@@ -1,0 +1,52 @@
+[
+  {
+    "id": "mo3hiae1nzk",
+    "data": "2026-04-17",
+    "pessoaId": "mo3hh59um71",
+    "pessoaNome": "João da Silva",
+    "pessoaSetor": "Produção",
+    "pratoId": "mo3hgk2cmz0",
+    "pratoNome": "Frango Grelhado",
+    "pratoValor": 25.9,
+    "acTotal": 0,
+    "totalPedido": 25.9,
+    "acomps": [
+      {
+        "nome": "Arroz Branco",
+        "valor": 0
+      },
+      {
+        "nome": "Feijão Carioca",
+        "valor": 0
+      }
+    ],
+    "criadoEm": "2026-04-17T22:33:11.449Z"
+  },
+  {
+    "id": "mo3nfdesdwa",
+    "data": "2026-04-18",
+    "pessoaId": "mo3neykqxav",
+    "pessoaNome": "Celsito",
+    "pessoaSetor": "Adm",
+    "pratoId": "mo3nedj0riy",
+    "pratoNome": "Calabresa Fatiada",
+    "pratoValor": 25.9,
+    "acTotal": 1,
+    "totalPedido": 26.9,
+    "acomps": [
+      {
+        "nome": "Arroz Branco",
+        "valor": 0
+      },
+      {
+        "nome": "Feijão Carioca",
+        "valor": 0
+      },
+      {
+        "nome": "Farofa",
+        "valor": 1
+      }
+    ],
+    "criadoEm": "2026-04-18T01:18:53.092Z"
+  }
+]
