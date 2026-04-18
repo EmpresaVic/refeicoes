@@ -110,6 +110,33 @@
         }
       ],
       "criadoEm": "2026-04-18T01:26:19.370Z"
+    },
+    {
+      "id": "mo3q8og01j3",
+      "data": "2026-04-18",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
+      "totalPedido": 4,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "FeijÃÂÃÂ£o Carioca",
+          "valor": 1
+        }
+      ],
+      "criadoEm": "2026-04-18T02:37:39.648Z"
     }
   ]
 }
