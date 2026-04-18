@@ -2,8 +2,8 @@
   "pessoas": [
     {
       "id": "mo3nnkjx7p2",
-      "nome": "João da Silva",
-      "setor": "Produção"
+      "nome": "JoÃ£o da Silva",
+      "setor": "ProduÃ§Ã£o"
     },
     {
       "id": "mo3nnu4w6zt",
@@ -36,7 +36,7 @@
     },
     {
       "id": "mo3nmwsakvi",
-      "nome": "Feijão Carioca",
+      "nome": "FeijÃ£o Carioca",
       "valor": 1
     }
   ],
@@ -62,11 +62,34 @@
           "valor": 1
         },
         {
-          "nome": "Feijão Carioca",
+          "nome": "FeijÃ£o Carioca",
           "valor": 1
         }
       ],
       "criadoEm": "2026-04-18T01:25:43.531Z"
+    },
+    {
+      "id": "mo3noxre3ca",
+      "data": "2026-04-18",
+      "pessoaId": "mo3nnkjx7p2",
+      "pessoaNome": "JoÃ£o da Silva",
+      "pessoaSetor": "ProduÃ§Ã£o",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 2,
+      "totalPedido": 27.9,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "FeijÃ£o Carioca",
+          "valor": 1
+        }
+      ],
+      "criadoEm": "2026-04-18T01:26:19.370Z"
     }
   ]
 }
