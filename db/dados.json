@@ -40,5 +40,33 @@
       "valor": 1
     }
   ],
-  "pedidos": []
+  "pedidos": [
+    {
+      "id": "mo3no63vyi9",
+      "data": "2026-04-18",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo3nncccfu8",
+      "pratoNome": "Tiras de Carne",
+      "pratoValor": 25.9,
+      "acTotal": 3,
+      "totalPedido": 28.9,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijão Carioca",
+          "valor": 1
+        }
+      ],
+      "criadoEm": "2026-04-18T01:25:43.531Z"
+    }
+  ]
 }
