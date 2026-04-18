@@ -2,8 +2,8 @@
   "pessoas": [
     {
       "id": "mo3nnkjx7p2",
-      "nome": "JoÃ£o da Silva",
-      "setor": "ProduÃ§Ã£o"
+      "nome": "JoÃÂ£o da Silva",
+      "setor": "ProduÃÂ§ÃÂ£o"
     },
     {
       "id": "mo3nnu4w6zt",
@@ -36,7 +36,12 @@
     },
     {
       "id": "mo3nmwsakvi",
-      "nome": "FeijÃ£o Carioca",
+      "nome": "FeijÃÂ£o Carioca",
+      "valor": 1
+    },
+    {
+      "id": "mo3q2ivojhu",
+      "nome": "Saladinha Express ( alface e Cenoura)",
       "valor": 1
     }
   ],
@@ -62,7 +67,7 @@
           "valor": 1
         },
         {
-          "nome": "FeijÃ£o Carioca",
+          "nome": "FeijÃÂ£o Carioca",
           "valor": 1
         }
       ],
@@ -72,8 +77,8 @@
       "id": "mo3noxre3ca",
       "data": "2026-04-18",
       "pessoaId": "mo3nnkjx7p2",
-      "pessoaNome": "JoÃ£o da Silva",
-      "pessoaSetor": "ProduÃ§Ã£o",
+      "pessoaNome": "JoÃÂ£o da Silva",
+      "pessoaSetor": "ProduÃÂ§ÃÂ£o",
       "pratoId": "mo3nn6mr8h6",
       "pratoNome": "Frango Grelhado",
       "pratoValor": 25.9,
@@ -85,7 +90,7 @@
           "valor": 1
         },
         {
-          "nome": "FeijÃ£o Carioca",
+          "nome": "FeijÃÂ£o Carioca",
           "valor": 1
         }
       ],
