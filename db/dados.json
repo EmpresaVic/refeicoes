@@ -1,6 +1,12 @@
 {
   "pessoas": [],
-  "pratos": [],
+  "pratos": [
+    {
+      "id": "mo3nn6mr8h6",
+      "nome": "Frango Grelhado",
+      "valor": 25.9
+    }
+  ],
   "acomps": [
     {
       "id": "mo3nmimd9gh",
