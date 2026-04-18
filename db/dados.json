@@ -1,11 +1,6 @@
 {
   "pessoas": [
     {
-      "id": "mo3nnkjx7p2",
-      "nome": "JoÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ£o da Silva",
-      "setor": "ProduÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ£o"
-    },
-    {
       "id": "mo3nnu4w6zt",
       "nome": "Mario Bross",
       "setor": "Administrativo"
@@ -14,6 +9,11 @@
       "id": "mo3q3aj3gmd",
       "nome": "Jairo Brito",
       "setor": "Cozinha"
+    },
+    {
+      "id": "mo3s62n7lgy",
+      "nome": "Joao da Silva",
+      "setor": "Producao"
     }
   ],
   "pratos": [
@@ -31,6 +31,11 @@
       "id": "mo3q2qzr56u",
       "nome": "Calabresa Fatiada",
       "valor": 1
+    },
+    {
+      "id": "mo3s5k6eo0j",
+      "nome": "Picanha Suina",
+      "valor": 25.9
     }
   ],
   "acomps": [
@@ -63,11 +68,6 @@
       "id": "mo3rb4d6m7k",
       "nome": "Cebola Empanada",
       "valor": 1
-    },
-    {
-      "id": "mo3s535s3m0",
-      "nome": "Feijao",
-      "valor": 1.9
     }
   ],
   "pedidos": [
@@ -151,9 +151,14 @@
   ],
   "bebidas": [
     {
-      "id": "mo3s331il9s",
-      "nome": "Suco de Laranja 300 ml",
-      "valor": 2.5
+      "id": "mo3s3ttlpvz",
+      "nome": "Pet Guarana 200 ml",
+      "valor": 1.9
+    },
+    {
+      "id": "mo3s42t2eum",
+      "nome": "Pet Pepsi  200 ml",
+      "valor": 1.9
     }
   ]
 }
