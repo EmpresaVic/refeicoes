@@ -411,7 +411,17 @@
     {
       "id": "mo52pngl",
       "nome": "Teste",
-      "senhaHash": "170842"
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      }
     },
     {
       "id": "mo54c22c",
