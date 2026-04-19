@@ -407,6 +407,44 @@
       },
       "obs": "bem passado",
       "criadoEm": "2026-04-19T19:56:06.365Z"
+    },
+    {
+      "id": "mo66xwsi92c",
+      "numPedido": 9,
+      "data": "2026-04-19",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo63imcyngi",
+      "pratoNome": "Parmegiana de Frango",
+      "pratoValor": 22.5,
+      "acTotal": 4,
+      "bebTotal": 2.5,
+      "totalPedido": 29,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-04-19T20:00:43.074Z"
     }
   ],
   "bebidas": [
