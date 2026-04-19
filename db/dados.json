@@ -201,25 +201,38 @@
       "criadoEm": "2026-04-19T00:44:27.490Z"
     },
     {
-      "id": "mo52qqcfir7",
+      "id": "mo52raz0idu",
       "numPedido": 3,
       "data": "2026-04-19",
       "pessoaId": "mo3q3aj3gmd",
       "pessoaNome": "Jairo Brito",
       "pessoaSetor": "Cozinha",
-      "pratoId": "mo3nn6mr8h6",
-      "pratoNome": "Frango Grelhado",
-      "pratoValor": 25.9,
-      "acTotal": 0,
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
       "bebTotal": 2.5,
-      "totalPedido": 28.4,
-      "acomps": [],
+      "totalPedido": 6.5,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
       "bebida": {
         "nome": "Suco de Laranja 300 ml",
         "valor": 2.5
       },
       "obs": "",
-      "criadoEm": "2026-04-19T01:15:23.487Z"
+      "criadoEm": "2026-04-19T01:15:50.221Z"
     }
   ],
   "bebidas": [
