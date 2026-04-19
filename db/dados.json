@@ -427,6 +427,21 @@
       "id": "mo54c22c",
       "nome": "Gestores",
       "senhaHash": "170842"
+    },
+    {
+      "id": "mo65tmc6",
+      "nome": "teste26",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      }
     }
   ],
   "diasEspeciais": [
