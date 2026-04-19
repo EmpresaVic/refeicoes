@@ -335,6 +335,44 @@
       },
       "obs": "",
       "criadoEm": "2026-04-19T03:57:29.143Z"
+    },
+    {
+      "id": "mo65jb3jmbo",
+      "numPedido": 7,
+      "data": "2026-04-19",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo54e0wh6th",
+      "pratoNome": "Picanha Suina",
+      "pratoValor": 20.9,
+      "acTotal": 4,
+      "bebTotal": 2.5,
+      "totalPedido": 27.4,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes Saute",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "teste",
+      "criadoEm": "2026-04-19T19:21:22.159Z"
     }
   ],
   "bebidas": [
