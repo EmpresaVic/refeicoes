@@ -381,5 +381,15 @@
       "senhaHash": "170842"
     }
   ],
-  "diasEspeciais": []
+  "diasEspeciais": [
+    {
+      "id": "mo63j6n8mt8",
+      "data": "2026-04-21",
+      "descricao": "Feriado dia 21 4",
+      "tipo": "especial",
+      "pratos": [
+        "mo63imcyngi"
+      ]
+    }
+  ]
 }
