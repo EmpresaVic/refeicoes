@@ -399,6 +399,15 @@
         "mo63imcyngi"
       ],
       "diaSemana": "sabado"
+    },
+    {
+      "id": "mo63vb0qv9j",
+      "descricao": "Break de Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mo63imcyngi"
+      ],
+      "diaSemana": "domingo"
     }
   ]
 }
