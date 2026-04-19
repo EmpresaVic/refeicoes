@@ -373,6 +373,40 @@
       },
       "obs": "teste",
       "criadoEm": "2026-04-19T19:21:22.159Z"
+    },
+    {
+      "id": "mo66rza5y34",
+      "numPedido": 8,
+      "data": "2026-04-19",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
+      "bebTotal": 1.9,
+      "totalPedido": 5.9,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Pet Pepsi 200 ml",
+        "valor": 1.9
+      },
+      "obs": "bem passado",
+      "criadoEm": "2026-04-19T19:56:06.365Z"
     }
   ],
   "bebidas": [
