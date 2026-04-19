@@ -199,6 +199,27 @@
       "bebida": null,
       "obs": "",
       "criadoEm": "2026-04-19T00:44:27.490Z"
+    },
+    {
+      "id": "mo52qqcfir7",
+      "numPedido": 3,
+      "data": "2026-04-19",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 0,
+      "bebTotal": 2.5,
+      "totalPedido": 28.4,
+      "acomps": [],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-04-19T01:15:23.487Z"
     }
   ],
   "bebidas": [
