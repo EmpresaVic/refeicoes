@@ -442,6 +442,21 @@
         "diasEspeciais": false,
         "usuarios": false
       }
+    },
+    {
+      "id": "mo66pp6x",
+      "nome": "teste55",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": true,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      }
     }
   ],
   "diasEspeciais": [
