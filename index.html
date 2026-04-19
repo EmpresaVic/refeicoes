@@ -498,35 +498,67 @@ tr:last-child td { border-bottom: none; }
 var STORAGE_KEY = 'refeicoes_db';
 var GH_CFG_KEY  = 'refeicoes_gh_cfg';
 var GH_FILE     = 'db/dados.json';
-var USERS_KEY   = 'refeicoes_usuarios';
 
 /* Usuário logado na sessão atual */
 var _usuarioLogado = null;
 
 /* =========================================================
    USUÁRIOS & LOGIN
+   Os usuários ficam em _cache['usuarios'] — sincronizado
+   pelo GitHub igual a pedidos, pessoas, pratos etc.
    ========================================================= */
 function _getUsuarios() {
-  try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); } catch(e) { return []; }
+  /* Lê do cache (já sincronizado com GitHub) */
+  var lista = _cache['usuarios'];
+  if (!Array.isArray(lista) || lista.length === 0) {
+    /* Fallback: tenta localStorage legado (migração) */
+    try {
+      var legado = JSON.parse(localStorage.getItem('refeicoes_usuarios') || '[]');
+      if (legado.length) return legado;
+    } catch(e){}
+    return [];
+  }
+  return JSON.parse(JSON.stringify(lista));
 }
-function _setUsuarios(lista) {
-  localStorage.setItem(USERS_KEY, JSON.stringify(lista));
+
+function _setUsuarios(lista, callback) {
+  /* Salva no cache e sincroniza com GitHub */
+  DB.set('usuarios', lista, callback);
 }
+
 function _hashSenha(s) {
   /* Hash simples para não guardar senha em texto puro */
   var h=0; for(var i=0;i<s.length;i++){ h=((h<<5)-h)+s.charCodeAt(i); h|=0; }
   return h.toString(16);
 }
 
-function fazerLogin() {
-  var user = document.getElementById('login-user').value.trim();
-  var pass = document.getElementById('login-pass').value;
+/* Login: primeiro carrega dados do GitHub (ou localStorage),
+   depois valida o usuário */
+async function fazerLogin() {
+  var user  = document.getElementById('login-user').value.trim();
+  var pass  = document.getElementById('login-pass').value;
   var errEl = document.getElementById('login-error');
+  var btn   = document.querySelector('#login-screen .login-btn');
+
   if(!user||!pass){ errEl.textContent='Preencha usuário e senha.'; return; }
+
+  errEl.textContent='';
+  btn.textContent='⏳ Verificando...';
+  btn.disabled=true;
+
+  /* Carrega dados (GitHub ou localStorage) para ter os usuários atualizados */
+  try {
+    await DB.loadAll(function(){});
+  } catch(e) {
+    /* Se falhar, continua com o que estiver no localStorage */
+  }
+
+  btn.textContent='🔑 Entrar';
+  btn.disabled=false;
 
   var usuarios = _getUsuarios();
 
-  /* Se não há usuários cadastrados, cria admin padrão automaticamente */
+  /* Se não há usuários cadastrados em nenhum lugar, cria admin padrão */
   if(!usuarios.length) {
     usuarios.push({ id:'admin', nome:'admin', senhaHash:_hashSenha('1234') });
     _setUsuarios(usuarios);
@@ -551,7 +583,7 @@ function fazerLogin() {
   document.getElementById('header-username').textContent = encontrado.nome;
   document.getElementById('header-user-info').style.display = 'flex';
   errEl.textContent='';
-  /* Inicializa o sistema */
+  /* Sincroniza o restante da interface (já tem os dados no cache) */
   sincronizar();
 }
 
@@ -578,25 +610,28 @@ function addUsuario() {
     if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ toast('Usuário já existe.','#c04a3a'); return; }
   }
   lista.push({ id: Date.now().toString(36), nome:nome, senhaHash:_hashSenha(senha) });
-  _setUsuarios(lista);
   document.getElementById('usr-nome').value='';
   document.getElementById('usr-senha').value='';
   document.getElementById('usr-senha2').value='';
+  toast('💾 Salvando usuário...','#4a7fa8');
+  _setUsuarios(lista, function(){ toast('✓ Usuário cadastrado e sincronizado!'); });
   renderUsuarios();
-  toast('✓ Usuário cadastrado!');
 }
 
 function delUsuario(id) {
   var lista = _getUsuarios();
   /* Protege: não remove o único usuário ou o logado */
   if(lista.length<=1){ toast('Deve haver ao menos um usuário.','#c04a3a'); return; }
-  if(_usuarioLogado && lista.find(function(u){ return u.id===id; })&&lista.find(function(u){ return u.id===id; }).nome===_usuarioLogado.nome){
+  var alvo = null;
+  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ alvo=lista[i]; break; }
+  if(_usuarioLogado && alvo && alvo.nome===_usuarioLogado.nome){
     toast('Não é possível remover o usuário logado.','#c04a3a'); return;
   }
   if(!confirm('Remover usuário?')) return;
-  _setUsuarios(lista.filter(function(u){ return u.id!==id; }));
+  var nova = lista.filter(function(u){ return u.id!==id; });
+  toast('💾 Removendo...','#4a7fa8');
+  _setUsuarios(nova, function(){ toast('Usuário removido.'); });
   renderUsuarios();
-  toast('Usuário removido.');
 }
 
 function renderUsuarios() {
@@ -787,7 +822,7 @@ var DB = {
     }
 
     /* Garante que cada tabela é array */
-    ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
     if (callback) callback(null);
@@ -805,7 +840,7 @@ function _carregarLocalStorage() {
 /* Persiste _cache inteiro (GitHub ou localStorage) */
 async function _persistir(callback) {
   /* Garante arrays */
-  ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
+  ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
     if (!Array.isArray(_cache[t])) _cache[t] = [];
   });
 
@@ -823,7 +858,7 @@ async function _persistir(callback) {
         /* Se o arquivo remoto tiver dados, faz merge (mantém locais) */
         if (r && r.content) {
           var remoto = r.content;
-          ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
+          ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
             /* Mantém versão local — ela tem os dados mais recentes desta sessão */
           });
         }
@@ -923,7 +958,7 @@ async function sincronizar() {
   if (!GH.isConfigured()) {
     setStatus('⚠️ Configure o GitHub', '#c04a3a');
     _carregarLocalStorage();
-    ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
     var cfg = CFG.get();
@@ -942,6 +977,18 @@ async function sincronizar() {
       _ultimoHash = _hashCache();
       iniciarAutoSync();
     }
+
+    /* Migração: se não há usuários no cache mas há no localStorage legado, migra */
+    if (!_cache['usuarios'] || !_cache['usuarios'].length) {
+      try {
+        var legado = JSON.parse(localStorage.getItem('refeicoes_usuarios') || '[]');
+        if (legado.length) {
+          _cache['usuarios'] = legado;
+          _persistir(function(){ localStorage.removeItem('refeicoes_usuarios'); });
+        }
+      } catch(e){}
+    }
+
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
     initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
@@ -980,7 +1027,7 @@ async function _autoSync() {
     _currentSha = result.sha;
     _ultimoHash = hashRemoto;
 
-    ['pessoas','pratos','acomps','pedidos'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
 
