@@ -275,6 +275,22 @@ input:focus, select:focus, .login-input:focus, .senha-input:focus {
   box-shadow: 0 2px 8px rgba(0,0,0,0.06);
 }
 
+/* Permission checkboxes */
+.perm-grid { display: grid; grid-template-columns: repeat(auto-fill, minmax(160px, 1fr)); gap: 8px; margin-top: 10px; }
+.perm-item { display: flex; align-items: center; gap: 8px; padding: 8px 12px; border: 1px solid var(--border); border-radius: 8px; cursor: pointer; user-select: none; font-size: 13px; }
+.perm-item:hover { border-color: var(--gold-dim); background: rgba(160,120,40,0.05); }
+.perm-item input[type=checkbox] { width: 16px; height: 16px; accent-color: var(--gold); cursor: pointer; flex-shrink: 0; }
+.perm-badge { display: inline-block; font-size: 10px; padding: 2px 6px; border-radius: 10px; background: rgba(160,120,40,0.12); color: var(--gold); font-weight: 600; margin-left: auto; }
+
+/* Dias Especiais */
+.de-badge-especial { background: rgba(58,111,152,0.12); color: var(--blue); }
+.de-badge-feriado { background: rgba(192,74,58,0.12); color: var(--red); }
+.de-tag { display: inline-block; padding: 2px 8px; border-radius: 10px; font-size: 11px; font-weight: 600; margin-left: 6px; }
+.de-tag.especial { background: rgba(58,111,152,0.12); color: var(--blue); }
+.de-tag.feriado { background: rgba(192,74,58,0.12); color: var(--red); }
+.prato-aviso-dia { background: rgba(58,111,152,0.08); border: 1px solid rgba(58,111,152,0.3); border-radius: 8px; padding: 9px 13px; font-size: 13px; color: var(--blue); margin-bottom: 10px; }
+.prato-aviso-dia.feriado { background: rgba(192,74,58,0.08); border-color: rgba(192,74,58,0.3); color: var(--red); }
+
 /* Login screen subtle gradient background */
 #login-screen {
   background: linear-gradient(135deg, #f5f3ef 0%, #ede9e1 100%);
@@ -335,6 +351,7 @@ nav button.active {
     <button onclick="showPage('pratos',this)">🍽️ Pratos</button>
     <button onclick="showPage('acomps',this)">🥗 Acompanhamentos</button>
     <button onclick="showPage('bebidas',this)">🥤 Bebidas</button>
+    <button id="nav-btn-diasEspeciais" onclick="showPage('diasEspeciais',this)">🗓️ Dias Especiais</button>
     <button id="nav-btn-usuarios" onclick="showPage('usuarios',this)">🔐 Usuários</button>
   </nav>
   <div class="gh-status-bar">
@@ -353,6 +370,7 @@ nav button.active {
 <div id="page-pedido" class="page active">
   <h1 class="page-title">Registrar Pedido</h1>
   <p class="page-sub">Selecione a pessoa, o prato, acompanhamentos e bebida.</p>
+  <div id="aviso-dia-especial" style="display:none;" class="prato-aviso-dia"></div>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Dados do Pedido</div>
@@ -390,15 +408,35 @@ nav button.active {
 
 <div id="page-resumo" class="page">
   <h1 class="page-title">Resumo Diário</h1>
-  <p class="page-sub">Visualize pedidos e faturamento por período.</p>
+  <p class="page-sub">Visualize pedidos e faturamento por período, pessoa ou prato.</p>
+
+  <!-- Filtros de período -->
   <div class="date-row">
     <div class="field"><label>Data inicial</label><input type="date" id="res-de"></div>
     <div class="date-sep">até</div>
     <div class="field"><label>Data final</label><input type="date" id="res-ate"></div>
-    <button class="btn btn-gold" onclick="gerarResumo()">Gerar Resumo</button>
+    <button class="btn btn-gold" onclick="gerarResumo()">🔍 Gerar Resumo</button>
     <button class="btn btn-ghost" onclick="verTodos()">Ver Todos</button>
     <button class="btn btn-ghost-blue" onclick="imprimirRelatorio()">🖨️ Imprimir</button>
   </div>
+
+  <!-- Filtros adicionais: pessoa e prato -->
+  <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end;">
+    <div class="field" style="margin-bottom:0;flex:1;min-width:200px;">
+      <label>Filtrar por Pessoa</label>
+      <select id="res-pessoa" onchange="aplicarFiltros()">
+        <option value="">— Todas as pessoas —</option>
+      </select>
+    </div>
+    <div class="field" style="margin-bottom:0;flex:1;min-width:200px;">
+      <label>Filtrar por Prato</label>
+      <select id="res-prato" onchange="aplicarFiltros()">
+        <option value="">— Todos os pratos —</option>
+      </select>
+    </div>
+    <button class="btn btn-ghost" onclick="limparFiltros()" style="padding:9px 16px;">✕ Limpar Filtros</button>
+  </div>
+
   <div class="stats-row" id="stats-row" style="display:none;">
     <div class="stat-box"><div class="val" id="st-pedidos">0</div><div class="lbl">Pedidos</div></div>
     <div class="stat-box"><div class="val" id="st-pessoas">0</div><div class="lbl">Pessoas atendidas</div></div>
@@ -477,18 +515,67 @@ nav button.active {
 
 <div id="page-usuarios" class="page">
   <h1 class="page-title">Gerenciar Usuários</h1>
-  <p class="page-sub">Cadastre usuários com acesso ao sistema.</p>
+  <p class="page-sub">Cadastre usuários e defina as permissões de acesso por módulo.</p>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Novo Usuário</div>
       <div class="field"><label>Nome de Usuário</label><input type="text" id="usr-nome" placeholder="Ex.: admin" autocomplete="off"></div>
       <div class="field"><label>Senha</label><input type="password" id="usr-senha" placeholder="Mínimo 4 caracteres" autocomplete="new-password"></div>
       <div class="field"><label>Confirmar Senha</label><input type="password" id="usr-senha2" placeholder="Repita a senha" autocomplete="new-password"></div>
+      <div class="field">
+        <label>Permissões de Acesso</label>
+        <div class="perm-grid" id="perm-novo-grid">
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="pedido" checked> 📋 Novo Pedido</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="resumo" checked> 📊 Resumo Diário</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="pessoas"> 👤 Pessoas</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="pratos"> 🍽️ Pratos</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="acomps"> 🥗 Acompanhamentos</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="bebidas"> 🥤 Bebidas</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="diasEspeciais"> 🗓️ Dias Especiais</label>
+          <label class="perm-item"><input type="checkbox" name="perm-novo" value="usuarios"> 🔐 Usuários</label>
+        </div>
+      </div>
       <button class="btn btn-gold" onclick="addUsuario()">+ Adicionar Usuário</button>
     </div>
     <div class="card">
       <div class="card-title">Usuários Cadastrados</div>
       <div id="lista-usuarios"><div class="empty"><span class="ico">🔐</span>Nenhum usuário</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-diasEspeciais" class="page">
+  <h1 class="page-title">Dias Especiais & Feriados</h1>
+  <p class="page-sub">Cadastre feriados e datas especiais e defina quais pratos estarão disponíveis nessas datas.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Nova Data Especial</div>
+      <div class="field">
+        <label>Tipo de Data</label>
+        <select id="de-modo" onchange="onDeModoChange()">
+          <option value="data">📅 Data específica</option>
+          <option value="sabado">📅 Todo Sábado</option>
+          <option value="domingo">📅 Todo Domingo</option>
+        </select>
+      </div>
+      <div class="field" id="de-data-field"><label>Data</label><input type="date" id="de-data"></div>
+      <div class="field"><label>Descrição</label><input type="text" id="de-desc" placeholder="Ex.: Natal, Aniversário, Sábado Especial"></div>
+      <div class="field">
+        <label>Tipo de Ocorrência</label>
+        <select id="de-tipo">
+          <option value="especial">🗓️ Dia Especial</option>
+          <option value="feriado">🚫 Feriado (sem atendimento)</option>
+        </select>
+      </div>
+      <div class="field" id="de-pratos-field">
+        <label>Pratos disponíveis nesta data <span style="font-size:10px;color:var(--text-dim);font-weight:400;text-transform:none;">(deixe vazio para mostrar todos)</span></label>
+        <div class="perm-grid" id="de-pratos-grid" style="max-height:200px;overflow-y:auto;"></div>
+      </div>
+      <button class="btn btn-gold" onclick="addDiaEspecial()">+ Adicionar Data</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Datas Cadastradas</div>
+      <div id="lista-diasEspeciais"><div class="empty"><span class="ico">🗓️</span>Nenhuma data especial</div></div>
     </div>
   </div>
 </div>
@@ -660,6 +747,7 @@ async function fazerLogin() {
   document.getElementById('header-username').textContent = encontrado.nome;
   document.getElementById('header-user-info').style.display = 'flex';
   errEl.textContent='';
+  aplicarPermissoesNav();
   /* Sincroniza o restante da interface (já tem os dados no cache) */
   sincronizar();
 }
@@ -671,6 +759,9 @@ function fazerLogout() {
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
   document.getElementById('login-error').textContent='';
+  /* Restaura todos os botões de nav */
+  var navBtns = document.querySelectorAll('#main-nav button');
+  for(var i=0;i<navBtns.length;i++) navBtns[i].style.display='';
   document.getElementById('login-screen').classList.add('open');
   setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
 }
@@ -686,7 +777,15 @@ function addUsuario() {
   for(var i=0;i<lista.length;i++){
     if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ toast('Usuário já existe.','#c04a3a'); return; }
   }
-  lista.push({ id: Date.now().toString(36), nome:nome, senhaHash:_hashSenha(senha) });
+  /* Coleta permissões */
+  var permChecks = document.querySelectorAll('#perm-novo-grid input[type=checkbox]');
+  var permissoes = {};
+  for(var i=0;i<permChecks.length;i++){
+    permissoes[permChecks[i].value] = permChecks[i].checked;
+  }
+  /* pedido sempre liberado */
+  permissoes['pedido'] = true;
+  lista.push({ id: Date.now().toString(36), nome:nome, senhaHash:_hashSenha(senha), permissoes:permissoes });
   document.getElementById('usr-nome').value='';
   document.getElementById('usr-senha').value='';
   document.getElementById('usr-senha2').value='';
@@ -715,17 +814,119 @@ function renderUsuarios() {
   var lista = _getUsuarios();
   var el = document.getElementById('lista-usuarios');
   if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🔐</span>Nenhum usuário</div>'; return; }
+  var modulos = [
+    {k:'pedido',l:'📋 Pedido'},{k:'resumo',l:'📊 Resumo'},{k:'pessoas',l:'👤 Pessoas'},
+    {k:'pratos',l:'🍽️ Pratos'},{k:'acomps',l:'🥗 Acomp.'},{k:'bebidas',l:'🥤 Bebidas'},
+    {k:'diasEspeciais',l:'🗓️ Dias Esp.'},{k:'usuarios',l:'🔐 Usuários'}
+  ];
   var h='';
   for(var i=0;i<lista.length;i++){
     var u=lista[i];
     var isMe = _usuarioLogado && u.nome===_usuarioLogado.nome;
-    h+='<div class="user-item">'
+    var perms = u.permissoes || null;
+    var permHtml = '';
+    if(perms){
+      var tags = '';
+      for(var m=0;m<modulos.length;m++){
+        if(perms[modulos[m].k]) tags+='<span class="perm-badge" style="margin:2px;">'+modulos[m].l+'</span>';
+      }
+      permHtml = '<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;">'+tags+'</div>';
+    } else {
+      permHtml = '<div style="margin-top:4px;"><span class="perm-badge">Acesso total (legado)</span></div>';
+    }
+    h+='<div class="user-item" style="flex-direction:column;align-items:flex-start;gap:6px;">'
+      +'<div style="display:flex;justify-content:space-between;width:100%;align-items:center;">'
       +'<div><div class="uname">'+u.nome+(isMe?' <span style="font-size:10px;color:var(--gold);">(você)</span>':'')+'</div>'
       +'<div class="urole">Usuário do sistema</div></div>'
-      +(isMe?'<span style="font-size:12px;color:var(--text-dim);">—</span>':'<button class="btn btn-danger" onclick="delUsuario(\''+u.id+'\')">✕ Remover</button>')
+      +(isMe?'<span style="font-size:12px;color:var(--text-dim);">—</span>'
+        :'<div style="display:flex;gap:6px;">'
+        +'<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editarPermissoes(\''+u.id+'\')">✏️ Permissões</button>'
+        +'<button class="btn btn-danger" onclick="delUsuario(\''+u.id+'\')">✕ Remover</button>'
+        +'</div>')
+      +'</div>'
+      +permHtml
       +'</div>';
   }
   el.innerHTML=h;
+}
+
+/* Modal de edição de permissões */
+function editarPermissoes(id) {
+  var lista = _getUsuarios();
+  var u = null;
+  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ u=lista[i]; break; }
+  if(!u) return;
+  var modulos = [
+    {k:'pedido',l:'📋 Novo Pedido'},{k:'resumo',l:'📊 Resumo Diário'},
+    {k:'pessoas',l:'👤 Pessoas'},{k:'pratos',l:'🍽️ Pratos'},
+    {k:'acomps',l:'🥗 Acompanhamentos'},{k:'bebidas',l:'🥤 Bebidas'},
+    {k:'diasEspeciais',l:'🗓️ Dias Especiais'},{k:'usuarios',l:'🔐 Usuários'}
+  ];
+  var perms = u.permissoes || {};
+  var checksHtml = '';
+  for(var m=0;m<modulos.length;m++){
+    var disabled = modulos[m].k==='pedido' ? ' disabled' : '';
+    var checked  = (modulos[m].k==='pedido' || perms[modulos[m].k]) ? ' checked' : '';
+    checksHtml += '<label class="perm-item"><input type="checkbox" class="ep-check" data-mod="'+modulos[m].k+'"'+checked+disabled+'> '+modulos[m].l+'</label>';
+  }
+
+  var overlay = document.getElementById('modal-edit-perm');
+  if(!overlay){
+    overlay = document.createElement('div');
+    overlay.id = 'modal-edit-perm';
+    overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2100;align-items:center;justify-content:center;';
+    document.body.appendChild(overlay);
+  }
+  overlay.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:440px;width:92%;">'
+    +'<h3 style="font-family:\'Playfair Display\',serif;color:var(--gold);margin-bottom:4px;font-size:18px;">✏️ Permissões de Acesso</h3>'
+    +'<p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">Usuário: <strong style="color:var(--cream);">'+u.nome+'</strong></p>'
+    +'<div class="perm-grid">'+checksHtml+'</div>'
+    +'<p style="font-size:11px;color:var(--text-dim);margin-top:10px;">* Novo Pedido sempre liberado.</p>'
+    +'<div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;">'
+    +'<button class="btn btn-ghost" onclick="document.getElementById(\'modal-edit-perm\').style.display=\'none\'">Cancelar</button>'
+    +'<button class="btn btn-gold" onclick="salvarPermissoes(\''+id+'\')">✓ Salvar Permissões</button>'
+    +'</div></div>';
+  overlay.style.display = 'flex';
+}
+
+function salvarPermissoes(id) {
+  var lista = _getUsuarios();
+  var u = null;
+  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ u=lista[i]; break; }
+  if(!u) return;
+  var checks = document.querySelectorAll('#modal-edit-perm .ep-check');
+  var permissoes = {};
+  for(var i=0;i<checks.length;i++){
+    permissoes[checks[i].getAttribute('data-mod')] = checks[i].checked;
+  }
+  permissoes['pedido'] = true;
+  u.permissoes = permissoes;
+  document.getElementById('modal-edit-perm').style.display='none';
+  toast('💾 Salvando permissões...','#3a6f98');
+  _setUsuarios(lista, function(){ toast('✓ Permissões atualizadas!'); });
+  renderUsuarios();
+  /* Atualiza nav se for o usuário logado */
+  if(_usuarioLogado && _usuarioLogado.id === id){
+    _usuarioLogado.permissoes = permissoes;
+    aplicarPermissoesNav();
+  }
+}
+
+/* Aplica visibilidade dos botões de nav com base nas permissões */
+function aplicarPermissoesNav() {
+  var perms = _usuarioLogado ? _usuarioLogado.permissoes : null;
+  if(!perms) return; /* sem restrições (usuário legado sem permissoes definidas) */
+  var navBtns = document.querySelectorAll('#main-nav button');
+  for(var i=0;i<navBtns.length;i++){
+    var btn = navBtns[i];
+    var onclick = btn.getAttribute('onclick') || '';
+    var match = onclick.match(/showPage\('([^']+)'/);
+    if(match){
+      var mod = match[1];
+      if(mod === 'pedido'){ btn.style.display=''; continue; }
+      btn.style.display = perms[mod] ? '' : 'none';
+    }
+  }
 }
 
 /* Cache em memória da sessão */
@@ -899,7 +1100,7 @@ var DB = {
     }
 
     /* Garante que cada tabela é array */
-    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios','diasEspeciais'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
     if (callback) callback(null);
@@ -917,7 +1118,7 @@ function _carregarLocalStorage() {
 /* Persiste _cache inteiro (GitHub ou localStorage) */
 async function _persistir(callback) {
   /* Garante arrays */
-  ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
+  ['pessoas','pratos','acomps','pedidos','bebidas','usuarios','diasEspeciais'].forEach(function(t){
     if (!Array.isArray(_cache[t])) _cache[t] = [];
   });
 
@@ -1040,7 +1241,7 @@ async function sincronizar() {
     });
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
     return;
   }
 
@@ -1068,7 +1269,7 @@ async function sincronizar() {
 
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
   });
 }
 
@@ -1104,12 +1305,12 @@ async function _autoSync() {
     _currentSha = result.sha;
     _ultimoHash = hashRemoto;
 
-    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios','diasEspeciais'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
 
     /* Atualiza a interface sem piscar */
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
 
     var now = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
     setStatus('✅ Sincronizado ' + now, '#3a7a4a');
@@ -1146,11 +1347,16 @@ var _formato = '80mm';
 var _navBtnResumo = null;
 
 function showPage(name, btn) {
-  if(name === 'resumo') {
-    _navBtnResumo = btn;
-    abrirSenha();
-    return;
+  /* Verificar permissão */
+  if(_usuarioLogado && name !== 'pedido') {
+    var perms = _usuarioLogado.permissoes;
+    /* admin (sem restrições) ou permissão concedida */
+    if(perms && !perms[name]) {
+      toast('⛔ Você não tem permissão para acessar este módulo.', '#c04a3a');
+      return;
+    }
   }
+  /* Resumo não requer mais senha — acesso direto (controlado por permissões) */
   var pages = document.querySelectorAll('.page');
   for(var i=0;i<pages.length;i++) pages[i].classList.remove('active');
   var btns = document.querySelectorAll('#main-nav button');
@@ -1158,12 +1364,13 @@ function showPage(name, btn) {
   document.getElementById('page-' + name).classList.add('active');
   if(btn) btn.classList.add('active');
   if(name==='pedido') initPedido();
-  if(name==='resumo') initResumo();
+  if(name==='resumo') { initResumo(); _popularFiltrosSelects(); }
   if(name==='pessoas') renderPessoas();
   if(name==='pratos') renderPratos();
   if(name==='acomps') renderAcomps();
   if(name==='bebidas') renderBebidas();
   if(name==='usuarios') renderUsuarios();
+  if(name==='diasEspeciais') { renderDiasEspeciaisForm(); renderDiasEspeciais(); }
 }
 
 function toast(msg, cor) {
@@ -1255,7 +1462,7 @@ function addPrato() {
   if(!nome){ toast('Informe o nome.','#c04a3a'); return; }
   if(isNaN(valor)||valor<0){ toast('Valor inválido.','#c04a3a'); return; }
   var lista = DB.get('pratos');
-  lista.push({ id:DB.uid(), nome:nome, valor:valor });
+  lista.push({ id:DB.uid(), nome:nome, valor:valor, diaEspecialOnly:false });
   document.getElementById('pr-nome').value='';
   document.getElementById('pr-valor').value='';
   renderPratos();
@@ -1269,14 +1476,27 @@ function delPrato(id) {
   renderPratos();
   DB.set('pratos', lista, function(){ toast('Prato removido.'); });
 }
+function togglePratoDiaEspecial(id) {
+  var lista = DB.get('pratos');
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].id===id){ lista[i].diaEspecialOnly = !lista[i].diaEspecialOnly; break; }
+  }
+  _cache['pratos'] = lista;
+  renderPratos();
+  DB.set('pratos', lista, function(){ toast('✓ Prato atualizado!'); });
+}
 function renderPratos() {
   var lista = DB.get('pratos');
   var el = document.getElementById('lista-pratos');
   if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🍽️</span>Nenhum prato</div>'; return; }
-  var h='<table><thead><tr><th>Prato</th><th>Valor</th><th></th></tr></thead><tbody>';
+  var h='<table><thead><tr><th>Prato</th><th>Valor</th><th>Só Dia Especial?</th><th></th></tr></thead><tbody>';
   for(var i=0;i<lista.length;i++){
     var p=lista[i];
-    h+='<tr><td>'+p.nome+'</td><td><span class="badge badge-gold">'+moeda(p.valor)+'</span></td><td><button class="btn btn-danger" onclick="delPrato(\''+p.id+'\')">✕</button></td></tr>';
+    var deLabel = p.diaEspecialOnly
+      ? '<span class="de-tag especial">✓ Especial</span>'
+      : '<span style="color:var(--text-dim);font-size:12px;">Normal</span>';
+    var deBtn = '<button class="btn btn-ghost" style="padding:3px 9px;font-size:11px;" onclick="togglePratoDiaEspecial(\''+p.id+'\')">'+(p.diaEspecialOnly?'↩ Normal':'🗓️ Especial')+'</button>';
+    h+='<tr><td>'+p.nome+'</td><td><span class="badge badge-gold">'+moeda(p.valor)+'</span></td><td>'+deLabel+' '+deBtn+'</td><td><button class="btn btn-danger" onclick="delPrato(\''+p.id+'\')">✕</button></td></tr>';
   }
   el.innerHTML=h+'</tbody></table>';
 }
@@ -1318,13 +1538,219 @@ function renderAcomps() {
 }
 
 /* =========================================================
+   DIAS ESPECIAIS
+   ========================================================= */
+function onDeModoChange() {
+  var modo = document.getElementById('de-modo').value;
+  document.getElementById('de-data-field').style.display = (modo === 'data') ? '' : 'none';
+}
+
+function renderDiasEspeciaisForm() {
+  /* Popula grid de pratos no formulário de dias especiais */
+  var pratos = DB.get('pratos');
+  var grid = document.getElementById('de-pratos-grid');
+  if(!grid) return;
+  if(!pratos.length){ grid.innerHTML='<p style="font-size:12px;color:var(--text-dim);">Nenhum prato cadastrado.</p>'; return; }
+  var h='';
+  for(var i=0;i<pratos.length;i++){
+    h+='<label class="perm-item"><input type="checkbox" name="de-prato" value="'+pratos[i].id+'"> '+pratos[i].nome+'</label>';
+  }
+  grid.innerHTML=h;
+  /* Mostrar/ocultar campo de pratos se for feriado */
+  document.getElementById('de-tipo').onchange = function(){
+    document.getElementById('de-pratos-field').style.display = this.value==='feriado'?'none':'';
+  };
+}
+
+function addDiaEspecial() {
+  var modo  = document.getElementById('de-modo').value;
+  var data  = document.getElementById('de-data') ? document.getElementById('de-data').value : '';
+  var desc  = document.getElementById('de-desc').value.trim();
+  var tipo  = document.getElementById('de-tipo').value;
+
+  if(modo === 'data' && !data){ toast('Informe a data.','#c04a3a'); return; }
+  if(!desc){ toast('Informe a descrição.','#c04a3a'); return; }
+
+  var lista = DB.get('diasEspeciais');
+
+  if(modo === 'data'){
+    /* Não permite duplicar a data */
+    for(var i=0;i<lista.length;i++){
+      if(lista[i].data===data && !lista[i].diaSemana){ toast('Já existe um registro para essa data.','#c04a3a'); return; }
+    }
+  } else {
+    /* Não permite duplicar sábado/domingo */
+    var semanaKey = modo; /* 'sabado' ou 'domingo' */
+    for(var i=0;i<lista.length;i++){
+      if(lista[i].diaSemana===semanaKey){ toast('Já existe uma regra para '+( modo==='sabado'?'Sábado':'Domingo')+'.','#c04a3a'); return; }
+    }
+  }
+
+  /* Coleta pratos selecionados */
+  var pratosChecks = document.querySelectorAll('#de-pratos-grid input[type=checkbox]:checked');
+  var pratosSel = [];
+  for(var i=0;i<pratosChecks.length;i++) pratosSel.push(pratosChecks[i].value);
+
+  var novoReg = { id:DB.uid(), descricao:desc, tipo:tipo, pratos:pratosSel };
+  if(modo === 'data'){
+    novoReg.data = data;
+  } else {
+    novoReg.diaSemana = modo; /* 'sabado' ou 'domingo' */
+  }
+
+  lista.push(novoReg);
+  /* Limpa form */
+  document.getElementById('de-data').value='';
+  document.getElementById('de-desc').value='';
+  document.getElementById('de-tipo').value='especial';
+  document.getElementById('de-modo').value='data';
+  onDeModoChange();
+  var checks = document.querySelectorAll('#de-pratos-grid input[type=checkbox]');
+  for(var i=0;i<checks.length;i++) checks[i].checked=false;
+  _cache['diasEspeciais']=lista;
+  renderDiasEspeciais();
+  toast('💾 Salvando...','#3a6f98');
+  DB.set('diasEspeciais', lista, function(){ toast('✓ Data especial salva!'); });
+}
+
+function delDiaEspecial(id) {
+  if(!confirm('Remover esta data especial?')) return;
+  var lista = DB.get('diasEspeciais').filter(function(x){ return x.id!==id; });
+  _cache['diasEspeciais']=lista;
+  renderDiasEspeciais();
+  DB.set('diasEspeciais', lista, function(){ toast('Data especial removida.'); });
+}
+
+function renderDiasEspeciais() {
+  var lista = DB.get('diasEspeciais');
+  var el = document.getElementById('lista-diasEspeciais');
+  if(!el) return;
+  if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🗓️</span>Nenhuma data especial</div>'; return; }
+  var pratos = DB.get('pratos');
+
+  /* Separa: datas fixas (ordenadas) e regras de dia-da-semana */
+  var fixas = lista.filter(function(x){ return x.data && !x.diaSemana; }).slice().sort(function(a,b){ return a.data.localeCompare(b.data); });
+  var semana = lista.filter(function(x){ return x.diaSemana; });
+
+  function pratosLabel(de){
+    if(de.tipo==='feriado') return '—';
+    if(Array.isArray(de.pratos) && de.pratos.length){
+      var nomes=[];
+      for(var j=0;j<de.pratos.length;j++){
+        for(var k=0;k<pratos.length;k++){
+          if(pratos[k].id===de.pratos[j]){ nomes.push(pratos[k].nome); break; }
+        }
+      }
+      return nomes.length ? nomes.join(', ') : '<span style="color:var(--text-dim);font-size:12px;">Todos os pratos</span>';
+    }
+    return '<span style="color:var(--text-dim);font-size:12px;">Todos os pratos</span>';
+  }
+
+  function tipoTag(tipo){
+    return tipo==='feriado'
+      ? '<span class="de-tag feriado">🚫 Feriado</span>'
+      : '<span class="de-tag especial">🗓️ Especial</span>';
+  }
+
+  var h='';
+  /* Regras de dia da semana */
+  if(semana.length){
+    h+='<div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Regras Semanais</div>';
+    h+='<table style="margin-bottom:18px;"><thead><tr><th>Dia</th><th>Descrição</th><th>Tipo</th><th>Pratos</th><th></th></tr></thead><tbody>';
+    for(var i=0;i<semana.length;i++){
+      var de=semana[i];
+      var diaLabel = de.diaSemana==='sabado'?'📅 Todo Sábado':'📅 Todo Domingo';
+      h+='<tr><td>'+diaLabel+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de.tipo)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+    }
+    h+='</tbody></table>';
+  }
+
+  /* Datas fixas */
+  if(fixas.length){
+    h+='<div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Datas Específicas</div>';
+    h+='<table><thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Pratos</th><th></th></tr></thead><tbody>';
+    for(var i=0;i<fixas.length;i++){
+      var de=fixas[i];
+      h+='<tr><td>'+fmtData(de.data)+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de.tipo)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+    }
+    h+='</tbody></table>';
+  }
+
+  el.innerHTML=h;
+}
+
+/* =========================================================
    PEDIDO
    ========================================================= */
 function initPedido() {
   var pessoas = DB.get('pessoas');
-  var pratos  = DB.get('pratos');
+  var todosOsPratos  = DB.get('pratos');
   var acomps  = DB.get('acomps');
   var bebidas = DB.get('bebidas');
+  var diasEspeciais = DB.get('diasEspeciais');
+
+  /* ── Verificar se hoje é dia especial ou feriado ── */
+  var dataHoje = hoje();
+  var diaEspecialHoje = null;
+  /* 1. Checa data exata */
+  for(var d=0;d<diasEspeciais.length;d++){
+    if(diasEspeciais[d].data === dataHoje){ diaEspecialHoje = diasEspeciais[d]; break; }
+  }
+  /* 2. Se não achou data exata, checa regra de dia da semana */
+  if(!diaEspecialHoje){
+    var dow = new Date(dataHoje+'T12:00:00').getDay(); /* 0=dom, 6=sab */
+    var dowKey = dow===6 ? 'sabado' : (dow===0 ? 'domingo' : null);
+    if(dowKey){
+      for(var d=0;d<diasEspeciais.length;d++){
+        if(diasEspeciais[d].diaSemana === dowKey){ diaEspecialHoje = diasEspeciais[d]; break; }
+      }
+    }
+  }
+
+  var aviso = document.getElementById('aviso-dia-especial');
+  var pratos = [];
+
+  if(diaEspecialHoje){
+    var tipo = diaEspecialHoje.tipo || 'especial';
+    if(tipo === 'feriado'){
+      aviso.textContent = '🚫 FERIADO: ' + diaEspecialHoje.descricao + ' — Sem atendimento hoje.';
+      aviso.className = 'prato-aviso-dia feriado';
+      aviso.style.display = 'block';
+      /* Bloqueia tudo */
+      document.getElementById('ped-prato').innerHTML = '<option value="">— Feriado, sem atendimento —</option>';
+      document.getElementById('acomp-lista').innerHTML = '';
+      document.getElementById('bebida-lista').innerHTML = '';
+      var selP2 = document.getElementById('ped-pessoa');
+      var hP2 = '<option value="">— Selecione —</option>';
+      for(var i=0;i<pessoas.length;i++) hP2+='<option value="'+pessoas[i].id+'">'+pessoas[i].nome+(pessoas[i].setor?' · '+pessoas[i].setor:'')+'</option>';
+      selP2.innerHTML=hP2;
+      document.getElementById('ped-data').value = dataHoje;
+      atualizarCnt(); onPratoChange(); return;
+    } else {
+      /* Dia especial:
+         - Sempre exibe os pratos normais (diaEspecialOnly = false)
+         - Adiciona os pratos do dia especial configurados no cadastro (opção extra no cardápio)
+         - Se nenhum prato específico foi definido no dia especial, exibe todos incluindo os diaEspecialOnly */
+      var pratosNormais = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly; });
+      var pratosDia = diaEspecialHoje.pratos; /* ids dos pratos extras definidos para este dia */
+      var pratosExtras = [];
+      if(Array.isArray(pratosDia) && pratosDia.length > 0){
+        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && pratosDia.indexOf(p.id) !== -1; });
+      } else {
+        /* Sem lista específica: inclui todos os pratos marcados como diaEspecialOnly */
+        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly; });
+      }
+      pratos = pratosNormais.concat(pratosExtras);
+      var msgExtra = pratosExtras.length ? ' — ' + pratosExtras.length + ' prato(s) especial(is) disponível(is).' : '';
+      aviso.textContent = '🗓️ DIA ESPECIAL: ' + diaEspecialHoje.descricao + msgExtra;
+      aviso.className = 'prato-aviso-dia';
+      aviso.style.display = 'block';
+    }
+  } else {
+    /* Dia normal: exibe apenas pratos que NÃO são exclusivos de dia especial */
+    pratos = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly; });
+    aviso.style.display = 'none';
+  }
 
   var selP = document.getElementById('ped-pessoa');
   var curP = selP.value;
@@ -1335,10 +1761,29 @@ function initPedido() {
   var selPr = document.getElementById('ped-prato');
   var curPr = selPr.value;
   var hPr = '<option value="">— Selecione —</option>';
-  for(var i=0;i<pratos.length;i++) hPr+='<option value="'+pratos[i].id+'" data-v="'+pratos[i].valor+'">'+pratos[i].nome+' — '+moeda(pratos[i].valor)+'</option>';
+
+  if(diaEspecialHoje && diaEspecialHoje.tipo !== 'feriado'){
+    /* Monta com grupos: normais + especiais separados */
+    var pratosNormaisGrp = pratos.filter(function(p){ return !p.diaEspecialOnly; });
+    var pratosEspeciaisGrp = pratos.filter(function(p){ return p.diaEspecialOnly; });
+    if(pratosNormaisGrp.length){
+      hPr += '<optgroup label="🍽️ Cardápio do Dia">';
+      for(var i=0;i<pratosNormaisGrp.length;i++) hPr+='<option value="'+pratosNormaisGrp[i].id+'" data-v="'+pratosNormaisGrp[i].valor+'">'+pratosNormaisGrp[i].nome+' — '+moeda(pratosNormaisGrp[i].valor)+'</option>';
+      hPr += '</optgroup>';
+    }
+    if(pratosEspeciaisGrp.length){
+      hPr += '<optgroup label="⭐ Pratos Especiais — ' + diaEspecialHoje.descricao + '">';
+      for(var i=0;i<pratosEspeciaisGrp.length;i++) hPr+='<option value="'+pratosEspeciaisGrp[i].id+'" data-v="'+pratosEspeciaisGrp[i].valor+'">⭐ '+pratosEspeciaisGrp[i].nome+' — '+moeda(pratosEspeciaisGrp[i].valor)+'</option>';
+      hPr += '</optgroup>';
+    }
+  } else {
+    for(var i=0;i<pratos.length;i++) hPr+='<option value="'+pratos[i].id+'" data-v="'+pratos[i].valor+'">'+pratos[i].nome+' — '+moeda(pratos[i].valor)+'</option>';
+  }
+
+  if(!pratos.length) hPr = '<option value="">— Nenhum prato disponível hoje —</option>';
   selPr.innerHTML=hPr; selPr.value=curPr;
 
-  document.getElementById('ped-data').value = hoje();
+  document.getElementById('ped-data').value = dataHoje;
 
   var c = document.getElementById('acomp-lista');
   if(!acomps.length){ c.innerHTML='<p style="color:var(--text-dim);font-size:13px;">Nenhum acompanhamento cadastrado.</p>'; }
@@ -1552,81 +1997,196 @@ function registrar(imprimir) {
 /* =========================================================
    RESUMO
    ========================================================= */
+/* Pedidos base da consulta atual (antes dos filtros de pessoa/prato) */
+var _pedidosBase = [];
+
 function initResumo() {
-  var h=hoje();
-  document.getElementById('res-de').value=h;
-  document.getElementById('res-ate').value=h;
+  var h = hoje();
+  document.getElementById('res-de').value = h;
+  document.getElementById('res-ate').value = h;
+  _popularFiltrosSelects();
+}
+
+function _popularFiltrosSelects() {
+  /* Popula os selects de pessoa e prato com os dados cadastrados */
+  var pessoas = DB.get('pessoas').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  var pratos  = DB.get('pratos').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+
+  var selPessoa = document.getElementById('res-pessoa');
+  var selPrato  = document.getElementById('res-prato');
+  if(!selPessoa || !selPrato) return;
+
+  var curPessoa = selPessoa.value;
+  var curPrato  = selPrato.value;
+
+  var hP = '<option value="">— Todas as pessoas —</option>';
+  for(var i=0;i<pessoas.length;i++) hP += '<option value="'+pessoas[i].id+'">'+pessoas[i].nome+(pessoas[i].setor?' · '+pessoas[i].setor:'')+'</option>';
+  selPessoa.innerHTML = hP;
+  selPessoa.value = curPessoa;
+
+  var hPr = '<option value="">— Todos os pratos —</option>';
+  for(var i=0;i<pratos.length;i++) hPr += '<option value="'+pratos[i].id+'">'+pratos[i].nome+'</option>';
+  selPrato.innerHTML = hPr;
+  selPrato.value = curPrato;
 }
 
 function gerarResumo() {
-  var de=document.getElementById('res-de').value;
-  var ate=document.getElementById('res-ate').value;
-  if(!de&&!ate){ toast('Informe ao menos uma data.','#c04a3a'); return; }
-  var ini=de||ate, fim=ate||de;
-  if(ini>fim){ toast('Data inicial maior que a final.','#c04a3a'); return; }
-  var pedidos=DB.get('pedidos').filter(function(p){ return p.data>=ini&&p.data<=fim; });
-  var label=ini===fim?fmtData(ini):fmtData(ini)+' a '+fmtData(fim);
-  renderResumo(pedidos,label);
+  var de  = document.getElementById('res-de').value;
+  var ate = document.getElementById('res-ate').value;
+  if(!de && !ate){ toast('Informe ao menos uma data.','#c04a3a'); return; }
+  var ini = de||ate, fim = ate||de;
+  if(ini > fim){ toast('Data inicial maior que a final.','#c04a3a'); return; }
+  _pedidosBase = DB.get('pedidos').filter(function(p){ return p.data>=ini && p.data<=fim; });
+  var label = ini===fim ? fmtData(ini) : fmtData(ini)+' a '+fmtData(fim);
+  _popularFiltrosSelects();
+  aplicarFiltros(label);
 }
 
-function verTodos() { renderResumo(DB.get('pedidos'),null); }
+function verTodos() {
+  _pedidosBase = DB.get('pedidos');
+  _popularFiltrosSelects();
+  aplicarFiltros(null);
+}
 
-function renderResumo(pedidos, label) {
-  var body=document.getElementById('resumo-body');
-  var stats=document.getElementById('stats-row');
-  if(!pedidos.length){ stats.style.display='none'; body.innerHTML='<div class="empty"><span class="ico">🔍</span>Nenhum pedido encontrado.</div>'; return; }
+function limparFiltros() {
+  document.getElementById('res-pessoa').value = '';
+  document.getElementById('res-prato').value  = '';
+  aplicarFiltros();
+}
+
+function aplicarFiltros(labelOverride) {
+  if(!_pedidosBase.length && !DB.get('pedidos').length) return;
+  /* Se _pedidosBase estiver vazio mas houver pedidos, ainda não rodou gerarResumo */
+  if(!_pedidosBase.length) return;
+
+  var pessoaId = document.getElementById('res-pessoa').value;
+  var pratoId  = document.getElementById('res-prato').value;
+
+  var filtrados = _pedidosBase.slice();
+  if(pessoaId) filtrados = filtrados.filter(function(p){ return p.pessoaId === pessoaId; });
+  if(pratoId)  filtrados = filtrados.filter(function(p){ return p.pratoId  === pratoId; });
+
+  /* Monta label dinâmico */
+  var label = (typeof labelOverride !== 'undefined') ? labelOverride : _labelAtual;
+  _labelAtual = label;
+
+  var sufixos = [];
+  if(pessoaId){
+    var sel = document.getElementById('res-pessoa');
+    sufixos.push('👤 ' + sel.options[sel.selectedIndex].text);
+  }
+  if(pratoId){
+    var sel2 = document.getElementById('res-prato');
+    sufixos.push('🍽️ ' + sel2.options[sel2.selectedIndex].text);
+  }
+  var labelFinal = label ? label : '';
+  if(sufixos.length) labelFinal = (labelFinal ? labelFinal + ' — ' : '') + sufixos.join(' · ');
+
+  renderResumo(filtrados, labelFinal || null, pessoaId, pratoId);
+}
+var _labelAtual = null;
+
+function renderResumo(pedidos, label, filtPessoa, filtPrato) {
+  var body  = document.getElementById('resumo-body');
+  var stats = document.getElementById('stats-row');
+  if(!pedidos.length){
+    stats.style.display='none';
+    body.innerHTML='<div class="empty"><span class="ico">🔍</span>Nenhum pedido encontrado.</div>';
+    return;
+  }
 
   var total=0; var uniqMap={};
   for(var i=0;i<pedidos.length;i++){
-    // support legacy records that only have pratoValor
     var tv = pedidos[i].totalPedido !== undefined ? pedidos[i].totalPedido : pedidos[i].pratoValor;
     total+=tv; uniqMap[pedidos[i].pessoaId]=1;
   }
   var uniq=Object.keys(uniqMap).length;
-  document.getElementById('st-pedidos').textContent=pedidos.length;
-  document.getElementById('st-pessoas').textContent=uniq;
-  document.getElementById('st-total').textContent=moeda(total);
+  document.getElementById('st-pedidos').textContent = pedidos.length;
+  document.getElementById('st-pessoas').textContent = uniq;
+  document.getElementById('st-total').textContent   = moeda(total);
   stats.style.display='flex';
 
+  /* ── Modo agrupamento: por pessoa ou por prato quando filtrado ── */
+  var h = '';
+
+  if(filtPrato && !filtPessoa) {
+    /* Agrupado por pessoa quando filtro é só por prato */
+    h += _renderResumoAgrupado(pedidos, 'pessoa', label);
+  } else if(filtPessoa && !filtPrato) {
+    /* Agrupado por prato quando filtro é só por pessoa */
+    h += _renderResumoAgrupado(pedidos, 'prato', label);
+  } else {
+    /* Padrão: agrupado por data */
+    h += _renderResumoPorData(pedidos);
+  }
+
+  body.innerHTML = h;
+}
+
+function _rowPedido(p) {
+  var tv = p.totalPedido !== undefined ? p.totalPedido : p.pratoValor;
+  var acHtml = '';
+  if(Array.isArray(p.acomps) && p.acomps.length){
+    for(var ai=0;ai<p.acomps.length;ai++){
+      var ac=p.acomps[ai];
+      var acNm=typeof ac==='object'?ac.nome:ac;
+      var acVl=typeof ac==='object'&&ac.valor>0?'<span style="color:var(--gold);font-size:11px;margin-left:4px;">+'+moeda(ac.valor)+'</span>':'';
+      acHtml+='<div style="line-height:1.6">'+acNm+acVl+'</div>';
+    }
+  } else { acHtml='<span style="color:var(--text-dim)">—</span>'; }
+  var bebHtml = p.bebida ? '🥤 '+p.bebida.nome+(p.bebida.valor>0?' <span style="color:var(--gold);font-size:11px;">+'+moeda(p.bebida.valor)+'</span>':'') : '<span style="color:var(--text-dim)">—</span>';
+  var obsHtml = p.obs ? '<span style="color:var(--gold-light);font-size:12px;">⚠ '+p.obs+'</span>' : '<span style="color:var(--text-dim)">—</span>';
+  return '<tr>'
+    +'<td>'+fmtData(p.data)+'</td>'
+    +'<td><strong>'+p.pessoaNome+'</strong>'+(p.pessoaSetor?'<br><small style="color:var(--text-dim)">'+p.pessoaSetor+'</small>':'')+'</td>'
+    +'<td>'+p.pratoNome+'<br><small style="color:var(--text-dim)">'+moeda(p.pratoValor)+'</small></td>'
+    +'<td>'+acHtml+'</td>'
+    +'<td>'+bebHtml+'</td>'
+    +'<td>'+obsHtml+'</td>'
+    +'<td><span class="badge badge-gold">'+moeda(tv)+'</span></td>'
+    +'</tr>';
+}
+
+function _renderResumoPorData(pedidos) {
   var grupos={};
   for(var i=0;i<pedidos.length;i++){ var d=pedidos[i].data; if(!grupos[d]) grupos[d]=[]; grupos[d].push(pedidos[i]); }
   var datas=Object.keys(grupos).sort(function(a,b){ return b.localeCompare(a); });
-
   var h='';
   for(var di=0;di<datas.length;di++){
     var d=datas[di]; var ps=grupos[d]; var tot=0;
-    for(var i=0;i<ps.length;i++){
-      var tv2 = ps[i].totalPedido !== undefined ? ps[i].totalPedido : ps[i].pratoValor;
-      tot+=tv2;
-    }
+    for(var i=0;i<ps.length;i++){ var tv=ps[i].totalPedido!==undefined?ps[i].totalPedido:ps[i].pratoValor; tot+=tv; }
     var rows='';
-    for(var i=0;i<ps.length;i++){
-      var p=ps[i];
-      var tv3 = p.totalPedido !== undefined ? p.totalPedido : p.pratoValor;
-      var acHtmlRes = '';
-      if(Array.isArray(p.acomps) && p.acomps.length){
-        for(var ai=0;ai<p.acomps.length;ai++){
-          var ac=p.acomps[ai];
-          var acNm=typeof ac==='object'?ac.nome:ac;
-          var acVl=typeof ac==='object'&&ac.valor>0?'<span style="color:var(--gold);font-size:11px;margin-left:4px;">+'+moeda(ac.valor)+'</span>':'';
-          acHtmlRes+='<div style="line-height:1.6">'+acNm+acVl+'</div>';
-        }
-      } else { acHtmlRes='<span style="color:var(--text-dim)">—</span>'; }
-      var bebHtmlRes = p.bebida ? '<span>🥤 '+p.bebida.nome+(p.bebida.valor>0?' <span style="color:var(--gold);font-size:11px;">+'+moeda(p.bebida.valor)+'</span>':'')+'</span>' : '<span style="color:var(--text-dim)">—</span>';
-      var obsHtmlRes = p.obs ? '<span style="color:var(--gold-light);font-size:12px;">⚠ '+p.obs+'</span>' : '<span style="color:var(--text-dim)">—</span>';
-      rows+='<tr>'
-        +'<td><strong>'+p.pessoaNome+'</strong>'+(p.pessoaSetor?'<br><small style="color:var(--text-dim)">'+p.pessoaSetor+'</small>':'')+'</td>'
-        +'<td>'+p.pratoNome+'<br><small style="color:var(--text-dim)">'+moeda(p.pratoValor)+'</small></td>'
-        +'<td>'+acHtmlRes+'</td>'
-        +'<td>'+bebHtmlRes+'</td>'
-        +'<td>'+obsHtmlRes+'</td>'
-        +'<td><span class="badge badge-gold">'+moeda(tv3)+'</span></td>'
-        +'</tr>';
-    }
-    h+='<div class="resumo-card"><div class="resumo-head"><strong>📅 '+fmtData(d)+'</strong><div style="text-align:right"><div style="font-size:11px;color:var(--text-dim)">'+ps.length+' pedido(s)</div><div class="resumo-total">'+moeda(tot)+'</div></div></div>'
-      +'<table><thead><tr><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i]);
+    h+='<div class="resumo-card"><div class="resumo-head"><strong>📅 '+fmtData(d)+'</strong>'
+      +'<div style="text-align:right"><div style="font-size:11px;color:var(--text-dim)">'+ps.length+' pedido(s)</div><div class="resumo-total">'+moeda(tot)+'</div></div></div>'
+      +'<table><thead><tr><th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
-  body.innerHTML=h;
+  return h;
+}
+
+function _renderResumoAgrupado(pedidos, porCampo, label) {
+  /* porCampo: 'pessoa' ou 'prato' */
+  var grupos={};
+  for(var i=0;i<pedidos.length;i++){
+    var key = porCampo==='pessoa' ? (pedidos[i].pessoaId+'|'+pedidos[i].pessoaNome+(pedidos[i].pessoaSetor?' · '+pedidos[i].pessoaSetor:''))
+                                  : (pedidos[i].pratoId +'|'+pedidos[i].pratoNome);
+    if(!grupos[key]) grupos[key]=[];
+    grupos[key].push(pedidos[i]);
+  }
+  var keys = Object.keys(grupos).sort(function(a,b){ return a.split('|')[1].localeCompare(b.split('|')[1]); });
+  var ico  = porCampo==='pessoa' ? '👤' : '🍽️';
+  var h='';
+  for(var ki=0;ki<keys.length;ki++){
+    var k=keys[ki]; var ps=grupos[k]; var tot=0;
+    var nomeGrupo = k.split('|')[1];
+    for(var i=0;i<ps.length;i++){ var tv=ps[i].totalPedido!==undefined?ps[i].totalPedido:ps[i].pratoValor; tot+=tv; }
+    var rows='';
+    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i]);
+    h+='<div class="resumo-card"><div class="resumo-head"><strong>'+ico+' '+nomeGrupo+'</strong>'
+      +'<div style="text-align:right"><div style="font-size:11px;color:var(--text-dim)">'+ps.length+' pedido(s)</div><div class="resumo-total">'+moeda(tot)+'</div></div></div>'
+      +'<table><thead><tr><th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+  }
+  return h;
 }
 
 /* =========================================================
@@ -1636,11 +2196,27 @@ function imprimirRelatorio() {
   var de=document.getElementById('res-de').value;
   var ate=document.getElementById('res-ate').value;
   var pedidos, label;
-  if(de||ate){ var ini=de||ate,fim=ate||de; pedidos=DB.get('pedidos').filter(function(p){ return p.data>=ini&&p.data<=fim; }); label=ini===fim?fmtData(ini):fmtData(ini)+' a '+fmtData(fim); }
-  else { pedidos=DB.get('pedidos'); label=null; }
+
+  /* Usa pedidos base (já filtrados por período) se disponível */
+  if(_pedidosBase.length){
+    pedidos = _pedidosBase.slice();
+    /* Aplica filtros de pessoa/prato se ativos */
+    var pessoaId = document.getElementById('res-pessoa').value;
+    var pratoId  = document.getElementById('res-prato').value;
+    if(pessoaId) pedidos = pedidos.filter(function(p){ return p.pessoaId === pessoaId; });
+    if(pratoId)  pedidos = pedidos.filter(function(p){ return p.pratoId  === pratoId; });
+    label = _labelAtual;
+  } else if(de||ate){
+    var ini=de||ate,fim=ate||de;
+    pedidos=DB.get('pedidos').filter(function(p){ return p.data>=ini&&p.data<=fim; });
+    label=ini===fim?fmtData(ini):fmtData(ini)+' a '+fmtData(fim);
+  } else {
+    pedidos=DB.get('pedidos');
+    label=null;
+  }
+
   if(!pedidos.length){ toast('Nenhum pedido para imprimir.','#c04a3a'); return; }
   _payload={tipo:'relatorio',dados:pedidos,label:label};
-  // show excel option only for relatório
   document.getElementById('opt-excel').style.display='flex';
   abrirModal();
 }
