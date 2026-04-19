@@ -9,6 +9,11 @@
       "id": "mo3q3aj3gmd",
       "nome": "Jairo Brito",
       "setor": "Cozinha"
+    },
+    {
+      "id": "mo544a6lsgu",
+      "nome": "TESTE",
+      "setor": "TESTE"
     }
   ],
   "pratos": [
@@ -254,40 +259,6 @@
       },
       "obs": "",
       "criadoEm": "2026-04-19T01:18:01.964Z"
-    },
-    {
-      "id": "mo543pljkd0",
-      "numPedido": 5,
-      "data": "2026-04-19",
-      "pessoaId": "mo3nnu4w6zt",
-      "pessoaNome": "Mario Bross",
-      "pessoaSetor": "Administrativo",
-      "pratoId": "mo3nncccfu8",
-      "pratoNome": "Tiras de Carne",
-      "pratoValor": 25.9,
-      "acTotal": 3,
-      "bebTotal": 2.5,
-      "totalPedido": 31.4,
-      "acomps": [
-        {
-          "nome": "Farofa",
-          "valor": 1
-        },
-        {
-          "nome": "Arroz Branco",
-          "valor": 1
-        },
-        {
-          "nome": "Legumes grelhados",
-          "valor": 1
-        }
-      ],
-      "bebida": {
-        "nome": "Suco de Laranja 300 ml",
-        "valor": 2.5
-      },
-      "obs": "",
-      "criadoEm": "2026-04-19T01:53:28.663Z"
     }
   ],
   "bebidas": [
