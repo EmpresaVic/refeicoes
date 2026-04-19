@@ -36,6 +36,12 @@
       "id": "mo54e0wh6th",
       "nome": "Picanha Suina",
       "valor": 20.9
+    },
+    {
+      "id": "mo63imcyngi",
+      "nome": "Parmegiana de Frango",
+      "valor": 22.5,
+      "diaEspecialOnly": false
     }
   ],
   "acomps": [
@@ -374,5 +380,6 @@
       "nome": "Gestores",
       "senhaHash": "170842"
     }
-  ]
+  ],
+  "diasEspeciais": []
 }
