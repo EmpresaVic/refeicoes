@@ -238,6 +238,29 @@
       "bebida": null,
       "obs": "",
       "criadoEm": "2026-04-19T01:16:53.199Z"
+    },
+    {
+      "id": "mo52tadjxxp",
+      "numPedido": 5,
+      "data": "2026-04-19",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nncccfu8",
+      "pratoNome": "Tiras de Carne",
+      "pratoValor": 25.9,
+      "acTotal": 1.9,
+      "bebTotal": 0,
+      "totalPedido": 27.799999999999997,
+      "acomps": [
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-19T01:17:22.759Z"
     }
   ],
   "bebidas": [
