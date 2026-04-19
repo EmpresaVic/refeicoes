@@ -390,6 +390,15 @@
       "pratos": [
         "mo63imcyngi"
       ]
+    },
+    {
+      "id": "mo63v22zsgg",
+      "descricao": "Break de Sábado",
+      "tipo": "especial",
+      "pratos": [
+        "mo63imcyngi"
+      ],
+      "diaSemana": "sabado"
     }
   ]
 }
