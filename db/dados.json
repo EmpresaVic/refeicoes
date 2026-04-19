@@ -415,7 +415,7 @@
       "permissoes": {
         "pedido": true,
         "resumo": false,
-        "pessoas": false,
+        "pessoas": true,
         "pratos": false,
         "acomps": false,
         "bebidas": false,
