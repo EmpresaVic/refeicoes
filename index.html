@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Controle de Refeições (Break) v10</title>
+<title>Controle de Refeições</title>
 <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;700;900&family=DM+Sans:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 :root {
@@ -162,16 +162,16 @@ tr:last-child td { border-bottom: none; }
 .preview-content { padding: 14px; }
 
 .recibo { font-family: 'Courier New', monospace; font-size: 13px; color: #000; background: #fff; width: 100%; max-width: 226px; margin: 0 auto; padding: 10px 6px; line-height: 1.55; }
-.r-logo { text-align: center; font-size: 17px; font-weight: 700; letter-spacing: 2px; }
-.r-sub { text-align: center; font-size: 11px; color: #444; }
+.r-logo { text-align: center; font-size: 17px; font-weight: 700; letter-spacing: 2px; color: #000; }
+.r-sub { text-align: center; font-size: 11px; color: #111; }
 .r-sep { border: none; border-top: 1px dashed #000; margin: 5px 0; }
 .r-sep2 { border: none; border-top: 2px solid #000; margin: 5px 0; }
-.r-row { display: flex; justify-content: space-between; }
-.r-lbl { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; }
-.r-ind { padding-left: 8px; }
-.r-tot { font-size: 15px; font-weight: 700; }
-.r-ctr { text-align: center; }
-.r-sm { font-size: 11px; color: #666; }
+.r-row { display: flex; justify-content: space-between; color: #000; }
+.r-lbl { font-weight: 700; font-size: 11px; text-transform: uppercase; letter-spacing: 0.5px; margin-top: 5px; color: #000; }
+.r-ind { padding-left: 8px; color: #000; }
+.r-tot { font-size: 15px; font-weight: 700; color: #000; }
+.r-ctr { text-align: center; color: #000; }
+.r-sm { font-size: 11px; color: #111; }
 
 #print-area { display: none; }
 
@@ -185,15 +185,69 @@ tr:last-child td { border-bottom: none; }
 @media print {
   body > header, body > main, #modal-print, #modal-preview, #modal-senha, #toast { display: none !important; }
   #print-area { display: block !important; background: #fff; color: #000; }
+  /* Comanda mais escura na impressão */
+  .recibo { color: #000 !important; -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .r-sub { color: #222 !important; }
+  .r-sm { color: #333 !important; }
+  * { color: inherit; }
+  .recibo * { color: #000 !important; }
+  .r-sep { border-top-color: #000 !important; }
+  .r-sep2 { border-top-color: #000 !important; }
 }
 
 /* total pedido display */
 .total-pedido { background: rgba(201,168,76,0.1); border: 1px solid var(--gold-dim); border-radius: 8px; padding: 10px 14px; margin-bottom: 14px; display: flex; justify-content: space-between; align-items: center; }
 .total-pedido .lbl { font-size: 12px; color: var(--text-dim); font-weight: 600; text-transform: uppercase; letter-spacing: 0.5px; }
 .total-pedido .val { font-family: 'Playfair Display', serif; font-size: 20px; color: var(--gold); font-weight: 700; }
+
+/* LOGIN SCREEN */
+#login-screen { display:none; position:fixed; inset:0; background:var(--bg); z-index:9999; align-items:center; justify-content:center; flex-direction:column; }
+#login-screen.open { display:flex; }
+.login-box { background:var(--surface); border:1px solid var(--border); border-radius:16px; padding:44px 40px; max-width:380px; width:90%; text-align:center; box-shadow:0 20px 60px rgba(0,0,0,0.6); }
+.login-logo { font-family:'Playfair Display',serif; font-size:26px; font-weight:900; color:var(--gold); margin-bottom:4px; }
+.login-logo span { color:var(--cream); }
+.login-sub { font-size:13px; color:var(--text-dim); margin-bottom:28px; }
+.login-field { display:flex; flex-direction:column; gap:5px; margin-bottom:14px; text-align:left; }
+.login-field label { font-size:11px; font-weight:600; color:var(--text-dim); letter-spacing:0.5px; text-transform:uppercase; }
+.login-input { background:var(--surface2); border:1px solid var(--border); border-radius:8px; padding:11px 14px; color:var(--text); font-family:'DM Sans',sans-serif; font-size:14px; outline:none; width:100%; }
+.login-input:focus { border-color:var(--gold); }
+.login-error { color:var(--red); font-size:12px; min-height:18px; margin-bottom:10px; }
+.login-btn { width:100%; padding:11px; border:none; border-radius:8px; background:var(--gold); color:#0f0e0c; font-family:'DM Sans',sans-serif; font-size:14px; font-weight:700; cursor:pointer; letter-spacing:0.5px; }
+.login-btn:hover { background:var(--gold-light); }
+.login-user-info { display:flex; align-items:center; gap:8px; font-size:13px; color:var(--text-dim); }
+.login-user-info strong { color:var(--cream); }
+.btn-logout { background:transparent; border:1px solid var(--border); color:var(--text-dim); padding:5px 12px; font-size:12px; border-radius:6px; cursor:pointer; font-family:'DM Sans',sans-serif; }
+.btn-logout:hover { border-color:var(--red); color:var(--red); }
+
+/* USUARIOS PAGE */
+#page-usuarios .user-item { display:flex; align-items:center; justify-content:space-between; padding:11px 14px; border:1px solid var(--border); border-radius:8px; margin-bottom:8px; background:var(--surface2); }
+#page-usuarios .user-item .uname { font-weight:600; color:var(--cream); }
+#page-usuarios .user-item .urole { font-size:11px; color:var(--text-dim); margin-top:2px; }
+
+@media print {
+  #login-screen { display:none !important; }
+}
 </style>
 </head>
 <body>
+
+<!-- LOGIN SCREEN -->
+<div id="login-screen" class="open">
+  <div class="login-box">
+    <div class="login-logo">Controle Refeição <span>Break</span></div>
+    <div class="login-sub">Faça login para continuar</div>
+    <div class="login-field">
+      <label>Usuário</label>
+      <input type="text" class="login-input" id="login-user" placeholder="Digite seu usuário" autocomplete="username" onkeydown="if(event.key==='Enter')document.getElementById('login-pass').focus()">
+    </div>
+    <div class="login-field">
+      <label>Senha</label>
+      <input type="password" class="login-input" id="login-pass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
+    </div>
+    <div class="login-error" id="login-error"></div>
+    <button class="login-btn" onclick="fazerLogin()">🔑 Entrar</button>
+  </div>
+</div>
 
 <header>
   <div class="logo">Controle Refeição <span>Break</span></div>
@@ -204,9 +258,13 @@ tr:last-child td { border-bottom: none; }
     <button onclick="showPage('pratos',this)">🍽️ Pratos</button>
     <button onclick="showPage('acomps',this)">🥗 Acompanhamentos</button>
     <button onclick="showPage('bebidas',this)">🥤 Bebidas</button>
+    <button id="nav-btn-usuarios" onclick="showPage('usuarios',this)">🔐 Usuários</button>
   </nav>
-  <input type="text" class="cfg-input" id="cfg-empresa" placeholder="BREAK FUNCIONARIO - SOMENTE O FUNCIONARIO PODE RETIRAR A REFEIÇÃO NO BALCÃO" oninput="salvarEmpresa(this.value)">
   <div class="gh-status-bar">
+    <div class="login-user-info" id="header-user-info" style="display:none;">
+      <span>👤 <strong id="header-username"></strong></span>
+      <button class="btn-logout" onclick="fazerLogout()">Sair</button>
+    </div>
     <span id="gh-status" style="color:#c9a84c;">⏳ Carregando...</span>
     <button class="btn btn-ghost-blue" onclick="abrirGHConfig()" title="Configurar GitHub" style="padding:6px 12px;font-size:12px;">⚙️ GitHub</button>
     <button class="btn btn-ghost-blue" onclick="sincronizar()" title="Sincronizar dados" style="padding:6px 12px;font-size:12px;">🔄 Sync</button>
@@ -340,6 +398,24 @@ tr:last-child td { border-bottom: none; }
   </div>
 </div>
 
+<div id="page-usuarios" class="page">
+  <h1 class="page-title">Gerenciar Usuários</h1>
+  <p class="page-sub">Cadastre usuários com acesso ao sistema.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Novo Usuário</div>
+      <div class="field"><label>Nome de Usuário</label><input type="text" id="usr-nome" placeholder="Ex.: admin" autocomplete="off"></div>
+      <div class="field"><label>Senha</label><input type="password" id="usr-senha" placeholder="Mínimo 4 caracteres" autocomplete="new-password"></div>
+      <div class="field"><label>Confirmar Senha</label><input type="password" id="usr-senha2" placeholder="Repita a senha" autocomplete="new-password"></div>
+      <button class="btn btn-gold" onclick="addUsuario()">+ Adicionar Usuário</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Usuários Cadastrados</div>
+      <div id="lista-usuarios"><div class="empty"><span class="ico">🔐</span>Nenhum usuário</div></div>
+    </div>
+  </div>
+</div>
+
 </main>
 
 <!-- SENHA MODAL -->
@@ -422,6 +498,123 @@ tr:last-child td { border-bottom: none; }
 var STORAGE_KEY = 'refeicoes_db';
 var GH_CFG_KEY  = 'refeicoes_gh_cfg';
 var GH_FILE     = 'db/dados.json';
+var USERS_KEY   = 'refeicoes_usuarios';
+
+/* Usuário logado na sessão atual */
+var _usuarioLogado = null;
+
+/* =========================================================
+   USUÁRIOS & LOGIN
+   ========================================================= */
+function _getUsuarios() {
+  try { return JSON.parse(localStorage.getItem(USERS_KEY) || '[]'); } catch(e) { return []; }
+}
+function _setUsuarios(lista) {
+  localStorage.setItem(USERS_KEY, JSON.stringify(lista));
+}
+function _hashSenha(s) {
+  /* Hash simples para não guardar senha em texto puro */
+  var h=0; for(var i=0;i<s.length;i++){ h=((h<<5)-h)+s.charCodeAt(i); h|=0; }
+  return h.toString(16);
+}
+
+function fazerLogin() {
+  var user = document.getElementById('login-user').value.trim();
+  var pass = document.getElementById('login-pass').value;
+  var errEl = document.getElementById('login-error');
+  if(!user||!pass){ errEl.textContent='Preencha usuário e senha.'; return; }
+
+  var usuarios = _getUsuarios();
+
+  /* Se não há usuários cadastrados, cria admin padrão automaticamente */
+  if(!usuarios.length) {
+    usuarios.push({ id:'admin', nome:'admin', senhaHash:_hashSenha('1234') });
+    _setUsuarios(usuarios);
+  }
+
+  var encontrado = null;
+  for(var i=0;i<usuarios.length;i++){
+    if(usuarios[i].nome.toLowerCase()===user.toLowerCase() && usuarios[i].senhaHash===_hashSenha(pass)){
+      encontrado=usuarios[i]; break;
+    }
+  }
+
+  if(!encontrado){
+    errEl.textContent='❌ Usuário ou senha incorretos.';
+    document.getElementById('login-pass').value='';
+    document.getElementById('login-pass').focus();
+    return;
+  }
+
+  _usuarioLogado = encontrado;
+  document.getElementById('login-screen').classList.remove('open');
+  document.getElementById('header-username').textContent = encontrado.nome;
+  document.getElementById('header-user-info').style.display = 'flex';
+  errEl.textContent='';
+  /* Inicializa o sistema */
+  sincronizar();
+}
+
+function fazerLogout() {
+  if(!confirm('Deseja sair do sistema?')) return;
+  _usuarioLogado = null;
+  document.getElementById('header-user-info').style.display = 'none';
+  document.getElementById('login-user').value='';
+  document.getElementById('login-pass').value='';
+  document.getElementById('login-error').textContent='';
+  document.getElementById('login-screen').classList.add('open');
+  setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
+}
+
+function addUsuario() {
+  var nome   = document.getElementById('usr-nome').value.trim();
+  var senha  = document.getElementById('usr-senha').value;
+  var senha2 = document.getElementById('usr-senha2').value;
+  if(!nome){ toast('Informe o nome de usuário.','#c04a3a'); return; }
+  if(senha.length<4){ toast('Senha deve ter ao menos 4 caracteres.','#c04a3a'); return; }
+  if(senha!==senha2){ toast('As senhas não coincidem.','#c04a3a'); return; }
+  var lista = _getUsuarios();
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ toast('Usuário já existe.','#c04a3a'); return; }
+  }
+  lista.push({ id: Date.now().toString(36), nome:nome, senhaHash:_hashSenha(senha) });
+  _setUsuarios(lista);
+  document.getElementById('usr-nome').value='';
+  document.getElementById('usr-senha').value='';
+  document.getElementById('usr-senha2').value='';
+  renderUsuarios();
+  toast('✓ Usuário cadastrado!');
+}
+
+function delUsuario(id) {
+  var lista = _getUsuarios();
+  /* Protege: não remove o único usuário ou o logado */
+  if(lista.length<=1){ toast('Deve haver ao menos um usuário.','#c04a3a'); return; }
+  if(_usuarioLogado && lista.find(function(u){ return u.id===id; })&&lista.find(function(u){ return u.id===id; }).nome===_usuarioLogado.nome){
+    toast('Não é possível remover o usuário logado.','#c04a3a'); return;
+  }
+  if(!confirm('Remover usuário?')) return;
+  _setUsuarios(lista.filter(function(u){ return u.id!==id; }));
+  renderUsuarios();
+  toast('Usuário removido.');
+}
+
+function renderUsuarios() {
+  var lista = _getUsuarios();
+  var el = document.getElementById('lista-usuarios');
+  if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🔐</span>Nenhum usuário</div>'; return; }
+  var h='';
+  for(var i=0;i<lista.length;i++){
+    var u=lista[i];
+    var isMe = _usuarioLogado && u.nome===_usuarioLogado.nome;
+    h+='<div class="user-item">'
+      +'<div><div class="uname">'+u.nome+(isMe?' <span style="font-size:10px;color:var(--gold);">(você)</span>':'')+'</div>'
+      +'<div class="urole">Usuário do sistema</div></div>'
+      +(isMe?'<span style="font-size:12px;color:var(--text-dim);">—</span>':'<button class="btn btn-danger" onclick="delUsuario(\''+u.id+'\')">✕ Remover</button>')
+      +'</div>';
+  }
+  el.innerHTML=h;
+}
 
 /* Cache em memória da sessão */
 var _cache = {};
@@ -463,8 +656,33 @@ var GH = {
       if (resp.status === 404) return { content: null, sha: null };
       if (!resp.ok) throw new Error('HTTP ' + resp.status);
       var data = await resp.json();
-      var json = atob(data.content.replace(/\n/g,''));
-      return { content: JSON.parse(json), sha: data.sha };
+
+      /* Arquivo existe mas pode estar vazio ou corrompido */
+      var rawB64 = (data.content || '').replace(/\n/g,'').trim();
+      if (!rawB64) return { content: null, sha: data.sha };
+
+      var json = '';
+      try {
+        /* decodeURIComponent(escape()) lida corretamente com UTF-8/acentos */
+        json = decodeURIComponent(escape(atob(rawB64)));
+      } catch(decErr) {
+        console.warn('GH read: erro ao decodificar base64, tentando atob direto:', decErr);
+        json = atob(rawB64);
+      }
+
+      json = json.trim();
+      if (!json) return { content: null, sha: data.sha };
+
+      var parsed = null;
+      try {
+        parsed = JSON.parse(json);
+      } catch(parseErr) {
+        console.error('GH read: JSON inválido no arquivo remoto, reiniciando:', parseErr);
+        /* Arquivo corrompido — trata como vazio e deixa o sistema recriar */
+        return { content: null, sha: data.sha };
+      }
+
+      return { content: parsed, sha: data.sha };
     } catch(e) {
       console.error('GH read error:', e);
       throw e;
@@ -475,7 +693,15 @@ var GH = {
   write: async function(dados, sha) {
     var c = GH.getCfg();
     var json = JSON.stringify(dados, null, 2);
-    var b64  = btoa(unescape(encodeURIComponent(json)));
+
+    /* Codificação segura para UTF-8 com acentos */
+    var b64;
+    try {
+      b64 = btoa(unescape(encodeURIComponent(json)));
+    } catch(e) {
+      b64 = btoa(json);
+    }
+
     var body = {
       message: 'Atualização automática — ' + new Date().toLocaleString('pt-BR'),
       content: b64,
@@ -538,8 +764,17 @@ var DB = {
           _cache = result.content;
           _currentSha = result.sha;
         } else {
-          _cache = {};
-          _currentSha = null;
+          /* Arquivo remoto vazio ou inexistente:
+             carrega dados locais e faz upload inicial para o GitHub */
+          _carregarLocalStorage();
+          _currentSha = result ? result.sha : null;
+          /* Tenta salvar os dados locais no GitHub (cria o arquivo) */
+          try {
+            _currentSha = await GH.write(_cache, _currentSha);
+            console.log('GH: arquivo criado/inicializado com dados locais.');
+          } catch(writeErr) {
+            console.warn('GH: não foi possível inicializar arquivo remoto:', writeErr.message);
+          }
         }
       } catch(e) {
         /* Fallback localStorage se GitHub falhar */
@@ -577,25 +812,30 @@ async function _persistir(callback) {
   if (GH.isConfigured()) {
     try {
       _currentSha = await GH.write(_cache, _currentSha);
+      /* Também salva localmente como backup */
+      try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_cache)); } catch(e3){}
       if (callback) callback(null);
     } catch(e) {
-      /* Tenta reler SHA e retentar uma vez (conflito de edição) */
+      /* Conflito de SHA: reler o SHA atual e tentar novamente */
       try {
         var r = await GH.read();
-        _currentSha = r.sha;
-        /* Merge: dados remotos + locais (locais têm prioridade) */
-        var remoto = r.content || {};
-        ['pessoas','pratos','acomps','pedidos'].forEach(function(t){
-          /* Mantém dados locais, não sobrescreve */
-        });
+        _currentSha = r ? r.sha : null;
+        /* Se o arquivo remoto tiver dados, faz merge (mantém locais) */
+        if (r && r.content) {
+          var remoto = r.content;
+          ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
+            /* Mantém versão local — ela tem os dados mais recentes desta sessão */
+          });
+        }
         _currentSha = await GH.write(_cache, _currentSha);
+        try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_cache)); } catch(e3){}
         if (callback) callback(null);
       } catch(e2) {
         console.error('Erro ao salvar no GitHub:', e2);
         /* Salva localmente como backup */
         try { localStorage.setItem(STORAGE_KEY, JSON.stringify(_cache)); } catch(e3){}
-        toast('⚠️ Erro ao salvar no GitHub. Salvo localmente como backup.', '#c04a3a');
-        if (callback) callback(e2);
+        toast('⚠️ Salvo localmente (GitHub indisponível).', '#c9a84c');
+        if (callback) callback(null); /* não bloqueia o fluxo */
       }
     }
   } else {
@@ -683,11 +923,11 @@ async function sincronizar() {
   if (!GH.isConfigured()) {
     setStatus('⚠️ Configure o GitHub', '#c04a3a');
     _carregarLocalStorage();
-    ['pessoas','pratos','acomps','pedidos'].forEach(function(t){
+    ['pessoas','pratos','acomps','pedidos','bebidas'].forEach(function(t){
       if (!Array.isArray(_cache[t])) _cache[t] = [];
     });
     var cfg = CFG.get();
-    if(cfg.empresa) document.getElementById('cfg-empresa').value = cfg.empresa;
+    var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
     initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
     return;
   }
@@ -703,7 +943,7 @@ async function sincronizar() {
       iniciarAutoSync();
     }
     var cfg = CFG.get();
-    if(cfg.empresa) document.getElementById('cfg-empresa').value = cfg.empresa;
+    var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
     initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas();
   });
 }
@@ -769,10 +1009,12 @@ function iniciarAutoSync() {
    INICIALIZAÇÃO
    ========================================================= */
 document.addEventListener('DOMContentLoaded', function(){
+  /* Mostra tela de login — não inicializa o sistema ainda */
+  document.getElementById('login-screen').classList.add('open');
+  setTimeout(function(){ document.getElementById('login-user').focus(); }, 200);
   if (!GH.isConfigured()) {
     setStatus('⚠️ Configure o GitHub →', '#c04a3a');
   }
-  sincronizar();
 });
 
 var _payload = null;
@@ -797,6 +1039,7 @@ function showPage(name, btn) {
   if(name==='pratos') renderPratos();
   if(name==='acomps') renderAcomps();
   if(name==='bebidas') renderBebidas();
+  if(name==='usuarios') renderUsuarios();
 }
 
 function toast(msg, cor) {
@@ -1167,8 +1410,15 @@ function registrar(imprimir) {
   var bebTotal=bebida?bebida.valor:0;
   var totalPedido=prato.valor+acTotal+bebTotal;
 
-  var novo={ id:DB.uid(), data:data, pessoaId:pessoaId, pessoaNome:pessoa.nome, pessoaSetor:pessoa.setor||'', pratoId:pratoId, pratoNome:prato.nome, pratoValor:prato.valor, acTotal:acTotal, bebTotal:bebTotal, totalPedido:totalPedido, acomps:acSel, bebida:bebida, obs:obs, criadoEm:new Date().toISOString() };
-  var pedidos=DB.get('pedidos'); pedidos.push(novo);
+  /* Número sequencial do pedido */
+  var pedidos=DB.get('pedidos');
+  var numPedido=1;
+  for(var i=0;i<pedidos.length;i++){
+    if(pedidos[i].numPedido && pedidos[i].numPedido>=numPedido) numPedido=pedidos[i].numPedido+1;
+  }
+
+  var novo={ id:DB.uid(), numPedido:numPedido, data:data, pessoaId:pessoaId, pessoaNome:pessoa.nome, pessoaSetor:pessoa.setor||'', pratoId:pratoId, pratoNome:prato.nome, pratoValor:prato.valor, acTotal:acTotal, bebTotal:bebTotal, totalPedido:totalPedido, acomps:acSel, bebida:bebida, obs:obs, criadoEm:new Date().toISOString() };
+  pedidos.push(novo);
   limparForm();
   toast('💾 Salvando pedido...','#4a7fa8');
   DB.set('pedidos', pedidos, function(){ toast('✓ Pedido salvo!'); });
@@ -1734,7 +1984,7 @@ function gerarExcel(pedidos, label) {
    ========================================================= */
 function htmlPedido(p,fmt) {
   var empresa=CFG.get().empresa||'BREAK FUNCIONÁRIO';
-  var num=p.id.slice(-6).toUpperCase();
+  var num = p.numPedido ? String(p.numPedido) : p.id.slice(-6).toUpperCase();
   var hora=new Date(p.criadoEm).toLocaleTimeString('pt-BR',{hour:'2-digit',minute:'2-digit'});
   var acNomes = Array.isArray(p.acomps) ? p.acomps.map(function(a){ return typeof a==='object'?a.nome:a; }) : [];
   var acTotal = p.acTotal || 0;
@@ -1771,27 +2021,28 @@ function htmlPedido(p,fmt) {
 
   var acA4='';
   for(var i=0;i<acNomes.length;i++) acA4+='<div style="padding-left:8px;">• '+acNomes[i]+'</div>';
-  return '<div style="font-family:Courier New,monospace;padding:36px;max-width:580px;margin:0 auto;color:#000;font-size:13px;">'
+  return '<div style="font-family:Courier New,monospace;padding:36px;max-width:580px;margin:0 auto;color:#000;font-size:14px;">'
     +'<div style="text-align:center;margin-bottom:18px;border-bottom:2px solid #000;padding-bottom:14px;">'
-    +'<div style="font-size:20px;font-weight:700;letter-spacing:3px;">'+empresa+'</div>'
-    +'<div>Controle de BREAK</div></div>'
-    +'<table style="width:100%;font-size:13px;margin-bottom:10px;">'
-    +'<tr><td><b>Pedido:</b></td><td>#'+num+'</td></tr>'
+    +'<div style="font-size:20px;font-weight:700;letter-spacing:3px;color:#000;">'+empresa+'</div>'
+    +'<div style="color:#000;">Controle de BREAK</div></div>'
+    +'<table style="width:100%;font-size:14px;margin-bottom:10px;">'
+    +'<tr><td><b>Pedido:</b></td><td><b>#'+num+'</b></td></tr>'
     +'<tr><td><b>Data:</b></td><td>'+fmtData(p.data)+'</td></tr>'
     +'<tr><td><b>Hora:</b></td><td>'+hora+'</td></tr></table>'
-    +'<hr style="border-top:1px dashed #000;margin:10px 0;">'
-    +'<div style="font-weight:700;font-size:11px;margin-bottom:5px;">COLABORADOR</div>'
-    +'<div style="padding-left:8px;font-size:14px;">'+p.pessoaNome+(p.pessoaSetor?' — '+p.pessoaSetor:'')+'</div>'
-    +'<hr style="border-top:1px dashed #000;margin:10px 0;">'
-    +'<div style="font-weight:700;font-size:11px;margin-bottom:5px;">PRATO PRINCIPAL</div>'
-    +'<div style="display:flex;justify-content:space-between;padding-left:8px;">'+p.pratoNome+'<span>'+moeda(p.pratoValor)+'</span></div>'
-    +(acNomes.length?'<hr style="border-top:1px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:11px;margin-bottom:5px;">ACOMPANHAMENTOS</div>'+acA4+(acTotal>0?'<div style="display:flex;justify-content:space-between;padding-left:8px;font-size:12px;color:#666;"><span>Subtotal acomps</span><span>'+moeda(acTotal)+'</span></div>':''):'')
-    +(beb?'<hr style="border-top:1px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:11px;margin-bottom:5px;">BEBIDA</div><div style="display:flex;justify-content:space-between;padding-left:8px;">'+beb.nome+'<span>'+(beb.valor>0?moeda(beb.valor):'Incluso')+'</span></div>':'')
-    +(obs?'<hr style="border-top:2px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:12px;margin-bottom:5px;background:#fffde7;padding:4px 6px;">⚠ OBSERVAÇÃO</div><div style="padding-left:8px;font-weight:700;font-size:14px;background:#fffde7;padding:6px 8px;">'+obs+'</div>':'')
-    +'<hr style="border:2px solid #000;margin:10px 0;">'
-    +'<div style="display:flex;justify-content:space-between;font-size:17px;font-weight:700;"><span>TOTAL</span><span>'+moeda(totalPedido)+'</span></div>'
-    +'<hr style="border-top:1px dashed #000;margin:10px 0;">'
-    +'<div style="text-align:center;font-size:11px;color:#888;">Documento não fiscal — BREAK - SOMENTE O FUNCIONARIO PODE RETIRAR A REFEIÇÃO NO BALCÃO</div>'
+    +'<hr style="border-top:2px dashed #000;margin:10px 0;">'
+    +'<div style="font-weight:700;font-size:12px;margin-bottom:5px;color:#000;">COLABORADOR</div>'
+    +'<div style="padding-left:8px;font-size:15px;font-weight:600;color:#000;">'+p.pessoaNome+(p.pessoaSetor?' — '+p.pessoaSetor:'')+'</div>'
+    +'<hr style="border-top:2px dashed #000;margin:10px 0;">'
+    +'<div style="font-weight:700;font-size:12px;margin-bottom:5px;color:#000;">PRATO PRINCIPAL</div>'
+    +'<div style="display:flex;justify-content:space-between;padding-left:8px;color:#000;font-weight:600;">'+p.pratoNome+'<span>'+moeda(p.pratoValor)+'</span></div>'
+    +(acNomes.length?'<hr style="border-top:2px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:12px;margin-bottom:5px;color:#000;">ACOMPANHAMENTOS</div>'+acA4+(acTotal>0?'<div style="display:flex;justify-content:space-between;padding-left:8px;font-size:13px;color:#000;font-weight:600;"><span>Subtotal acomps</span><span>'+moeda(acTotal)+'</span></div>':''):'')
+    +(beb?'<hr style="border-top:2px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:12px;margin-bottom:5px;color:#000;">BEBIDA</div><div style="display:flex;justify-content:space-between;padding-left:8px;color:#000;font-weight:600;">'+beb.nome+'<span>'+(beb.valor>0?moeda(beb.valor):'Incluso')+'</span></div>':'')
+    +(obs?'<hr style="border-top:2px dashed #000;margin:10px 0;"><div style="font-weight:700;font-size:13px;margin-bottom:5px;background:#fffde7;padding:4px 6px;color:#000;">⚠ OBSERVAÇÃO</div><div style="padding-left:8px;font-weight:700;font-size:15px;background:#fffde7;padding:6px 8px;color:#000;">'+obs+'</div>':'')
+    +'<hr style="border:3px solid #000;margin:10px 0;">'
+    +'<div style="display:flex;justify-content:space-between;font-size:18px;font-weight:700;color:#000;"><span>TOTAL</span><span>'+moeda(totalPedido)+'</span></div>'
+    +'<hr style="border-top:2px dashed #000;margin:10px 0;">'
+    +'<div style="text-align:center;font-size:12px;color:#000;font-weight:600;">Documento não fiscal — BREAK</div>'
+    +'<div style="text-align:center;font-size:11px;color:#000;">SOMENTE O FUNCIONARIO PODE RETIRAR A REFEIÇÃO NO BALCÃO</div>'
     +'</div>';
 }
 
