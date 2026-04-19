@@ -295,6 +295,40 @@
       "bebida": null,
       "obs": "Bem Passado",
       "criadoEm": "2026-04-19T03:53:57.016Z"
+    },
+    {
+      "id": "mo58j6pjz22",
+      "numPedido": 6,
+      "data": "2026-04-19",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
+      "bebTotal": 1.9,
+      "totalPedido": 5.9,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes Saute",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Pet Guarana 200 ml",
+        "valor": 1.9
+      },
+      "obs": "",
+      "criadoEm": "2026-04-19T03:57:29.143Z"
     }
   ],
   "bebidas": [
