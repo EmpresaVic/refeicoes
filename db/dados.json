@@ -1,11 +1,6 @@
 {
   "pessoas": [
     {
-      "id": "mo3nnkjx7p2",
-      "nome": "JoÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ£o da Silva",
-      "setor": "ProduÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ§ÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂÃÂ£o"
-    },
-    {
       "id": "mo3nnu4w6zt",
       "nome": "Mario Bross",
       "setor": "Administrativo"
@@ -201,47 +196,42 @@
       "criadoEm": "2026-04-19T00:44:27.490Z"
     },
     {
-      "id": "mo52qqcfir7",
+      "id": "mo52raz0idu",
       "numPedido": 3,
       "data": "2026-04-19",
       "pessoaId": "mo3q3aj3gmd",
       "pessoaNome": "Jairo Brito",
       "pessoaSetor": "Cozinha",
-      "pratoId": "mo3nn6mr8h6",
-      "pratoNome": "Frango Grelhado",
-      "pratoValor": 25.9,
-      "acTotal": 0,
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
       "bebTotal": 2.5,
-      "totalPedido": 28.4,
-      "acomps": [],
+      "totalPedido": 6.5,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
       "bebida": {
         "nome": "Suco de Laranja 300 ml",
         "valor": 2.5
       },
       "obs": "",
-      "criadoEm": "2026-04-19T01:15:23.487Z"
+      "criadoEm": "2026-04-19T01:15:50.221Z"
     },
     {
-      "id": "mo52snkf2ce",
+      "id": "mo52u4mkknx",
       "numPedido": 4,
-      "data": "2026-04-19",
-      "pessoaId": "mo3nnu4w6zt",
-      "pessoaNome": "Mario Bross",
-      "pessoaSetor": "Administrativo",
-      "pratoId": "mo3q2qzr56u",
-      "pratoNome": "Calabresa Fatiada",
-      "pratoValor": 1,
-      "acTotal": 0,
-      "bebTotal": 0,
-      "totalPedido": 1,
-      "acomps": [],
-      "bebida": null,
-      "obs": "",
-      "criadoEm": "2026-04-19T01:16:53.199Z"
-    },
-    {
-      "id": "mo52tadjxxp",
-      "numPedido": 5,
       "data": "2026-04-19",
       "pessoaId": "mo3q3aj3gmd",
       "pessoaNome": "Jairo Brito",
@@ -250,35 +240,20 @@
       "pratoNome": "Tiras de Carne",
       "pratoValor": 25.9,
       "acTotal": 1.9,
-      "bebTotal": 0,
-      "totalPedido": 27.799999999999997,
+      "bebTotal": 1.9,
+      "totalPedido": 29.699999999999996,
       "acomps": [
         {
           "nome": "Feijao",
           "valor": 1.9
         }
       ],
-      "bebida": null,
+      "bebida": {
+        "nome": "Pet Guarana 200 ml",
+        "valor": 1.9
+      },
       "obs": "",
-      "criadoEm": "2026-04-19T01:17:22.759Z"
-    },
-    {
-      "id": "mo52ui0fqjf",
-      "numPedido": 6,
-      "data": "2026-04-19",
-      "pessoaId": "mo3nnu4w6zt",
-      "pessoaNome": "Mario Bross",
-      "pessoaSetor": "Administrativo",
-      "pratoId": "mo3q2qzr56u",
-      "pratoNome": "Calabresa Fatiada",
-      "pratoValor": 1,
-      "acTotal": 0,
-      "bebTotal": 0,
-      "totalPedido": 1,
-      "acomps": [],
-      "bebida": null,
-      "obs": "",
-      "criadoEm": "2026-04-19T01:18:19.311Z"
+      "criadoEm": "2026-04-19T01:18:01.964Z"
     }
   ],
   "bebidas": [
