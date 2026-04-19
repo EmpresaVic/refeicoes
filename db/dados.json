@@ -181,6 +181,24 @@
       },
       "obs": "teste",
       "criadoEm": "2026-04-19T00:44:02.371Z"
+    },
+    {
+      "id": "mo51my8yv5e",
+      "numPedido": 2,
+      "data": "2026-04-19",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo3nncccfu8",
+      "pratoNome": "Tiras de Carne",
+      "pratoValor": 25.9,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 25.9,
+      "acomps": [],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-19T00:44:27.490Z"
     }
   ],
   "bebidas": [
