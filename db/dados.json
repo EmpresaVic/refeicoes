@@ -75,7 +75,7 @@
       "id": "mobrdrlewzz",
       "nome": "Teste de prato",
       "valor": 25.9,
-      "diaEspecialOnly": false
+      "diaEspecialOnly": true
     }
   ],
   "acomps": [
