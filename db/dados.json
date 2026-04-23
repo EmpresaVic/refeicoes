@@ -304,17 +304,6 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
-    },
-    {
-      "id": "moc1vj4cyay",
-      "descricao": "feriado dia 23 4",
-      "tipo": "especial",
-      "pratos": [
-        "moau2tfvppc",
-        "moau2zqn6bp",
-        "moau37kqgqx"
-      ],
-      "data": "2026-04-23"
     }
   ],
   "emp_moc1l1xu_pedidos": [
@@ -982,17 +971,6 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
-    },
-    {
-      "id": "moc1vj4cyay",
-      "descricao": "feriado dia 23 4",
-      "tipo": "especial",
-      "pratos": [
-        "moau2tfvppc",
-        "moau2zqn6bp",
-        "moau37kqgqx"
-      ],
-      "data": "2026-04-23"
     }
   ]
 }
