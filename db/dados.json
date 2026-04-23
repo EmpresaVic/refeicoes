@@ -1,5 +1,140 @@
 {
-  "pessoas": [
+  "usuarios": [
+    {
+      "id": "admin",
+      "nome": "admin",
+      "senhaHash": "170842",
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mo51sns2",
+      "nome": "Gestao",
+      "senhaHash": "1868fe",
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mo52pngl",
+      "nome": "Teste",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": true,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      },
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mo54c22c",
+      "nome": "Gestores",
+      "senhaHash": "170842",
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mo65tmc6",
+      "nome": "teste26",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      },
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mo66pp6x",
+      "nome": "teste55",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": true,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      },
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "mobr7mug",
+      "nome": "Operador",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      },
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
+      "id": "moc1mlf5",
+      "nome": "AdminVictria",
+      "senhaHash": "169384",
+      "perfil": "operador",
+      "empresas": [
+        "moc1l1xu"
+      ],
+      "permissoes": {
+        "pedido": true,
+        "resumo": true,
+        "pessoas": true,
+        "pratos": true,
+        "acomps": true,
+        "bebidas": true,
+        "diasEspeciais": true,
+        "usuarios": true
+      }
+    },
+    {
+      "id": "super",
+      "nome": "super",
+      "senhaHash": "-63bd2729",
+      "perfil": "superadmin",
+      "empresas": [],
+      "permissoes": null
+    }
+  ],
+  "empresas": [
+    {
+      "id": "moc1l1xu",
+      "nome": "Victria Comercio de Alimentos Ltda",
+      "end": "Lj ff02"
+    },
+    {
+      "id": "moc1lcwb",
+      "nome": "Victive Comercio de Alimentos Ltda",
+      "end": "Lj ff19"
+    },
+    {
+      "id": "moc1ll1c",
+      "nome": "Victrus Comercio de Alimentos",
+      "end": "loja 280"
+    }
+  ],
+  "emp_moc1l1xu_pessoas": [
     {
       "id": "mo3nnu4w6zt",
       "nome": "Mario Bross",
@@ -22,7 +157,7 @@
       "aniversario": "2026-04-22"
     }
   ],
-  "pratos": [
+  "emp_moc1l1xu_pratos": [
     {
       "id": "mo3nn6mr8h6",
       "nome": "Frango Grelhado",
@@ -78,7 +213,7 @@
       "diaEspecialOnly": true
     }
   ],
-  "acomps": [
+  "emp_moc1l1xu_acomps": [
     {
       "id": "mo3nmimd9gh",
       "nome": "Farofa",
@@ -115,7 +250,78 @@
       "valor": 1.9
     }
   ],
-  "pedidos": [
+  "emp_moc1l1xu_bebidas": [
+    {
+      "id": "mo3s331il9s",
+      "nome": "Suco de Laranja 300 ml",
+      "valor": 2.5
+    },
+    {
+      "id": "mo3s79rbvju",
+      "nome": "Pet Guarana 200 ml",
+      "valor": 1.9
+    },
+    {
+      "id": "mo3s7h263y4",
+      "nome": "Pet Pepsi 200 ml",
+      "valor": 1.9
+    },
+    {
+      "id": "mo51t64zyga",
+      "nome": "Suco em Po",
+      "valor": 1
+    }
+  ],
+  "emp_moc1l1xu_diasEspeciais": [
+    {
+      "id": "moaux3nmttr",
+      "descricao": "Aniversariante do Mes",
+      "tipo": "aniversario",
+      "pratos": [
+        "moau2tfvppc",
+        "moau2zqn6bp",
+        "moau37kqgqx"
+      ]
+    },
+    {
+      "id": "mobrf6w7sm7",
+      "descricao": "Todo sabado",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "sabado"
+    },
+    {
+      "id": "mobrfry4xlg",
+      "descricao": "Todo Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "domingo"
+    },
+    {
+      "id": "moc1vj4cyay",
+      "descricao": "feriado dia 23 4",
+      "tipo": "especial",
+      "pratos": [
+        "moau2tfvppc",
+        "moau2zqn6bp",
+        "moau37kqgqx"
+      ],
+      "data": "2026-04-23"
+    }
+  ],
+  "emp_moc1l1xu_pedidos": [
     {
       "id": "mo3no63vyi9",
       "data": "2026-04-18",
@@ -713,212 +919,40 @@
       "bebida": null,
       "obs": "Ao ponto",
       "criadoEm": "2026-04-23T22:26:57.413Z"
-    }
-  ],
-  "bebidas": [
-    {
-      "id": "mo3s331il9s",
-      "nome": "Suco de Laranja 300 ml",
-      "valor": 2.5
     },
     {
-      "id": "mo3s79rbvju",
-      "nome": "Pet Guarana 200 ml",
-      "valor": 1.9
-    },
-    {
-      "id": "mo3s7h263y4",
-      "nome": "Pet Pepsi 200 ml",
-      "valor": 1.9
-    },
-    {
-      "id": "mo51t64zyga",
-      "nome": "Suco em Po",
-      "valor": 1
-    }
-  ],
-  "usuarios": [
-    {
-      "id": "admin",
-      "nome": "admin",
-      "senhaHash": "170842",
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mo51sns2",
-      "nome": "Gestao",
-      "senhaHash": "1868fe",
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mo52pngl",
-      "nome": "Teste",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": true,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mo54c22c",
-      "nome": "Gestores",
-      "senhaHash": "170842",
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mo65tmc6",
-      "nome": "teste26",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": false,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mo66pp6x",
-      "nome": "teste55",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": true,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "mobr7mug",
-      "nome": "Operador",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": false,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
-      "id": "moc1mlf5",
-      "nome": "AdminVictria",
-      "senhaHash": "169384",
-      "perfil": "operador",
-      "empresas": [
-        "moc1l1xu"
+      "id": "moc3evjnl2x",
+      "numPedido": 19,
+      "data": "2026-04-23",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "moau2tfvppc",
+      "pratoNome": "Contra File",
+      "pratoValor": 26.9,
+      "acTotal": 3,
+      "bebTotal": 2.5,
+      "totalPedido": 32.4,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        }
       ],
-      "permissoes": {
-        "pedido": true,
-        "resumo": true,
-        "pessoas": true,
-        "pratos": true,
-        "acomps": true,
-        "bebidas": true,
-        "diasEspeciais": true,
-        "usuarios": true
-      }
-    },
-    {
-      "id": "super",
-      "nome": "super",
-      "senhaHash": "-63bd2729",
-      "perfil": "superadmin",
-      "empresas": [],
-      "permissoes": null
-    }
-  ],
-  "diasEspeciais": [
-    {
-      "id": "moaux3nmttr",
-      "descricao": "Aniversariante do Mes",
-      "tipo": "aniversario",
-      "pratos": [
-        "moau2tfvppc",
-        "moau2zqn6bp",
-        "moau37kqgqx"
-      ]
-    },
-    {
-      "id": "mobrf6w7sm7",
-      "descricao": "Todo sabado",
-      "tipo": "especial",
-      "pratos": [
-        "mo3nn6mr8h6",
-        "mo3nncccfu8",
-        "mo3q2qzr56u",
-        "mo54e0wh6th",
-        "mo63imcyngi"
-      ],
-      "diaSemana": "sabado"
-    },
-    {
-      "id": "mobrfry4xlg",
-      "descricao": "Todo Domingo",
-      "tipo": "especial",
-      "pratos": [
-        "mo3nn6mr8h6",
-        "mo3nncccfu8",
-        "mo3q2qzr56u",
-        "mo54e0wh6th",
-        "mo63imcyngi"
-      ],
-      "diaSemana": "domingo"
-    },
-    {
-      "id": "moc1vj4cyay",
-      "descricao": "feriado dia 23 4",
-      "tipo": "especial",
-      "pratos": [
-        "moau2tfvppc",
-        "moau2zqn6bp",
-        "moau37kqgqx"
-      ],
-      "data": "2026-04-23"
-    }
-  ],
-  "empresas": [
-    {
-      "id": "moc1l1xu",
-      "nome": "Victria Comercio de Alimentos Ltda",
-      "end": "Lj ff02"
-    },
-    {
-      "id": "moc1lcwb",
-      "nome": "Victive Comercio de Alimentos Ltda",
-      "end": "Lj ff19"
-    },
-    {
-      "id": "moc1ll1c",
-      "nome": "Victrus Comercio de Alimentos",
-      "end": "loja 280"
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "bem passado",
+      "criadoEm": "2026-04-23T23:08:33.203Z"
     }
   ]
 }
