@@ -769,15 +769,6 @@
       ]
     },
     {
-      "id": "mo63vv26hps",
-      "descricao": "Teste de feriado",
-      "tipo": "especial",
-      "pratos": [
-        "mo54e0wh6th"
-      ],
-      "data": "2026-04-19"
-    },
-    {
       "id": "moaux3nmttr",
       "descricao": "Aniversariante do Mes",
       "tipo": "aniversario",
