@@ -598,6 +598,37 @@
       "bebida": null,
       "obs": "teste",
       "criadoEm": "2026-04-23T02:47:26.484Z"
+    },
+    {
+      "id": "moavt5h51we",
+      "numPedido": 15,
+      "data": "2026-04-23",
+      "pessoaId": "moauxmvbwni",
+      "pessoaNome": "Teste",
+      "pessoaSetor": "Adm",
+      "pratoId": "moau37kqgqx",
+      "pratoNome": "Tilápia",
+      "pratoValor": 25.4,
+      "acTotal": 3,
+      "bebTotal": 0,
+      "totalPedido": 28.4,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "teste",
+      "criadoEm": "2026-04-23T02:47:56.154Z"
     }
   ],
   "bebidas": [
