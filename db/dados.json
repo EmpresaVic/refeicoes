@@ -487,6 +487,37 @@
       "bebida": null,
       "obs": "",
       "criadoEm": "2026-04-23T02:24:03.044Z"
+    },
+    {
+      "id": "moavmhnurug",
+      "numPedido": 11,
+      "data": "2026-04-23",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 3,
+      "bebTotal": 0,
+      "totalPedido": 28.9,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "teste",
+      "criadoEm": "2026-04-23T02:42:45.354Z"
     }
   ],
   "bebidas": [
