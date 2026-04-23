@@ -44,7 +44,8 @@
     {
       "id": "mo54e0wh6th",
       "nome": "Picanha Suina",
-      "valor": 20.9
+      "valor": 20.9,
+      "diaEspecialOnly": true
     },
     {
       "id": "mo63imcyngi",
