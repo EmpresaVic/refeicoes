@@ -629,6 +629,24 @@
       "bebida": null,
       "obs": "teste",
       "criadoEm": "2026-04-23T02:47:56.154Z"
+    },
+    {
+      "id": "mobrcl9owiw",
+      "numPedido": 16,
+      "data": "2026-04-23",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo54e0wh6th",
+      "pratoNome": "Picanha Suina",
+      "pratoValor": 20.9,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 20.9,
+      "acomps": [],
+      "bebida": null,
+      "obs": "testes",
+      "criadoEm": "2026-04-23T17:30:51.180Z"
     }
   ],
   "bebidas": [
