@@ -935,6 +935,40 @@
       },
       "obs": "",
       "criadoEm": "2026-04-23T23:09:31.718Z"
+    },
+    {
+      "id": "moc3mrjea2x",
+      "numPedido": 20,
+      "data": "2026-04-23",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "moau2tfvppc",
+      "pratoNome": "Contra File",
+      "pratoValor": 26.9,
+      "acTotal": 3.9,
+      "bebTotal": 2.5,
+      "totalPedido": 33.3,
+      "acomps": [
+        {
+          "nome": "Legumes Saute",
+          "valor": 1
+        },
+        {
+          "nome": "Cebola Empanada",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-04-23T23:14:41.258Z"
     }
   ],
   "pessoas": [],
