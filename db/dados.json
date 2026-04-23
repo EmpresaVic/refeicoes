@@ -795,6 +795,19 @@
         "moau2zqn6bp",
         "moau37kqgqx"
       ]
+    },
+    {
+      "id": "mobrf6w7sm7",
+      "descricao": "Todo sabado",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "sabado"
     }
   ]
 }
