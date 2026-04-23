@@ -518,6 +518,37 @@
       "bebida": null,
       "obs": "teste",
       "criadoEm": "2026-04-23T02:42:45.354Z"
+    },
+    {
+      "id": "moavrmkatd9",
+      "numPedido": 12,
+      "data": "2026-04-23",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
+      "bebTotal": 0,
+      "totalPedido": 4,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        },
+        {
+          "nome": "Cebola Empanada",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-23T02:46:44.987Z"
     }
   ],
   "bebidas": [
