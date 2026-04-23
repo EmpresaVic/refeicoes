@@ -66,6 +66,12 @@
       "nome": "Tilápia",
       "valor": 25.4,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mobrdrlewzz",
+      "nome": "Teste de prato",
+      "valor": 25.9,
+      "diaEspecialOnly": false
     }
   ],
   "acomps": [
