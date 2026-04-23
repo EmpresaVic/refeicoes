@@ -289,6 +289,7 @@ input:focus, select:focus, .login-input:focus, .senha-input:focus {
 .de-tag.especial { background: rgba(58,111,152,0.12); color: var(--blue); }
 .de-tag.feriado { background: rgba(192,74,58,0.12); color: var(--red); }
 .prato-aviso-dia { background: rgba(58,111,152,0.08); border: 1px solid rgba(58,111,152,0.3); border-radius: 8px; padding: 9px 13px; font-size: 13px; color: var(--blue); margin-bottom: 10px; }
+.prato-aviso-dia.aniversario { background: rgba(160,120,40,0.08); border-color: rgba(160,120,40,0.35); color: var(--gold); }
 .prato-aviso-dia.feriado { background: rgba(192,74,58,0.08); border-color: rgba(192,74,58,0.3); color: var(--red); }
 
 /* Login screen subtle gradient background */
@@ -371,10 +372,11 @@ nav button.active {
   <h1 class="page-title">Registrar Pedido</h1>
   <p class="page-sub">Selecione a pessoa, o prato, acompanhamentos e bebida.</p>
   <div id="aviso-dia-especial" style="display:none;" class="prato-aviso-dia"></div>
+  <div id="aviso-aniversario" style="display:none;" class="prato-aviso-dia" style="background:rgba(160,120,40,0.08);border-color:rgba(160,120,40,0.4);color:var(--gold);"></div>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Dados do Pedido</div>
-      <div class="field"><label>Pessoa</label><select id="ped-pessoa"></select></div>
+      <div class="field"><label>Pessoa</label><select id="ped-pessoa" onchange="onPessoaChange()"></select></div>
       <div class="field"><label>Prato Principal</label><select id="ped-prato" onchange="onPratoChange()"></select></div>
       <div id="prato-badge" style="margin-bottom:12px;display:none;"><span class="badge badge-gold" id="prato-badge-val"></span></div>
       <div class="field"><label>Data do Pedido <span style="font-size:10px;color:var(--green);font-weight:600;letter-spacing:0;text-transform:none;">✔ preenchida automaticamente</span></label><input type="date" id="ped-data" readonly style="background:var(--surface2);color:var(--text-dim);cursor:not-allowed;opacity:0.8;"></div>
@@ -453,6 +455,7 @@ nav button.active {
       <div class="card-title">Nova Pessoa</div>
       <div class="field"><label>Nome Completo</label><input type="text" id="p-nome" placeholder="Ex.: João da Silva"></div>
       <div class="field"><label>Setor (opcional)</label><input type="text" id="p-setor" placeholder="Ex.: Produção"></div>
+      <div class="field"><label>Data de Aniversário <span style="font-size:10px;color:var(--text-dim);font-weight:400;text-transform:none;">(opcional)</span></label><input type="date" id="p-aniversario"></div>
       <button class="btn btn-gold" onclick="addPessoa()">+ Adicionar</button>
     </div>
     <div class="card">
@@ -562,8 +565,9 @@ nav button.active {
       <div class="field"><label>Descrição</label><input type="text" id="de-desc" placeholder="Ex.: Natal, Aniversário, Sábado Especial"></div>
       <div class="field">
         <label>Tipo de Ocorrência</label>
-        <select id="de-tipo">
+        <select id="de-tipo" onchange="onDeTipoChange()">
           <option value="especial">🗓️ Dia Especial</option>
+          <option value="aniversario">🎂 Aniversário (pratos para aniversariantes)</option>
           <option value="feriado">🚫 Feriado (sem atendimento)</option>
         </select>
       </div>
@@ -1425,11 +1429,13 @@ function verificarSenha() {
 function addPessoa() {
   var nome = document.getElementById('p-nome').value.trim();
   var setor = document.getElementById('p-setor').value.trim();
+  var aniversario = document.getElementById('p-aniversario').value;
   if(!nome) { toast('Informe o nome.','#c04a3a'); return; }
   var lista = DB.get('pessoas');
-  lista.push({ id:DB.uid(), nome:nome, setor:setor });
+  lista.push({ id:DB.uid(), nome:nome, setor:setor, aniversario:aniversario||'' });
   document.getElementById('p-nome').value = '';
   document.getElementById('p-setor').value = '';
+  document.getElementById('p-aniversario').value = '';
   renderPessoas();
   toast('💾 Salvando...','#3a6f98');
   DB.set('pessoas', lista, function(){ toast('✓ Pessoa adicionada!'); });
@@ -1445,10 +1451,11 @@ function renderPessoas() {
   var lista = DB.get('pessoas');
   var el = document.getElementById('lista-pessoas');
   if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">👤</span>Nenhuma pessoa</div>'; return; }
-  var h = '<table><thead><tr><th>Nome</th><th>Setor</th><th></th></tr></thead><tbody>';
+  var h = '<table><thead><tr><th>Nome</th><th>Setor</th><th>Aniversário</th><th></th></tr></thead><tbody>';
   for(var i=0;i<lista.length;i++){
     var p=lista[i];
-    h+='<tr><td>'+p.nome+'</td><td>'+(p.setor||'—')+'</td><td><button class="btn btn-danger" onclick="delPessoa(\''+p.id+'\')">✕</button></td></tr>';
+    var aniLabel = p.aniversario ? ('🎂 '+fmtAniversario(p.aniversario)) : '<span style="color:var(--text-dim);font-size:12px;">—</span>';
+    h+='<tr><td>'+p.nome+'</td><td>'+(p.setor||'—')+'</td><td>'+aniLabel+'</td><td><button class="btn btn-danger" onclick="delPessoa(\''+p.id+'\')">✕</button></td></tr>';
   }
   el.innerHTML = h+'</tbody></table>';
 }
@@ -1545,6 +1552,33 @@ function onDeModoChange() {
   document.getElementById('de-data-field').style.display = (modo === 'data') ? '' : 'none';
 }
 
+function onDeTipoChange() {
+  var tipo = document.getElementById('de-tipo').value;
+  document.getElementById('de-pratos-field').style.display = (tipo === 'feriado') ? 'none' : '';
+  var isAni = tipo === 'aniversario';
+  /* Aniversário não precisa de data nem modo — é uma configuração global */
+  document.getElementById('de-data-field').style.display = isAni ? 'none' : (document.getElementById('de-modo').value === 'data' ? '' : 'none');
+  var modoField = document.getElementById('de-modo').parentElement;
+  if(modoField) modoField.style.display = isAni ? 'none' : '';
+}
+
+/* Formata aniversário: exibe apenas dia/mês (ignora ano) */
+function fmtAniversario(iso){
+  if(!iso) return '';
+  var p = iso.split('-');
+  if(p.length < 3) return iso;
+  return p[2]+'/'+p[1];
+}
+
+/* Verifica se uma data ISO é aniversário hoje (compara apenas dia e mês) */
+function eAniversarioHoje(iso){
+  if(!iso) return false;
+  var hoje_d = new Date();
+  var p = iso.split('-');
+  if(p.length < 3) return false;
+  return parseInt(p[2],10) === hoje_d.getDate() && parseInt(p[1],10) === (hoje_d.getMonth()+1);
+}
+
 function renderDiasEspeciaisForm() {
   /* Popula grid de pratos no formulário de dias especiais */
   var pratos = DB.get('pratos');
@@ -1557,9 +1591,7 @@ function renderDiasEspeciaisForm() {
   }
   grid.innerHTML=h;
   /* Mostrar/ocultar campo de pratos se for feriado */
-  document.getElementById('de-tipo').onchange = function(){
-    document.getElementById('de-pratos-field').style.display = this.value==='feriado'?'none':'';
-  };
+  document.getElementById('de-tipo').onchange = onDeTipoChange;
 }
 
 function addDiaEspecial() {
@@ -1568,12 +1600,17 @@ function addDiaEspecial() {
   var desc  = document.getElementById('de-desc').value.trim();
   var tipo  = document.getElementById('de-tipo').value;
 
-  if(modo === 'data' && !data){ toast('Informe a data.','#c04a3a'); return; }
+  if(modo === 'data' && !data && tipo !== 'aniversario'){ toast('Informe a data.','#c04a3a'); return; }
   if(!desc){ toast('Informe a descrição.','#c04a3a'); return; }
 
   var lista = DB.get('diasEspeciais');
 
-  if(modo === 'data'){
+  if(tipo === 'aniversario'){
+    /* Só permite um registro do tipo aniversário */
+    for(var i=0;i<lista.length;i++){
+      if(lista[i].tipo==='aniversario'){ toast('Já existe uma configuração de Aniversário. Remova a existente para adicionar outra.','#c04a3a'); return; }
+    }
+  } else if(modo === 'data'){
     /* Não permite duplicar a data */
     for(var i=0;i<lista.length;i++){
       if(lista[i].data===data && !lista[i].diaSemana){ toast('Já existe um registro para essa data.','#c04a3a'); return; }
@@ -1592,10 +1629,12 @@ function addDiaEspecial() {
   for(var i=0;i<pratosChecks.length;i++) pratosSel.push(pratosChecks[i].value);
 
   var novoReg = { id:DB.uid(), descricao:desc, tipo:tipo, pratos:pratosSel };
-  if(modo === 'data'){
-    novoReg.data = data;
-  } else {
-    novoReg.diaSemana = modo; /* 'sabado' ou 'domingo' */
+  if(tipo !== 'aniversario'){
+    if(modo === 'data'){
+      novoReg.data = data;
+    } else {
+      novoReg.diaSemana = modo;
+    }
   }
 
   lista.push(novoReg);
@@ -1605,6 +1644,7 @@ function addDiaEspecial() {
   document.getElementById('de-tipo').value='especial';
   document.getElementById('de-modo').value='data';
   onDeModoChange();
+  onDeTipoChange();
   var checks = document.querySelectorAll('#de-pratos-grid input[type=checkbox]');
   for(var i=0;i<checks.length;i++) checks[i].checked=false;
   _cache['diasEspeciais']=lista;
@@ -1628,8 +1668,9 @@ function renderDiasEspeciais() {
   if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🗓️</span>Nenhuma data especial</div>'; return; }
   var pratos = DB.get('pratos');
 
-  /* Separa: datas fixas (ordenadas) e regras de dia-da-semana */
-  var fixas = lista.filter(function(x){ return x.data && !x.diaSemana; }).slice().sort(function(a,b){ return a.data.localeCompare(b.data); });
+  /* Separa: aniversário (global), datas fixas (ordenadas) e regras de dia-da-semana */
+  var aniversarios = lista.filter(function(x){ return x.tipo==='aniversario'; });
+  var fixas = lista.filter(function(x){ return x.data && !x.diaSemana && x.tipo!=='aniversario'; }).slice().sort(function(a,b){ return a.data.localeCompare(b.data); });
   var semana = lista.filter(function(x){ return x.diaSemana; });
 
   function pratosLabel(de){
@@ -1647,12 +1688,23 @@ function renderDiasEspeciais() {
   }
 
   function tipoTag(tipo){
-    return tipo==='feriado'
-      ? '<span class="de-tag feriado">🚫 Feriado</span>'
-      : '<span class="de-tag especial">🗓️ Especial</span>';
+    if(tipo==='feriado') return '<span class="de-tag feriado">🚫 Feriado</span>';
+    if(tipo==='aniversario') return '<span class="de-tag" style="background:rgba(160,120,40,0.12);color:var(--gold);">🎂 Aniversário</span>';
+    return '<span class="de-tag especial">🗓️ Especial</span>';
   }
 
   var h='';
+
+  /* Configuração de Aniversário (regra global, sem data) */
+  if(aniversarios.length){
+    h+='<div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Configuração de Aniversário</div>';
+    h+='<table style="margin-bottom:18px;"><thead><tr><th>Tipo</th><th>Descrição</th><th>Pratos Disponíveis</th><th></th></tr></thead><tbody>';
+    for(var i=0;i<aniversarios.length;i++){
+      var de=aniversarios[i];
+      h+='<tr><td>'+tipoTag(de.tipo)+'</td><td>'+de.descricao+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+    }
+    h+='</tbody></table>';
+  }
   /* Regras de dia da semana */
   if(semana.length){
     h+='<div style="font-size:11px;font-weight:700;color:var(--text-dim);letter-spacing:0.5px;text-transform:uppercase;margin-bottom:8px;">Regras Semanais</div>';
@@ -1688,6 +1740,23 @@ function initPedido() {
   var acomps  = DB.get('acomps');
   var bebidas = DB.get('bebidas');
   var diasEspeciais = DB.get('diasEspeciais');
+
+  /* Coleta ids dos pratos vinculados à configuração de Aniversário
+     para excluí-los da lista base — só aparecem via onPessoaChange */
+  var idsAniversario = [];
+  for(var d=0;d<diasEspeciais.length;d++){
+    if(diasEspeciais[d].tipo==='aniversario' && Array.isArray(diasEspeciais[d].pratos)){
+      idsAniversario = idsAniversario.concat(diasEspeciais[d].pratos);
+    }
+  }
+  /* Se não houver pratos específicos configurados, considera todos os diaEspecialOnly como aniversário */
+  var configAni = diasEspeciais.filter(function(x){ return x.tipo==='aniversario'; });
+  var semPratosEspecificos = configAni.length > 0 && configAni[0].pratos && configAni[0].pratos.length === 0;
+  function _isAniPrato(p){
+    if(idsAniversario.length > 0) return idsAniversario.indexOf(p.id) !== -1;
+    if(semPratosEspecificos) return p.diaEspecialOnly; /* fallback: todos os especiais */
+    return false;
+  }
 
   /* ── Verificar se hoje é dia especial ou feriado ── */
   var dataHoje = hoje();
@@ -1728,17 +1797,17 @@ function initPedido() {
       atualizarCnt(); onPratoChange(); return;
     } else {
       /* Dia especial:
-         - Sempre exibe os pratos normais (diaEspecialOnly = false)
+         - Sempre exibe os pratos normais (diaEspecialOnly = false), exceto os de aniversário
          - Adiciona os pratos do dia especial configurados no cadastro (opção extra no cardápio)
-         - Se nenhum prato específico foi definido no dia especial, exibe todos incluindo os diaEspecialOnly */
-      var pratosNormais = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly; });
+         - Se nenhum prato específico foi definido no dia especial, exibe todos incluindo os diaEspecialOnly (exceto aniversário) */
+      var pratosNormais = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly && !_isAniPrato(p); });
       var pratosDia = diaEspecialHoje.pratos; /* ids dos pratos extras definidos para este dia */
       var pratosExtras = [];
       if(Array.isArray(pratosDia) && pratosDia.length > 0){
-        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && pratosDia.indexOf(p.id) !== -1; });
+        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && !_isAniPrato(p) && pratosDia.indexOf(p.id) !== -1; });
       } else {
-        /* Sem lista específica: inclui todos os pratos marcados como diaEspecialOnly */
-        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly; });
+        /* Sem lista específica: inclui todos os pratos marcados como diaEspecialOnly, exceto aniversário */
+        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && !_isAniPrato(p); });
       }
       pratos = pratosNormais.concat(pratosExtras);
       var msgExtra = pratosExtras.length ? ' — ' + pratosExtras.length + ' prato(s) especial(is) disponível(is).' : '';
@@ -1747,8 +1816,8 @@ function initPedido() {
       aviso.style.display = 'block';
     }
   } else {
-    /* Dia normal: exibe apenas pratos que NÃO são exclusivos de dia especial */
-    pratos = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly; });
+    /* Dia normal: exibe apenas pratos que NÃO são exclusivos de dia especial e NÃO são de aniversário */
+    pratos = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly && !_isAniPrato(p); });
     aviso.style.display = 'none';
   }
 
@@ -1829,6 +1898,82 @@ function onPratoChange() {
     badge.style.display='none';
   }
   calcularTotalPedido();
+}
+
+/* Chamado quando o funcionário é selecionado no pedido */
+function onPessoaChange() {
+  var pessoaId = document.getElementById('ped-pessoa').value;
+  var avisoAni = document.getElementById('aviso-aniversario');
+
+  if(!pessoaId){ avisoAni.style.display='none'; _removerPratosAniversario(); return; }
+
+  var pessoas = DB.get('pessoas');
+  var pessoa = null;
+  for(var i=0;i<pessoas.length;i++) if(pessoas[i].id===pessoaId){ pessoa=pessoas[i]; break; }
+  if(!pessoa){ avisoAni.style.display='none'; _removerPratosAniversario(); return; }
+
+  if(pessoa.aniversario && eAniversarioHoje(pessoa.aniversario)){
+    /* Busca dias especiais do tipo aniversário para obter os pratos */
+    var diasEspeciais = DB.get('diasEspeciais');
+    var diaAni = null;
+    for(var i=0;i<diasEspeciais.length;i++){
+      if(diasEspeciais[i].tipo==='aniversario'){ diaAni=diasEspeciais[i]; break; }
+    }
+
+    avisoAni.textContent = '🎂 Feliz Aniversário, ' + pessoa.nome.split(' ')[0] + '! Pratos especiais disponíveis.';
+    avisoAni.className = 'prato-aviso-dia aniversario';
+    avisoAni.style.display = 'block';
+
+    if(diaAni && Array.isArray(diaAni.pratos) && diaAni.pratos.length){
+      _adicionarPratosAniversario(diaAni.pratos, diaAni.descricao || 'Aniversário');
+    } else if(diaAni){
+      /* Sem pratos específicos: mostra todos os diaEspecialOnly */
+      var todosOsPratos = DB.get('pratos');
+      var idsEspeciais = todosOsPratos.filter(function(p){ return p.diaEspecialOnly; }).map(function(p){ return p.id; });
+      if(idsEspeciais.length) _adicionarPratosAniversario(idsEspeciais, 'Aniversário');
+    }
+  } else {
+    avisoAni.style.display='none';
+    _removerPratosAniversario();
+  }
+}
+
+/* Adiciona optgroup de pratos de aniversário no select de pratos */
+function _adicionarPratosAniversario(pratoIds, label) {
+  _removerPratosAniversario(); /* limpa antes de adicionar */
+  var todosOsPratos = DB.get('pratos');
+  var selPr = document.getElementById('ped-prato');
+  var optgroup = document.createElement('optgroup');
+  optgroup.label = '🎂 Pratos Especiais — ' + label;
+  optgroup.setAttribute('data-aniversario', '1');
+  var count = 0;
+  for(var i=0;i<pratoIds.length;i++){
+    for(var j=0;j<todosOsPratos.length;j++){
+      if(todosOsPratos[j].id===pratoIds[i]){
+        var opt = document.createElement('option');
+        opt.value = todosOsPratos[j].id;
+        opt.setAttribute('data-v', todosOsPratos[j].valor);
+        opt.textContent = '🎂 ' + todosOsPratos[j].nome + ' — ' + moeda(todosOsPratos[j].valor);
+        optgroup.appendChild(opt);
+        count++;
+        break;
+      }
+    }
+  }
+  if(count > 0) selPr.appendChild(optgroup);
+}
+
+/* Remove o optgroup de aniversário do select de pratos */
+function _removerPratosAniversario() {
+  var selPr = document.getElementById('ped-prato');
+  if(!selPr) return;
+  var grupos = selPr.querySelectorAll('optgroup[data-aniversario]');
+  for(var i=0;i<grupos.length;i++) grupos[i].parentNode.removeChild(grupos[i]);
+  /* Garante que nenhuma opção de aniversário fique selecionada */
+  if(selPr.value === '' || (selPr.selectedIndex >= 0 && selPr.options[selPr.selectedIndex] && selPr.options[selPr.selectedIndex].text.indexOf('🎂') === 0)){
+    selPr.value = '';
+    onPratoChange();
+  }
 }
 
 function toggleAcomp(id) {
@@ -1932,6 +2077,9 @@ function limparForm() {
   var allB=document.querySelectorAll('#bebida-lista .acomp-check');
   for(var i=0;i<allB.length;i++) allB[i].classList.remove('sel');
   document.getElementById('bebida-info').textContent='Nenhuma bebida selecionada';
+  var avisoAni=document.getElementById('aviso-aniversario');
+  if(avisoAni) avisoAni.style.display='none';
+  _removerPratosAniversario();
   atualizarCnt(); onPratoChange();
   document.getElementById('total-pedido-box').style.display='none';
 }
