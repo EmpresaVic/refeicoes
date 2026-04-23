@@ -14,6 +14,12 @@
       "id": "mo544a6lsgu",
       "nome": "TESTE",
       "setor": "TESTE"
+    },
+    {
+      "id": "moauxmvbwni",
+      "nome": "Teste",
+      "setor": "Adm",
+      "aniversario": "2026-04-22"
     }
   ],
   "pratos": [
