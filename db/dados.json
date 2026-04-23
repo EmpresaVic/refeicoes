@@ -846,5 +846,11 @@
       "data": "2026-04-23"
     }
   ],
-  "empresas": []
+  "empresas": [
+    {
+      "id": "moc1l1xu",
+      "nome": "Victria Comercio de Alimentos Ltda",
+      "end": "Lj ff02"
+    }
+  ]
 }
