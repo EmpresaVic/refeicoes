@@ -794,18 +794,6 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
-    },
-    {
-      "id": "mobrn1tnioo",
-      "descricao": "teste de feriado 23 4",
-      "tipo": "especial",
-      "pratos": [
-        "mo3nn6mr8h6",
-        "mo3nncccfu8",
-        "mo3q2qzr56u",
-        "mo54e0wh6th"
-      ],
-      "data": "2026-04-23"
     }
   ]
 }
