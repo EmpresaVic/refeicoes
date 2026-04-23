@@ -769,15 +769,6 @@
       ]
     },
     {
-      "id": "mo63vb0qv9j",
-      "descricao": "Break de Domingo",
-      "tipo": "especial",
-      "pratos": [
-        "mo63imcyngi"
-      ],
-      "diaSemana": "domingo"
-    },
-    {
       "id": "mo63vv26hps",
       "descricao": "Teste de feriado",
       "tipo": "especial",
