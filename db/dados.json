@@ -549,6 +549,24 @@
       "bebida": null,
       "obs": "",
       "criadoEm": "2026-04-23T02:46:44.987Z"
+    },
+    {
+      "id": "moavrzxdnnc",
+      "numPedido": 13,
+      "data": "2026-04-23",
+      "pessoaId": "moauxmvbwni",
+      "pessoaNome": "Teste",
+      "pessoaSetor": "Adm",
+      "pratoId": "moau2tfvppc",
+      "pratoNome": "Contra File",
+      "pratoValor": 26.9,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 26.9,
+      "acomps": [],
+      "bebida": null,
+      "obs": "teste",
+      "criadoEm": "2026-04-23T02:47:02.305Z"
     }
   ],
   "bebidas": [
