@@ -794,6 +794,13 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
+    },
+    {
+      "id": "mobrlt87u63",
+      "descricao": "teste de feriado",
+      "tipo": "especial",
+      "pratos": [],
+      "data": "2026-04-23"
     }
   ]
 }
