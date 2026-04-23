@@ -26,7 +26,8 @@
     {
       "id": "mo3nn6mr8h6",
       "nome": "Frango Grelhado",
-      "valor": 25.9
+      "valor": 25.9,
+      "diaEspecialOnly": true
     },
     {
       "id": "mo3nncccfu8",
