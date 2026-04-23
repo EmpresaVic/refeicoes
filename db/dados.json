@@ -794,6 +794,17 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
+    },
+    {
+      "id": "mobv58qxi5g",
+      "descricao": "Feriado dia 23",
+      "tipo": "especial",
+      "pratos": [
+        "mo63imcyngi",
+        "moau2tfvppc",
+        "moau37kqgqx"
+      ],
+      "data": "2026-04-23"
     }
   ]
 }
