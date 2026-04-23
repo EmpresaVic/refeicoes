@@ -280,16 +280,6 @@
   ],
   "emp_moc1l1xu_diasEspeciais": [
     {
-      "id": "moaux3nmttr",
-      "descricao": "Aniversariante do Mes",
-      "tipo": "aniversario",
-      "pratos": [
-        "moau2tfvppc",
-        "moau2zqn6bp",
-        "moau37kqgqx"
-      ]
-    },
-    {
       "id": "mobrf6w7sm7",
       "descricao": "Todo sabado",
       "tipo": "especial",
@@ -966,5 +956,43 @@
   "acomps": [],
   "pedidos": [],
   "bebidas": [],
-  "diasEspeciais": []
+  "diasEspeciais": [
+    {
+      "id": "mobrf6w7sm7",
+      "descricao": "Todo sabado",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "sabado"
+    },
+    {
+      "id": "mobrfry4xlg",
+      "descricao": "Todo Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "domingo"
+    },
+    {
+      "id": "moc1vj4cyay",
+      "descricao": "feriado dia 23 4",
+      "tipo": "especial",
+      "pratos": [
+        "moau2tfvppc",
+        "moau2zqn6bp",
+        "moau37kqgqx"
+      ],
+      "data": "2026-04-23"
+    }
+  ]
 }
