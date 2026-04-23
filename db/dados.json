@@ -695,6 +695,24 @@
       },
       "obs": "teste",
       "criadoEm": "2026-04-23T22:16:10.695Z"
+    },
+    {
+      "id": "moc1xds5qo1",
+      "numPedido": 18,
+      "data": "2026-04-23",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "moau2zqn6bp",
+      "pratoNome": "Fraldinha",
+      "pratoValor": 29.3,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 29.3,
+      "acomps": [],
+      "bebida": null,
+      "obs": "Ao ponto",
+      "criadoEm": "2026-04-23T22:26:57.413Z"
     }
   ],
   "bebidas": [
@@ -723,12 +741,16 @@
     {
       "id": "admin",
       "nome": "admin",
-      "senhaHash": "170842"
+      "senhaHash": "170842",
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mo51sns2",
       "nome": "Gestao",
-      "senhaHash": "1868fe"
+      "senhaHash": "1868fe",
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mo52pngl",
@@ -743,12 +765,16 @@
         "bebidas": false,
         "diasEspeciais": false,
         "usuarios": false
-      }
+      },
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mo54c22c",
       "nome": "Gestores",
-      "senhaHash": "170842"
+      "senhaHash": "170842",
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mo65tmc6",
@@ -763,7 +789,9 @@
         "bebidas": false,
         "diasEspeciais": false,
         "usuarios": false
-      }
+      },
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mo66pp6x",
@@ -778,7 +806,9 @@
         "bebidas": false,
         "diasEspeciais": false,
         "usuarios": false
-      }
+      },
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "mobr7mug",
@@ -793,7 +823,9 @@
         "bebidas": false,
         "diasEspeciais": false,
         "usuarios": false
-      }
+      },
+      "perfil": "operador",
+      "empresas": []
     },
     {
       "id": "moc1mlf5",
@@ -813,6 +845,14 @@
         "diasEspeciais": true,
         "usuarios": true
       }
+    },
+    {
+      "id": "super",
+      "nome": "super",
+      "senhaHash": "-63bd2729",
+      "perfil": "superadmin",
+      "empresas": [],
+      "permissoes": null
     }
   ],
   "diasEspeciais": [
