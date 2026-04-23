@@ -567,6 +567,37 @@
       "bebida": null,
       "obs": "teste",
       "criadoEm": "2026-04-23T02:47:02.305Z"
+    },
+    {
+      "id": "moavsil0ayd",
+      "numPedido": 14,
+      "data": "2026-04-23",
+      "pessoaId": "mo3q3aj3gmd",
+      "pessoaNome": "Jairo Brito",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nncccfu8",
+      "pratoNome": "Tiras de Carne",
+      "pratoValor": 25.9,
+      "acTotal": 3,
+      "bebTotal": 0,
+      "totalPedido": 28.9,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "teste",
+      "criadoEm": "2026-04-23T02:47:26.484Z"
     }
   ],
   "bebidas": [
