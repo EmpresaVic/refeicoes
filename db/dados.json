@@ -1,13 +1,6 @@
 {
   "usuarios": [
     {
-      "id": "admin",
-      "nome": "admin",
-      "senhaHash": "170842",
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
       "id": "mo51sns2",
       "nome": "Gestao",
       "senhaHash": "1868fe",
