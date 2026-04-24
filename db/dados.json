@@ -1194,11 +1194,6 @@
       ]
     }
   ],
-  "pessoas": [],
-  "pratos": [],
-  "acomps": [],
-  "bebidas": [],
-  "diasEspeciais": [],
   "emp_moc1l1xu_setores": [
     {
       "id": "mocw8byyi84",
@@ -1225,6 +1220,17 @@
     {
       "id": "modakqe5nmo",
       "nome": "Gestão"
+    }
+  ],
+  "emp_moc1ll1c_pessoas": [],
+  "emp_moc1ll1c_pratos": [],
+  "emp_moc1ll1c_acomps": [],
+  "emp_moc1ll1c_bebidas": [],
+  "emp_moc1ll1c_diasEspeciais": [],
+  "emp_moc1ll1c_setores": [
+    {
+      "id": "modbdsg9qtz",
+      "nome": "Cozinha"
     }
   ]
 }
