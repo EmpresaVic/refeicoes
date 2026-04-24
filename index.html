@@ -359,6 +359,7 @@ nav button.active {
     <button onclick="showPage('pratos',this)">🍽️ Pratos</button>
     <button onclick="showPage('acomps',this)">🥗 Acompanhamentos</button>
     <button onclick="showPage('bebidas',this)">🥤 Bebidas</button>
+    <button onclick="showPage('setores',this)">🏷️ Setores</button>
     <button id="nav-btn-diasEspeciais" onclick="showPage('diasEspeciais',this)">🗓️ Dias Especiais</button>
     <button id="nav-btn-empresas" onclick="showPage('empresas',this)" style="display:none;">🏢 Empresas</button>
     <button id="nav-btn-usuarios" onclick="showPage('usuarios',this)">🔐 Usuários</button>
@@ -446,15 +447,21 @@ nav button.active {
     </div>
   </div>
 
-  <!-- Filtros adicionais: pessoa e prato -->
+  <!-- Filtros adicionais: pessoa, prato e setor -->
   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end;">
-    <div class="field" style="margin-bottom:0;flex:1;min-width:200px;">
+    <div class="field" style="margin-bottom:0;flex:1;min-width:180px;">
+      <label>Filtrar por Setor</label>
+      <select id="res-setor" onchange="aplicarFiltros()">
+        <option value="">— Todos os setores —</option>
+      </select>
+    </div>
+    <div class="field" style="margin-bottom:0;flex:1;min-width:180px;">
       <label>Filtrar por Pessoa</label>
       <select id="res-pessoa" onchange="aplicarFiltros()">
         <option value="">— Todas as pessoas —</option>
       </select>
     </div>
-    <div class="field" style="margin-bottom:0;flex:1;min-width:200px;">
+    <div class="field" style="margin-bottom:0;flex:1;min-width:180px;">
       <label>Filtrar por Prato</label>
       <select id="res-prato" onchange="aplicarFiltros()">
         <option value="">— Todos os pratos —</option>
@@ -478,7 +485,7 @@ nav button.active {
     <div class="card">
       <div class="card-title">Nova Pessoa</div>
       <div class="field"><label>Nome Completo</label><input type="text" id="p-nome" placeholder="Ex.: João da Silva"></div>
-      <div class="field"><label>Setor (opcional)</label><input type="text" id="p-setor" placeholder="Ex.: Produção"></div>
+      <div class="field"><label>Setor (opcional)</label><select id="p-setor"><option value="">— Selecione um setor —</option></select></div>
       <div class="field"><label>Data de Aniversário <span style="font-size:10px;color:var(--text-dim);font-weight:400;text-transform:none;">(opcional)</span></label><input type="date" id="p-aniversario"></div>
       <button class="btn btn-gold" onclick="addPessoa()">+ Adicionar</button>
     </div>
@@ -536,6 +543,22 @@ nav button.active {
     <div class="card">
       <div class="card-title">Cadastradas</div>
       <div id="lista-bebidas"><div class="empty"><span class="ico">🥤</span>Nenhuma bebida</div></div>
+    </div>
+  </div>
+</div>
+
+<div id="page-setores" class="page">
+  <h1 class="page-title">Cadastro de Setores</h1>
+  <p class="page-sub">Gerencie os departamentos/setores da empresa.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Novo Setor</div>
+      <div class="field"><label>Nome do Setor</label><input type="text" id="set-nome" placeholder="Ex.: Produção, RH, Financeiro"></div>
+      <button class="btn btn-gold" onclick="addSetor()">+ Adicionar</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Setores Cadastrados</div>
+      <div id="lista-setores"><div class="empty"><span class="ico">🏷️</span>Nenhum setor cadastrado</div></div>
     </div>
   </div>
 </div>
@@ -1573,7 +1596,7 @@ async function sincronizar() {
     _garantirSuperAdmin();
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderSetores(); renderDiasEspeciais();
     if(_usuarioLogado && _usuarioLogado.perfil === 'superadmin') _popularSuperSel();
     return;
   }
@@ -1602,7 +1625,7 @@ async function sincronizar() {
     var empresas = _getEmpresas();
     if(empresas.length === 1) {
       var empId = empresas[0].id;
-      ['pessoas','pratos','acomps','pedidos','bebidas','diasEspeciais'].forEach(function(t){
+      ['pessoas','pratos','acomps','pedidos','bebidas','setores','diasEspeciais'].forEach(function(t){
         var prefixKey = 'emp_'+empId+'_'+t;
         if(!Array.isArray(_cache[prefixKey]) || !_cache[prefixKey].length) {
           if(Array.isArray(_cache[t]) && _cache[t].length) {
@@ -1616,7 +1639,7 @@ async function sincronizar() {
     if(_usuarioLogado && _usuarioLogado.perfil === 'superadmin') _popularSuperSel();
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderSetores(); renderDiasEspeciais();
   });
 }
 
@@ -1657,7 +1680,7 @@ async function _autoSync() {
     });
 
     /* Atualiza a interface sem piscar */
-    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
+    initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderSetores(); renderDiasEspeciais();
 
     var now = new Date().toLocaleTimeString('pt-BR', {hour:'2-digit', minute:'2-digit'});
     setStatus('✅ Sincronizado ' + now, '#3a7a4a');
@@ -1720,7 +1743,8 @@ function showPage(name, btn) {
   if(btn) btn.classList.add('active');
   if(name==='pedido') initPedido();
   if(name==='resumo') { initResumo(); _popularFiltrosSelects(); }
-  if(name==='pessoas') renderPessoas();
+  if(name==='pessoas') { renderPessoas(); _popularSetorSelect(); }
+  if(name==='setores') renderSetores();
   if(name==='pratos') renderPratos();
   if(name==='acomps') renderAcomps();
   if(name==='bebidas') renderBebidas();
@@ -2401,6 +2425,66 @@ function renderBebidas() {
   el.innerHTML=h+'</tbody></table>';
 }
 
+/* =========================================================
+   SETORES
+   ========================================================= */
+function addSetor() {
+  var nome = document.getElementById('set-nome').value.trim();
+  if(!nome){ toast('Informe o nome do setor.','#c04a3a'); return; }
+  var lista = DB.get('setores');
+  /* Verifica duplicidade */
+  for(var i=0;i<lista.length;i++){
+    if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ toast('Setor já cadastrado.','#c04a3a'); return; }
+  }
+  lista.push({ id:DB.uid(), nome:nome });
+  document.getElementById('set-nome').value='';
+  renderSetores();
+  _popularSetorSelect();
+  toast('💾 Salvando...','#3a6f98');
+  DB.set('setores', lista, function(){ toast('✓ Setor adicionado!'); });
+}
+function delSetor(id) {
+  if(!confirm('Remover setor? Pessoas vinculadas perderão o setor.')) return;
+  var lista = DB.get('setores').filter(function(x){ return x.id!==id; });
+  _cache[(_empPrefix())+'setores'] = lista;
+  renderSetores();
+  _popularSetorSelect();
+  DB.set('setores', lista, function(){ toast('Setor removido.'); });
+}
+function renderSetores() {
+  var lista = DB.get('setores');
+  var el = document.getElementById('lista-setores');
+  if(!el) return;
+  if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🏷️</span>Nenhum setor cadastrado</div>'; return; }
+  var h='<table><thead><tr><th>Nome do Setor</th><th></th></tr></thead><tbody>';
+  for(var i=0;i<lista.length;i++){
+    h+='<tr><td><span class="badge badge-gold">🏷️ '+lista[i].nome+'</span></td><td><button class="btn btn-danger" onclick="delSetor(\''+lista[i].id+'\')">✕</button></td></tr>';
+  }
+  el.innerHTML=h+'</tbody></table>';
+}
+/* Popula o select de setor no formulário de Pessoas */
+function _popularSetorSelect() {
+  var sel = document.getElementById('p-setor');
+  if(!sel) return;
+  var cur = sel.value;
+  var lista = DB.get('setores').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  var h = '<option value="">— Selecione um setor —</option>';
+  for(var i=0;i<lista.length;i++) h+='<option value="'+lista[i].nome+'">'+lista[i].nome+'</option>';
+  sel.innerHTML=h;
+  if(cur) sel.value=cur;
+}
+/* Popula o select de setor no Resumo Diário */
+function _popularFiltroSetor() {
+  var sel = document.getElementById('res-setor');
+  if(!sel) return;
+  var cur = sel.value;
+  var lista = DB.get('setores').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  var h = '<option value="">— Todos os setores —</option>';
+  for(var i=0;i<lista.length;i++) h+='<option value="'+lista[i].nome+'">🏷️ '+lista[i].nome+'</option>';
+  sel.innerHTML=h;
+  if(cur) sel.value=cur;
+}
+
 function calcularTotalPedido() {
   var sel=document.getElementById('ped-prato');
   var opt=sel.options[sel.selectedIndex];
@@ -2556,6 +2640,7 @@ function initResumo() {
   document.getElementById('res-de').value = h;
   document.getElementById('res-ate').value = h;
   _popularFiltrosSelects();
+  _popularFiltroSetor();
   /* Filtro de empresa: só para superadmin */
   var isSA = _usuarioLogado && _usuarioLogado.perfil === 'superadmin';
   var empRow = document.getElementById('res-empresa-row');
@@ -2633,6 +2718,7 @@ function verTodos() {
 function limparFiltros() {
   document.getElementById('res-pessoa').value = '';
   document.getElementById('res-prato').value  = '';
+  if(document.getElementById('res-setor')) document.getElementById('res-setor').value = '';
   if(document.getElementById('res-empresa')) document.getElementById('res-empresa').value = '';
   _pedidosBase = [];
   var body = document.getElementById('resumo-body');
@@ -2647,11 +2733,13 @@ function aplicarFiltros(labelOverride) {
 
   var pessoaId = document.getElementById('res-pessoa').value;
   var pratoId  = document.getElementById('res-prato').value;
+  var setorFilt = document.getElementById('res-setor') ? document.getElementById('res-setor').value : '';
   var empFiltId = document.getElementById('res-empresa') ? document.getElementById('res-empresa').value : '';
 
   var filtrados = _pedidosBase.slice();
   if(pessoaId) filtrados = filtrados.filter(function(p){ return p.pessoaId === pessoaId; });
   if(pratoId)  filtrados = filtrados.filter(function(p){ return p.pratoId  === pratoId; });
+  if(setorFilt) filtrados = filtrados.filter(function(p){ return p.pessoaSetor === setorFilt; });
   /* Filtro de empresa aplicado sobre _pedidosBase já filtrada por gerarResumo,
      mas se o usuário mudou o select depois, re-filtra */
   if(empFiltId) filtrados = filtrados.filter(function(p){ return p.empresaId === empFiltId; });
@@ -2664,6 +2752,9 @@ function aplicarFiltros(labelOverride) {
   if(empFiltId){
     var selEmp = document.getElementById('res-empresa');
     sufixos.push('🏢 ' + selEmp.options[selEmp.selectedIndex].text);
+  }
+  if(setorFilt){
+    sufixos.push('🏷️ ' + setorFilt);
   }
   if(pessoaId){
     var sel = document.getElementById('res-pessoa');
