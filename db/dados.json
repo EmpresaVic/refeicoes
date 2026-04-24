@@ -1108,11 +1108,6 @@
   "pedidos": [],
   "emp_moc1lcwb_pessoas": [
     {
-      "id": "mo3nnu4w6zt",
-      "nome": "Mario Bross",
-      "setor": "Administrativo"
-    },
-    {
       "id": "mo3q3aj3gmd",
       "nome": "Jairo Brito",
       "setor": "Cozinha"
@@ -1175,46 +1170,14 @@
   ],
   "pessoas": [
     {
-      "id": "modapvi7bqh",
-      "nome": "Aline Silva da Costa",
-      "setor": "Gestão",
-      "aniversario": "1984-11-30"
+      "id": "mo3q3aj3gmd",
+      "nome": "Jairo Brito",
+      "setor": "Cozinha"
     },
     {
-      "id": "modarqnhqfz",
-      "nome": "Danilo Polis Dias Moreira",
-      "setor": "Cozinha",
-      "aniversario": "2004-12-21"
-    },
-    {
-      "id": "modaug2d3dw",
-      "nome": "Karine Correia Maia da Trindade",
-      "setor": "Cozinha",
-      "aniversario": "2005-04-07"
-    },
-    {
-      "id": "modavc8hhml",
-      "nome": "Maria da Piedade Gomes dos Anjos",
-      "setor": "Cozinha",
-      "aniversario": "1985-05-17"
-    },
-    {
-      "id": "modawmqhf0h",
-      "nome": "Mirian Regina Gonçalves",
-      "setor": "Atendimento",
-      "aniversario": "1993-07-27"
-    },
-    {
-      "id": "modaxebl2fe",
-      "nome": "Sonia Maria dos Santos",
-      "setor": "Cozinha",
-      "aniversario": "1975-02-02"
-    },
-    {
-      "id": "modaz0ilzpx",
-      "nome": "Valdineia Nascimento Chagas",
-      "setor": "Gestão",
-      "aniversario": "1990-11-03"
+      "id": "mo544a6lsgu",
+      "nome": "TESTE",
+      "setor": "TESTE"
     }
   ],
   "pratos": [],
