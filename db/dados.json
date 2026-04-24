@@ -34,6 +34,16 @@
         "moc1l1xu"
       ],
       "permissoes": null
+    },
+    {
+      "id": "moc8d5ff",
+      "nome": "AdminVictrus",
+      "senhaHash": "78b2a1ac",
+      "perfil": "admin",
+      "empresas": [
+        "moc1ll1c"
+      ],
+      "permissoes": null
     }
   ],
   "empresas": [
