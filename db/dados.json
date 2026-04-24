@@ -49,25 +49,6 @@
       "empresas": []
     },
     {
-      "id": "moc1mlf5",
-      "nome": "AdminVictria",
-      "senhaHash": "169384",
-      "perfil": "operador",
-      "empresas": [
-        "moc1l1xu"
-      ],
-      "permissoes": {
-        "pedido": true,
-        "resumo": true,
-        "pessoas": true,
-        "pratos": true,
-        "acomps": true,
-        "bebidas": true,
-        "diasEspeciais": true,
-        "usuarios": true
-      }
-    },
-    {
       "id": "super",
       "nome": "super",
       "senhaHash": "-63bd2729",
