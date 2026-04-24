@@ -305,6 +305,14 @@
         "moau37kqgqx"
       ],
       "data": "2026-04-23"
+    },
+    {
+      "id": "mocv6vwhdkc",
+      "descricao": "Aniversário",
+      "tipo": "aniversario",
+      "pratos": [
+        "moau37kqgqx"
+      ]
     }
   ],
   "emp_moc1l1xu_pedidos": [
@@ -1000,11 +1008,23 @@
       "diaSemana": "domingo"
     },
     {
-      "id": "moc8hm8mz66",
-      "descricao": "Feriado dia do trabalho",
+      "id": "moc1vj4cyay",
+      "descricao": "feriado dia 23 4",
       "tipo": "especial",
-      "pratos": [],
-      "data": "2026-05-01"
+      "pratos": [
+        "moau2tfvppc",
+        "moau2zqn6bp",
+        "moau37kqgqx"
+      ],
+      "data": "2026-04-23"
+    },
+    {
+      "id": "mocv6vwhdkc",
+      "descricao": "Aniversário",
+      "tipo": "aniversario",
+      "pratos": [
+        "moau37kqgqx"
+      ]
     }
   ]
 }
