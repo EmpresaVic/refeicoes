@@ -973,9 +973,44 @@
       },
       "obs": "",
       "criadoEm": "2026-04-23T23:14:41.258Z"
+    },
+    {
+      "id": "mocva3sucoz",
+      "numPedido": 21,
+      "data": "2026-04-24",
+      "pessoaId": "mocv7zad7cs",
+      "pessoaNome": "teste",
+      "pessoaSetor": "adm",
+      "pratoId": "moau37kqgqx",
+      "pratoNome": "Tilápia",
+      "pratoValor": 25.4,
+      "acTotal": 3,
+      "bebTotal": 1,
+      "totalPedido": 29.4,
+      "acomps": [
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        },
+        {
+          "nome": "Cebola Empanada",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Suco em Po",
+        "valor": 1
+      },
+      "obs": "",
+      "criadoEm": "2026-04-24T12:08:39.870Z"
     }
   ],
-  "pessoas": [
+  "pedidos": [],
+  "emp_moc1lcwb_pessoas": [
     {
       "id": "mo3nnu4w6zt",
       "nome": "Mario Bross",
@@ -992,11 +1027,10 @@
       "setor": "TESTE"
     }
   ],
-  "pratos": [],
-  "acomps": [],
-  "pedidos": [],
-  "bebidas": [],
-  "diasEspeciais": [
+  "emp_moc1lcwb_pratos": [],
+  "emp_moc1lcwb_acomps": [],
+  "emp_moc1lcwb_bebidas": [],
+  "emp_moc1lcwb_diasEspeciais": [
     {
       "id": "mobrf6w7sm7",
       "descricao": "Todo sabado",
