@@ -1106,7 +1106,14 @@
     }
   ],
   "pedidos": [],
-  "emp_moc1lcwb_pessoas": [],
+  "emp_moc1lcwb_pessoas": [
+    {
+      "id": "modb4una1hm",
+      "nome": "Agatha Victoria Rodrigues dos Santos",
+      "setor": "Atendimento",
+      "aniversario": "2001-08-15"
+    }
+  ],
   "emp_moc1lcwb_pratos": [],
   "emp_moc1lcwb_acomps": [],
   "emp_moc1lcwb_bebidas": [],
