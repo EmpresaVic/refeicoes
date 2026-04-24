@@ -140,6 +140,12 @@
       "id": "mo3q3aj3gmd",
       "nome": "Jairo Brito",
       "setor": "Cozinha"
+    },
+    {
+      "id": "mocw9qf4z2p",
+      "nome": "Teste",
+      "setor": "Atendimento",
+      "aniversario": "2026-04-24"
     }
   ],
   "emp_moc1l1xu_pratos": [
