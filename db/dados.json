@@ -145,12 +145,6 @@
       "id": "mo544a6lsgu",
       "nome": "TESTE",
       "setor": "TESTE"
-    },
-    {
-      "id": "moauxmvbwni",
-      "nome": "Teste",
-      "setor": "Adm",
-      "aniversario": "2026-04-22"
     }
   ],
   "emp_moc1l1xu_pratos": [
@@ -975,7 +969,23 @@
       "criadoEm": "2026-04-23T23:14:41.258Z"
     }
   ],
-  "pessoas": [],
+  "pessoas": [
+    {
+      "id": "mo3nnu4w6zt",
+      "nome": "Mario Bross",
+      "setor": "Administrativo"
+    },
+    {
+      "id": "mo3q3aj3gmd",
+      "nome": "Jairo Brito",
+      "setor": "Cozinha"
+    },
+    {
+      "id": "mo544a6lsgu",
+      "nome": "TESTE",
+      "setor": "TESTE"
+    }
+  ],
   "pratos": [],
   "acomps": [],
   "pedidos": [],
