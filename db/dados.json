@@ -1106,13 +1106,7 @@
     }
   ],
   "pedidos": [],
-  "emp_moc1lcwb_pessoas": [
-    {
-      "id": "mo544a6lsgu",
-      "nome": "TESTE",
-      "setor": "TESTE"
-    }
-  ],
+  "emp_moc1lcwb_pessoas": [],
   "emp_moc1lcwb_pratos": [],
   "emp_moc1lcwb_acomps": [],
   "emp_moc1lcwb_bebidas": [],
@@ -1163,13 +1157,7 @@
       ]
     }
   ],
-  "pessoas": [
-    {
-      "id": "mo544a6lsgu",
-      "nome": "TESTE",
-      "setor": "TESTE"
-    }
-  ],
+  "pessoas": [],
   "pratos": [],
   "acomps": [],
   "bebidas": [],
