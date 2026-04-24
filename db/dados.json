@@ -1,11 +1,38 @@
 {
   "usuarios": [
     {
+      "id": "mobr7mug",
+      "nome": "Operador",
+      "senhaHash": "170842",
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      },
+      "perfil": "operador",
+      "empresas": []
+    },
+    {
       "id": "super",
       "nome": "super",
       "senhaHash": "-63bd2729",
       "perfil": "superadmin",
       "empresas": [],
+      "permissoes": null
+    },
+    {
+      "id": "moc8ccu1",
+      "nome": "adminVictria",
+      "senhaHash": "78b2a1ac",
+      "perfil": "admin",
+      "empresas": [
+        "moc1l1xu"
+      ],
       "permissoes": null
     }
   ],
