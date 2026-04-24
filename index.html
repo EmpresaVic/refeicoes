@@ -338,13 +338,20 @@ nav button.active {
       <label>Senha</label>
       <input type="password" class="login-input" id="login-pass" placeholder="Digite sua senha" autocomplete="current-password" onkeydown="if(event.key==='Enter')fazerLogin()">
     </div>
+    <div class="login-field" id="login-empresa-row" style="display:none;">
+      <label>Empresa</label>
+      <select class="login-input" id="login-empresa" style="letter-spacing:0;font-size:14px;"></select>
+    </div>
     <div class="login-error" id="login-error"></div>
-    <button class="login-btn" onclick="fazerLogin()">🔑 Entrar</button>
+    <button class="login-btn" id="login-btn" onclick="fazerLogin()">🔑 Entrar</button>
   </div>
 </div>
 
 <header>
-  <div class="logo">Controle Refeição <span>Break</span></div>
+  <div>
+    <div class="logo">Controle Refeição <span>Break</span></div>
+    <div id="header-empresa-nome" style="font-size:11px;color:var(--text-dim);margin-top:2px;font-weight:500;"></div>
+  </div>
   <nav id="main-nav">
     <button class="active" onclick="showPage('pedido',this)">📋 Novo Pedido</button>
     <button onclick="showPage('resumo',this)">📊 Resumo Diário</button>
@@ -353,9 +360,16 @@ nav button.active {
     <button onclick="showPage('acomps',this)">🥗 Acompanhamentos</button>
     <button onclick="showPage('bebidas',this)">🥤 Bebidas</button>
     <button id="nav-btn-diasEspeciais" onclick="showPage('diasEspeciais',this)">🗓️ Dias Especiais</button>
+    <button id="nav-btn-empresas" onclick="showPage('empresas',this)" style="display:none;">🏢 Empresas</button>
     <button id="nav-btn-usuarios" onclick="showPage('usuarios',this)">🔐 Usuários</button>
   </nav>
   <div class="gh-status-bar">
+    <div id="header-empresa-switcher" style="display:none;align-items:center;gap:6px;">
+      <span style="font-size:11px;color:var(--text-dim);">🌐 Empresa:</span>
+      <select id="super-empresa-sel" onchange="superTrocarEmpresa(this.value)" style="background:var(--surface2);border:1px solid var(--border);border-radius:6px;padding:5px 8px;color:var(--text);font-family:'DM Sans',sans-serif;font-size:12px;outline:none;max-width:180px;">
+        <option value="">— Todas —</option>
+      </select>
+    </div>
     <div class="login-user-info" id="header-user-info" style="display:none;">
       <span>👤 <strong id="header-username"></strong></span>
       <button class="btn-logout" onclick="fazerLogout()">Sair</button>
@@ -525,6 +539,20 @@ nav button.active {
       <div class="field"><label>Nome de Usuário</label><input type="text" id="usr-nome" placeholder="Ex.: admin" autocomplete="off"></div>
       <div class="field"><label>Senha</label><input type="password" id="usr-senha" placeholder="Mínimo 4 caracteres" autocomplete="new-password"></div>
       <div class="field"><label>Confirmar Senha</label><input type="password" id="usr-senha2" placeholder="Repita a senha" autocomplete="new-password"></div>
+      <div class="field" id="usr-perfil-row">
+        <label>Perfil</label>
+        <select id="usr-perfil" onchange="onUsrPerfilChange()">
+          <option value="operador">Operador</option>
+          <option value="admin">Administrador</option>
+          <option value="superadmin" id="usr-opt-super" style="display:none;">Super Administrador</option>
+        </select>
+      </div>
+      <div class="field" id="usr-empresa-row">
+        <label>Empresas com Acesso</label>
+        <div class="perm-grid" id="usr-empresa-grid" style="max-height:180px;overflow-y:auto;">
+          <span style="font-size:12px;color:var(--text-dim);">Nenhuma empresa cadastrada.</span>
+        </div>
+      </div>
       <div class="field">
         <label>Permissões de Acesso</label>
         <div class="perm-grid" id="perm-novo-grid">
@@ -548,8 +576,8 @@ nav button.active {
 </div>
 
 <div id="page-diasEspeciais" class="page">
-  <h1 class="page-title">Dias Especiais & Feriados</h1>
-  <p class="page-sub">Cadastre feriados e datas especiais e defina quais pratos estarão disponíveis nessas datas.</p>
+  <h1 class="page-title">Dias Especiais</h1>
+  <p class="page-sub">Cadastre datas especiais e defina quais pratos estarão disponíveis nessas datas.</p>
   <div class="grid2">
     <div class="card">
       <div class="card-title">Nova Data Especial</div>
@@ -568,7 +596,6 @@ nav button.active {
         <select id="de-tipo" onchange="onDeTipoChange()">
           <option value="especial">🗓️ Dia Especial</option>
           <option value="aniversario">🎂 Aniversário (pratos para aniversariantes)</option>
-          <option value="feriado">🚫 Feriado (sem atendimento)</option>
         </select>
       </div>
       <div class="field" id="de-pratos-field">
@@ -580,6 +607,24 @@ nav button.active {
     <div class="card">
       <div class="card-title">Datas Cadastradas</div>
       <div id="lista-diasEspeciais"><div class="empty"><span class="ico">🗓️</span>Nenhuma data especial</div></div>
+    </div>
+  </div>
+</div>
+
+<!-- EMPRESAS PAGE (superadmin only) -->
+<div id="page-empresas" class="page">
+  <h1 class="page-title">🏢 Gerenciar Empresas</h1>
+  <p class="page-sub">Cadastre as empresas e vincule usuários a elas.</p>
+  <div class="grid2">
+    <div class="card">
+      <div class="card-title">Nova Empresa</div>
+      <div class="field"><label>Nome da Empresa</label><input type="text" id="emp-nome" placeholder="Ex.: Fast Food Centro"></div>
+      <div class="field"><label>Endereço (opcional)</label><input type="text" id="emp-end" placeholder="Ex.: Rua das Flores, 123"></div>
+      <button class="btn btn-gold" onclick="addEmpresa()">+ Adicionar Empresa</button>
+    </div>
+    <div class="card">
+      <div class="card-title">Empresas Cadastradas</div>
+      <div id="lista-empresas"><div class="empty"><span class="ico">🏢</span>Nenhuma empresa</div></div>
     </div>
   </div>
 </div>
@@ -663,23 +708,103 @@ nav button.active {
    Configuração (usuário/repo/branch/token) fica em localStorage.
    ========================================================= */
 
+/* =========================================================
+   MULTI-EMPRESA — Estrutura de dados
+   - _cache['empresas']  → array de { id, nome, end }
+   - _cache['usuarios']  → array de { id, nome, senhaHash, perfil, empresas[], permissoes{} }
+   - Dados por empresa: _cache['emp_<id>_<tabela>']
+   - Usuário super (superadmin): sem empresa obrigatória; vê todas
+   ========================================================= */
+
 var STORAGE_KEY = 'refeicoes_db';
 var GH_CFG_KEY  = 'refeicoes_gh_cfg';
 var GH_FILE     = 'db/dados.json';
 
-/* Usuário logado na sessão atual */
-var _usuarioLogado = null;
+/* Usuário e empresa ativos na sessão */
+var _usuarioLogado   = null;
+var _empresaAtiva    = null; /* { id, nome } — null quando superadmin sem filtro */
+
+/* ── helpers de empresa ── */
+function _getEmpresas() {
+  var lista = _cache['empresas'];
+  return Array.isArray(lista) ? JSON.parse(JSON.stringify(lista)) : [];
+}
+function _setEmpresas(lista, cb) { DB.set('empresas', lista, cb); }
+
+function _empPrefix() {
+  /* Retorna prefixo de chave da empresa ativa, ou '' se superadmin global */
+  return _empresaAtiva ? 'emp_' + _empresaAtiva.id + '_' : '';
+}
+
+/* DB.get/set com prefixo de empresa */
+var DB = {
+  uid: function() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); },
+
+  get: function(k) {
+    var chave = _empPrefix() + k;
+    /* Fallback: se não tem dado com prefixo, tenta sem (migração) */
+    var v = _cache[chave];
+    if (!Array.isArray(v)) {
+      if (_empPrefix() && Array.isArray(_cache[k])) {
+        /* Migração: move dados globais para a empresa */
+        _cache[chave] = JSON.parse(JSON.stringify(_cache[k]));
+        delete _cache[k];
+        v = _cache[chave];
+      } else {
+        v = [];
+      }
+    }
+    return JSON.parse(JSON.stringify(v));
+  },
+
+  set: function(k, v, callback) {
+    var chave = (k === 'empresas' || k === 'usuarios') ? k : (_empPrefix() + k);
+    _cache[chave] = v;
+    _persistir(callback);
+  },
+
+  loadAll: async function(callback) {
+    if (GH.isConfigured()) {
+      try {
+        var result = await GH.read();
+        if (result && result.content) {
+          _cache = result.content;
+          _currentSha = result.sha;
+        } else {
+          _carregarLocalStorage();
+          _currentSha = result ? result.sha : null;
+          try {
+            _currentSha = await GH.write(_cache, _currentSha);
+          } catch(writeErr) {
+            console.warn('GH: não foi possível inicializar arquivo remoto:', writeErr.message);
+          }
+        }
+      } catch(e) {
+        _carregarLocalStorage();
+        if (callback) callback(new Error('GitHub indisponível: ' + e.message));
+        return;
+      }
+    } else {
+      _carregarLocalStorage();
+    }
+
+    /* Garante arrays globais */
+    if (!Array.isArray(_cache['empresas'])) _cache['empresas'] = [];
+    if (!Array.isArray(_cache['usuarios'])) _cache['usuarios'] = [];
+
+    /* Garante superadmin */
+    _garantirSuperAdmin();
+
+    if (callback) callback(null);
+  }
+};
 
 /* =========================================================
    USUÁRIOS & LOGIN
-   Os usuários ficam em _cache['usuarios'] — sincronizado
-   pelo GitHub igual a pedidos, pessoas, pratos etc.
    ========================================================= */
 function _getUsuarios() {
-  /* Lê do cache (já sincronizado com GitHub) */
   var lista = _cache['usuarios'];
   if (!Array.isArray(lista) || lista.length === 0) {
-    /* Fallback: tenta localStorage legado (migração) */
     try {
       var legado = JSON.parse(localStorage.getItem('refeicoes_usuarios') || '[]');
       if (legado.length) return legado;
@@ -690,23 +815,35 @@ function _getUsuarios() {
 }
 
 function _setUsuarios(lista, callback) {
-  /* Salva no cache e sincroniza com GitHub */
   DB.set('usuarios', lista, callback);
 }
 
 function _hashSenha(s) {
-  /* Hash simples para não guardar senha em texto puro */
   var h=0; for(var i=0;i<s.length;i++){ h=((h<<5)-h)+s.charCodeAt(i); h|=0; }
   return h.toString(16);
 }
 
-/* Login: primeiro carrega dados do GitHub (ou localStorage),
-   depois valida o usuário */
+function _garantirSuperAdmin() {
+  if (!Array.isArray(_cache['usuarios'])) _cache['usuarios'] = [];
+  var existe = _cache['usuarios'].some(function(u){ return u.nome === 'super' && u.perfil === 'superadmin'; });
+  if (!existe) {
+    _cache['usuarios'].push({
+      id: 'super',
+      nome: 'super',
+      senhaHash: _hashSenha('super123'),
+      perfil: 'superadmin',
+      empresas: [],
+      permissoes: null
+    });
+  }
+}
+
+/* ── Login: passo 1 — valida credenciais ── */
 async function fazerLogin() {
   var user  = document.getElementById('login-user').value.trim();
   var pass  = document.getElementById('login-pass').value;
   var errEl = document.getElementById('login-error');
-  var btn   = document.querySelector('#login-screen .login-btn');
+  var btn   = document.getElementById('login-btn');
 
   if(!user||!pass){ errEl.textContent='Preencha usuário e senha.'; return; }
 
@@ -714,22 +851,17 @@ async function fazerLogin() {
   btn.textContent='⏳ Verificando...';
   btn.disabled=true;
 
-  /* Carrega dados (GitHub ou localStorage) para ter os usuários atualizados */
-  try {
-    await DB.loadAll(function(){});
-  } catch(e) {
-    /* Se falhar, continua com o que estiver no localStorage */
-  }
+  try { await DB.loadAll(function(){}); } catch(e) {}
 
   btn.textContent='🔑 Entrar';
   btn.disabled=false;
 
   var usuarios = _getUsuarios();
 
-  /* Se não há usuários cadastrados em nenhum lugar, cria admin padrão */
+  /* Fallback: cria admin padrão */
   if(!usuarios.length) {
-    usuarios.push({ id:'admin', nome:'admin', senhaHash:_hashSenha('1234') });
-    _setUsuarios(usuarios);
+    _garantirSuperAdmin();
+    usuarios = _getUsuarios();
   }
 
   var encontrado = null;
@@ -746,34 +878,182 @@ async function fazerLogin() {
     return;
   }
 
-  _usuarioLogado = encontrado;
-  document.getElementById('login-screen').classList.remove('open');
-  document.getElementById('header-username').textContent = encontrado.nome;
-  document.getElementById('header-user-info').style.display = 'flex';
+  /* Superadmin: entra diretamente sem escolher empresa */
+  if(encontrado.perfil === 'superadmin') {
+    _entrarSistema(encontrado, null);
+    return;
+  }
+
+  /* Usuário normal: verifica empresas vinculadas */
+  var empIds = encontrado.empresas || [];
+  var todasEmpresas = _getEmpresas();
+  var empresasAcesso = todasEmpresas.filter(function(e){ return empIds.indexOf(e.id) >= 0; });
+
+  if(!empresasAcesso.length) {
+    errEl.textContent='⚠️ Usuário sem empresa vinculada. Contate o administrador.';
+    return;
+  }
+
+  if(empresasAcesso.length === 1) {
+    _entrarSistema(encontrado, empresasAcesso[0]);
+    return;
+  }
+
+  /* Múltiplas empresas: mostra combo */
+  var sel = document.getElementById('login-empresa');
+  sel.innerHTML = '<option value="">— Selecione a empresa —</option>' +
+    empresasAcesso.map(function(e){ return '<option value="'+e.id+'">'+e.nome+'</option>'; }).join('');
+  document.getElementById('login-empresa-row').style.display = '';
   errEl.textContent='';
+
+  btn.textContent='🏢 Confirmar Empresa';
+  btn.onclick = function() {
+    var empId = document.getElementById('login-empresa').value;
+    if(!empId){ document.getElementById('login-error').textContent='⚠️ Selecione a empresa.'; return; }
+    var emp = empresasAcesso.find(function(e){ return e.id===empId; });
+    _entrarSistema(encontrado, emp);
+    btn.textContent='🔑 Entrar';
+    btn.onclick = fazerLogin;
+  };
+}
+
+function _entrarSistema(user, empresa) {
+  _usuarioLogado  = user;
+  _empresaAtiva   = empresa; /* null = superadmin global */
+
+  document.getElementById('login-screen').classList.remove('open');
+  document.getElementById('login-empresa-row').style.display = 'none';
+  document.getElementById('header-username').textContent = user.nome;
+  document.getElementById('header-user-info').style.display = 'flex';
+
+  /* Mostra nome da empresa no header */
+  var hEmp = document.getElementById('header-empresa-nome');
+  if(hEmp) hEmp.textContent = empresa ? ('🏢 ' + empresa.nome) : '🌐 Todas as empresas';
+
+  /* Se superadmin: mostra switcher de empresa no header */
+  var switcher = document.getElementById('header-empresa-switcher');
+  if(user.perfil === 'superadmin') {
+    switcher.style.display = 'flex';
+    _popularSuperSel();
+    document.getElementById('nav-btn-empresas').style.display = '';
+  } else {
+    switcher.style.display = 'none';
+    document.getElementById('nav-btn-empresas').style.display = 'none';
+  }
+
   aplicarPermissoesNav();
-  /* Sincroniza o restante da interface (já tem os dados no cache) */
   sincronizar();
+}
+
+/* Superadmin troca empresa pelo seletor do header */
+function superTrocarEmpresa(empId) {
+  if(empId) {
+    var emp = _getEmpresas().find(function(e){ return e.id===empId; });
+    _empresaAtiva = emp || null;
+  } else {
+    _empresaAtiva = null;
+  }
+  var hEmp = document.getElementById('header-empresa-nome');
+  if(hEmp) hEmp.textContent = _empresaAtiva ? ('🏢 ' + _empresaAtiva.nome) : '🌐 Todas as empresas';
+  initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
+  /* Re-renderiza a página ativa */
+  var activePage = document.querySelector('.page.active');
+  if(activePage) {
+    var pName = activePage.id.replace('page-','');
+    showPage(pName, null);
+  }
+}
+
+function _popularSuperSel() {
+  var sel = document.getElementById('super-empresa-sel');
+  if(!sel) return;
+  var empresas = _getEmpresas();
+  sel.innerHTML = '<option value="">🌐 Todas as empresas</option>' +
+    empresas.map(function(e){ return '<option value="'+e.id+'">'+e.nome+'</option>'; }).join('');
+  if(_empresaAtiva) sel.value = _empresaAtiva.id;
 }
 
 function fazerLogout() {
   if(!confirm('Deseja sair do sistema?')) return;
   _usuarioLogado = null;
+  _empresaAtiva  = null;
   document.getElementById('header-user-info').style.display = 'none';
+  document.getElementById('header-empresa-nome').textContent = '';
+  document.getElementById('header-empresa-switcher').style.display = 'none';
+  document.getElementById('nav-btn-empresas').style.display = 'none';
   document.getElementById('login-user').value='';
   document.getElementById('login-pass').value='';
   document.getElementById('login-error').textContent='';
+  document.getElementById('login-empresa-row').style.display='none';
+  var btn = document.getElementById('login-btn');
+  btn.textContent = '🔑 Entrar';
+  btn.onclick = fazerLogin;
   /* Restaura todos os botões de nav */
   var navBtns = document.querySelectorAll('#main-nav button');
   for(var i=0;i<navBtns.length;i++) navBtns[i].style.display='';
+  document.getElementById('nav-btn-empresas').style.display='none';
   document.getElementById('login-screen').classList.add('open');
   setTimeout(function(){ document.getElementById('login-user').focus(); }, 100);
+}
+
+/* ── Permissões de nav ── */
+function aplicarPermissoesNav() {
+  if(!_usuarioLogado) return;
+  var perms = _usuarioLogado.permissoes;
+  var isSuperAdmin = _usuarioLogado.perfil === 'superadmin';
+  var isAdmin      = _usuarioLogado.perfil === 'admin';
+
+  var navBtns = document.querySelectorAll('#main-nav button');
+  for(var i=0;i<navBtns.length;i++){
+    var btn = navBtns[i];
+    var bid = btn.id || '';
+    if(bid === 'nav-btn-empresas') continue; /* já controlado por _entrarSistema */
+
+    /* superadmin e admin têm acesso total */
+    if(isSuperAdmin || isAdmin) { btn.style.display=''; continue; }
+
+    var onclick = btn.getAttribute('onclick') || '';
+    var match = onclick.match(/showPage\('([^']+)'/);
+    if(match){
+      var mod = match[1];
+      if(mod === 'pedido'){ btn.style.display=''; continue; }
+      if(!perms){ btn.style.display=''; continue; } /* sem restrições (legado) */
+      btn.style.display = perms[mod] ? '' : 'none';
+    }
+  }
+}
+
+/* ── addUsuario: agora inclui empresa e perfil ── */
+function onUsrPerfilChange() {
+  var perfil = document.getElementById('usr-perfil').value;
+  var empRow = document.getElementById('usr-empresa-row');
+  var permGrid = document.getElementById('perm-novo-grid').parentElement;
+  if(perfil === 'superadmin') {
+    empRow.style.display = 'none';
+    permGrid.style.display = 'none';
+  } else {
+    empRow.style.display = '';
+    permGrid.style.display = '';
+    /* preenche checkboxes de empresa */
+    _buildEmpresaChecks(null);
+  }
+}
+
+function _buildEmpresaChecks(selectedIds) {
+  var empresas = _getEmpresas();
+  var el = document.getElementById('usr-empresa-grid');
+  if(!empresas.length){ el.innerHTML='<span style="font-size:12px;color:var(--text-dim);">Nenhuma empresa cadastrada.</span>'; return; }
+  el.innerHTML = empresas.map(function(e){
+    var chk = (selectedIds && selectedIds.indexOf(e.id)>=0) ? 'checked' : '';
+    return '<label class="perm-item"><input type="checkbox" class="uemp-chk" value="'+e.id+'" '+chk+'> '+e.nome+'</label>';
+  }).join('');
 }
 
 function addUsuario() {
   var nome   = document.getElementById('usr-nome').value.trim();
   var senha  = document.getElementById('usr-senha').value;
   var senha2 = document.getElementById('usr-senha2').value;
+  var perfil = document.getElementById('usr-perfil').value;
   if(!nome){ toast('Informe o nome de usuário.','#c04a3a'); return; }
   if(senha.length<4){ toast('Senha deve ter ao menos 4 caracteres.','#c04a3a'); return; }
   if(senha!==senha2){ toast('As senhas não coincidem.','#c04a3a'); return; }
@@ -781,15 +1061,38 @@ function addUsuario() {
   for(var i=0;i<lista.length;i++){
     if(lista[i].nome.toLowerCase()===nome.toLowerCase()){ toast('Usuário já existe.','#c04a3a'); return; }
   }
-  /* Coleta permissões */
-  var permChecks = document.querySelectorAll('#perm-novo-grid input[type=checkbox]');
-  var permissoes = {};
-  for(var i=0;i<permChecks.length;i++){
-    permissoes[permChecks[i].value] = permChecks[i].checked;
+
+  /* Permissões */
+  var permissoes = null;
+  if(perfil !== 'superadmin' && perfil !== 'admin') {
+    var permChecks = document.querySelectorAll('#perm-novo-grid input[type=checkbox]');
+    permissoes = {};
+    for(var j=0;j<permChecks.length;j++){
+      permissoes[permChecks[j].value] = permChecks[j].checked;
+    }
+    permissoes['pedido'] = true;
   }
-  /* pedido sempre liberado */
-  permissoes['pedido'] = true;
-  lista.push({ id: Date.now().toString(36), nome:nome, senhaHash:_hashSenha(senha), permissoes:permissoes });
+
+  /* Empresas vinculadas */
+  var empresasIds = [];
+  if(perfil !== 'superadmin') {
+    var empChks = document.querySelectorAll('.uemp-chk:checked');
+    for(var k=0;k<empChks.length;k++) empresasIds.push(empChks[k].value);
+    /* Se não é superadmin e não selecionou empresa, avisa */
+    if(!empresasIds.length && perfil !== 'admin') {
+      toast('Selecione ao menos uma empresa para o usuário.','#c04a3a'); return;
+    }
+  }
+
+  lista.push({
+    id: Date.now().toString(36),
+    nome: nome,
+    senhaHash: _hashSenha(senha),
+    perfil: perfil,
+    empresas: empresasIds,
+    permissoes: permissoes
+  });
+
   document.getElementById('usr-nome').value='';
   document.getElementById('usr-senha').value='';
   document.getElementById('usr-senha2').value='';
@@ -800,10 +1103,8 @@ function addUsuario() {
 
 function delUsuario(id) {
   var lista = _getUsuarios();
-  /* Protege: não remove o único usuário ou o logado */
   if(lista.length<=1){ toast('Deve haver ao menos um usuário.','#c04a3a'); return; }
-  var alvo = null;
-  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ alvo=lista[i]; break; }
+  var alvo = lista.find(function(u){ return u.id===id; });
   if(_usuarioLogado && alvo && alvo.nome===_usuarioLogado.nome){
     toast('Não é possível remover o usuário logado.','#c04a3a'); return;
   }
@@ -816,6 +1117,7 @@ function delUsuario(id) {
 
 function renderUsuarios() {
   var lista = _getUsuarios();
+  var empresas = _getEmpresas();
   var el = document.getElementById('lista-usuarios');
   if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🔐</span>Nenhum usuário</div>'; return; }
   var modulos = [
@@ -823,43 +1125,62 @@ function renderUsuarios() {
     {k:'pratos',l:'🍽️ Pratos'},{k:'acomps',l:'🥗 Acomp.'},{k:'bebidas',l:'🥤 Bebidas'},
     {k:'diasEspeciais',l:'🗓️ Dias Esp.'},{k:'usuarios',l:'🔐 Usuários'}
   ];
+  var PERFIL_LABEL = { superadmin:'Super Admin', admin:'Administrador', operador:'Operador' };
+  var isSA = _usuarioLogado && _usuarioLogado.perfil === 'superadmin';
   var h='';
   for(var i=0;i<lista.length;i++){
     var u=lista[i];
     var isMe = _usuarioLogado && u.nome===_usuarioLogado.nome;
     var perms = u.permissoes || null;
+    var perfilBadge = u.perfil==='superadmin' ? ' <span style="background:rgba(122,74,154,.12);color:#7a1a7a;padding:2px 7px;border-radius:10px;font-size:10px;font-weight:700;">SUPER</span>' : '';
     var permHtml = '';
-    if(perms){
-      var tags = '';
+    if(u.perfil==='superadmin'){ permHtml='<span style="font-size:12px;color:var(--text-dim);">Acesso total a todas as empresas</span>'; }
+    else if(u.perfil==='admin'){ permHtml='<span class="perm-badge">Acesso total</span>'; }
+    else if(perms){
+      var tags='';
       for(var m=0;m<modulos.length;m++){
         if(perms[modulos[m].k]) tags+='<span class="perm-badge" style="margin:2px;">'+modulos[m].l+'</span>';
       }
-      permHtml = '<div style="margin-top:6px;display:flex;flex-wrap:wrap;gap:3px;">'+tags+'</div>';
+      permHtml='<div style="display:flex;flex-wrap:wrap;gap:3px;">'+tags+'</div>';
     } else {
-      permHtml = '<div style="margin-top:4px;"><span class="perm-badge">Acesso total (legado)</span></div>';
+      permHtml='<span class="perm-badge">Acesso total (legado)</span>';
     }
+    var empNomes = '';
+    if(u.perfil!=='superadmin'){
+      var empIds = u.empresas || [];
+      var nomes = empIds.map(function(eid){ var e=empresas.find(function(x){return x.id===eid;}); return e?e.nome:eid; });
+      empNomes = '<div style="font-size:11px;color:var(--text-dim);margin-top:2px;">🏢 '+(nomes.length?nomes.join(', '):'— Sem empresa')+'</div>';
+    }
+
     h+='<div class="user-item" style="flex-direction:column;align-items:flex-start;gap:6px;">'
       +'<div style="display:flex;justify-content:space-between;width:100%;align-items:center;">'
-      +'<div><div class="uname">'+u.nome+(isMe?' <span style="font-size:10px;color:var(--gold);">(você)</span>':'')+'</div>'
-      +'<div class="urole">Usuário do sistema</div></div>'
+      +'<div><div class="uname">'+u.nome+perfilBadge+(isMe?' <span style="font-size:10px;color:var(--gold);">(você)</span>':'')+'</div>'
+      +'<div class="urole">'+(PERFIL_LABEL[u.perfil]||u.perfil)+'</div>'
+      +empNomes+'</div>'
       +(isMe?'<span style="font-size:12px;color:var(--text-dim);">—</span>'
         :'<div style="display:flex;gap:6px;">'
-        +'<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editarPermissoes(\''+u.id+'\')">✏️ Permissões</button>'
+        +(u.perfil!=='superadmin'?'<button class="btn btn-ghost" style="padding:4px 10px;font-size:12px;" onclick="editarPermissoes(\''+u.id+'\')">✏️ Permissões</button>':'')
         +'<button class="btn btn-danger" onclick="delUsuario(\''+u.id+'\')">✕ Remover</button>'
         +'</div>')
       +'</div>'
-      +permHtml
+      +'<div style="margin-top:4px;">'+permHtml+'</div>'
       +'</div>';
   }
   el.innerHTML=h;
+
+  /* Popula select de perfil: superadmin só visível para superadmin */
+  var optSuper = document.getElementById('usr-opt-super');
+  if(optSuper) optSuper.style.display = isSA ? '' : 'none';
+  /* Popula checkboxes de empresa */
+  _buildEmpresaChecks(null);
 }
 
 /* Modal de edição de permissões */
 function editarPermissoes(id) {
   var lista = _getUsuarios();
-  var u = null;
-  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ u=lista[i]; break; }
+  var u = lista.find(function(x){ return x.id===id; });
   if(!u) return;
+  var empresas = _getEmpresas();
   var modulos = [
     {k:'pedido',l:'📋 Novo Pedido'},{k:'resumo',l:'📊 Resumo Diário'},
     {k:'pessoas',l:'👤 Pessoas'},{k:'pratos',l:'🍽️ Pratos'},
@@ -873,6 +1194,11 @@ function editarPermissoes(id) {
     var checked  = (modulos[m].k==='pedido' || perms[modulos[m].k]) ? ' checked' : '';
     checksHtml += '<label class="perm-item"><input type="checkbox" class="ep-check" data-mod="'+modulos[m].k+'"'+checked+disabled+'> '+modulos[m].l+'</label>';
   }
+  var empIds = u.empresas || [];
+  var empChecks = empresas.map(function(e){
+    var c = empIds.indexOf(e.id)>=0 ? ' checked' : '';
+    return '<label class="perm-item"><input type="checkbox" class="ep-emp" value="'+e.id+'"'+c+'> '+e.nome+'</label>';
+  }).join('');
 
   var overlay = document.getElementById('modal-edit-perm');
   if(!overlay){
@@ -881,22 +1207,23 @@ function editarPermissoes(id) {
     overlay.style.cssText = 'display:none;position:fixed;inset:0;background:rgba(0,0,0,0.5);z-index:2100;align-items:center;justify-content:center;';
     document.body.appendChild(overlay);
   }
-  overlay.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:440px;width:92%;">'
+  overlay.innerHTML = '<div style="background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:28px;max-width:500px;width:94%;max-height:90vh;overflow-y:auto;">'
     +'<h3 style="font-family:\'Playfair Display\',serif;color:var(--gold);margin-bottom:4px;font-size:18px;">✏️ Permissões de Acesso</h3>'
     +'<p style="font-size:13px;color:var(--text-dim);margin-bottom:16px;">Usuário: <strong style="color:var(--cream);">'+u.nome+'</strong></p>'
+    +(empresas.length?('<div style="margin-bottom:16px;"><div style="font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Empresas com Acesso</div><div class="perm-grid">'+empChecks+'</div></div>'):'')
+    +'<div style="font-size:11px;font-weight:600;color:var(--text-dim);text-transform:uppercase;letter-spacing:.5px;margin-bottom:8px;">Módulos Permitidos</div>'
     +'<div class="perm-grid">'+checksHtml+'</div>'
     +'<p style="font-size:11px;color:var(--text-dim);margin-top:10px;">* Novo Pedido sempre liberado.</p>'
     +'<div style="display:flex;gap:10px;margin-top:18px;justify-content:flex-end;">'
     +'<button class="btn btn-ghost" onclick="document.getElementById(\'modal-edit-perm\').style.display=\'none\'">Cancelar</button>'
-    +'<button class="btn btn-gold" onclick="salvarPermissoes(\''+id+'\')">✓ Salvar Permissões</button>'
+    +'<button class="btn btn-gold" onclick="salvarPermissoes(\''+id+'\')">✓ Salvar</button>'
     +'</div></div>';
   overlay.style.display = 'flex';
 }
 
 function salvarPermissoes(id) {
   var lista = _getUsuarios();
-  var u = null;
-  for(var i=0;i<lista.length;i++) if(lista[i].id===id){ u=lista[i]; break; }
+  var u = lista.find(function(x){ return x.id===id; });
   if(!u) return;
   var checks = document.querySelectorAll('#modal-edit-perm .ep-check');
   var permissoes = {};
@@ -905,34 +1232,79 @@ function salvarPermissoes(id) {
   }
   permissoes['pedido'] = true;
   u.permissoes = permissoes;
+  /* Salva empresas */
+  var empChks = document.querySelectorAll('#modal-edit-perm .ep-emp:checked');
+  u.empresas = [];
+  for(var j=0;j<empChks.length;j++) u.empresas.push(empChks[j].value);
+
   document.getElementById('modal-edit-perm').style.display='none';
   toast('💾 Salvando permissões...','#3a6f98');
   _setUsuarios(lista, function(){ toast('✓ Permissões atualizadas!'); });
   renderUsuarios();
-  /* Atualiza nav se for o usuário logado */
   if(_usuarioLogado && _usuarioLogado.id === id){
     _usuarioLogado.permissoes = permissoes;
     aplicarPermissoesNav();
   }
 }
 
-/* Aplica visibilidade dos botões de nav com base nas permissões */
-function aplicarPermissoesNav() {
-  var perms = _usuarioLogado ? _usuarioLogado.permissoes : null;
-  if(!perms) return; /* sem restrições (usuário legado sem permissoes definidas) */
-  var navBtns = document.querySelectorAll('#main-nav button');
-  for(var i=0;i<navBtns.length;i++){
-    var btn = navBtns[i];
-    var onclick = btn.getAttribute('onclick') || '';
-    var match = onclick.match(/showPage\('([^']+)'/);
-    if(match){
-      var mod = match[1];
-      if(mod === 'pedido'){ btn.style.display=''; continue; }
-      btn.style.display = perms[mod] ? '' : 'none';
-    }
-  }
+/* =========================================================
+   EMPRESAS (CRUD — apenas superadmin)
+   ========================================================= */
+function addEmpresa() {
+  var nome = document.getElementById('emp-nome').value.trim();
+  var end  = document.getElementById('emp-end').value.trim();
+  if(!nome){ toast('Informe o nome da empresa.','#c04a3a'); return; }
+  var lista = _getEmpresas();
+  var novaId = Date.now().toString(36);
+  lista.push({ id: novaId, nome: nome, end: end });
+  document.getElementById('emp-nome').value='';
+  document.getElementById('emp-end').value='';
+  _setEmpresas(lista, function(){ toast('✓ Empresa adicionada!'); });
+  renderEmpresas();
+  /* Atualiza seletor do header */
+  _popularSuperSel();
+  /* Atualiza checkboxes de usuários */
+  _buildEmpresaChecks(null);
 }
 
+function delEmpresa(id) {
+  var lista = _getEmpresas();
+  var emp = lista.find(function(e){ return e.id===id; });
+  if(!emp) return;
+  if(!confirm('Remover "'+emp.nome+'"? Os dados da empresa serão mantidos, mas ela não será mais acessível por novos usuários.')) return;
+  lista = lista.filter(function(e){ return e.id!==id; });
+  /* Remove empresa dos usuários */
+  var usuarios = _getUsuarios();
+  usuarios = usuarios.map(function(u){
+    u.empresas = (u.empresas||[]).filter(function(eid){ return eid!==id; });
+    return u;
+  });
+  _cache['usuarios'] = usuarios;
+  _setEmpresas(lista, function(){ toast('Empresa removida.'); });
+  renderEmpresas();
+  _popularSuperSel();
+  _buildEmpresaChecks(null);
+}
+
+function renderEmpresas() {
+  var lista = _getEmpresas();
+  var usuarios = _getUsuarios();
+  var el = document.getElementById('lista-empresas');
+  if(!el) return;
+  if(!lista.length){ el.innerHTML='<div class="empty"><span class="ico">🏢</span>Nenhuma empresa</div>'; return; }
+  var h='';
+  for(var i=0;i<lista.length;i++){
+    var e=lista[i];
+    var numU = usuarios.filter(function(u){ return (u.empresas||[]).indexOf(e.id)>=0; }).length;
+    h+='<div class="user-item">'
+      +'<div style="flex:1;min-width:0">'
+      +'<div class="uname">🏢 '+e.nome+'</div>'
+      +'<div class="urole">'+numU+' usuário(s) vinculado(s)'+(e.end?' · 📍 '+e.end:'')+'</div></div>'
+      +'<div><button class="btn btn-danger" onclick="delEmpresa(\''+e.id+'\')">✕ Remover</button></div>'
+      +'</div>';
+  }
+  el.innerHTML=h;
+}
 /* Cache em memória da sessão */
 var _cache = {};
 
@@ -1058,59 +1430,6 @@ var GH = {
 /* ─── SHA atual do arquivo (para evitar conflito de edição) ─── */
 var _currentSha = null;
 
-/* ─── DB: interface de acesso aos dados ─── */
-var DB = {
-  uid: function() { return Date.now().toString(36) + Math.random().toString(36).slice(2,5); },
-
-  get: function(k) {
-    return _cache[k] ? JSON.parse(JSON.stringify(_cache[k])) : [];
-  },
-
-  /* Salva tabela no cache + persiste no GitHub (ou localStorage como fallback) */
-  set: function(k, v, callback) {
-    _cache[k] = v;
-    _persistir(callback);
-  },
-
-  /* Carrega todos os dados (do GitHub ou localStorage) para o cache */
-  loadAll: async function(callback) {
-    if (GH.isConfigured()) {
-      try {
-        var result = await GH.read();
-        if (result && result.content) {
-          _cache = result.content;
-          _currentSha = result.sha;
-        } else {
-          /* Arquivo remoto vazio ou inexistente:
-             carrega dados locais e faz upload inicial para o GitHub */
-          _carregarLocalStorage();
-          _currentSha = result ? result.sha : null;
-          /* Tenta salvar os dados locais no GitHub (cria o arquivo) */
-          try {
-            _currentSha = await GH.write(_cache, _currentSha);
-            console.log('GH: arquivo criado/inicializado com dados locais.');
-          } catch(writeErr) {
-            console.warn('GH: não foi possível inicializar arquivo remoto:', writeErr.message);
-          }
-        }
-      } catch(e) {
-        /* Fallback localStorage se GitHub falhar */
-        _carregarLocalStorage();
-        if (callback) callback(new Error('GitHub indisponível: ' + e.message));
-        return;
-      }
-    } else {
-      _carregarLocalStorage();
-    }
-
-    /* Garante que cada tabela é array */
-    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios','diasEspeciais'].forEach(function(t){
-      if (!Array.isArray(_cache[t])) _cache[t] = [];
-    });
-    if (callback) callback(null);
-  }
-};
-
 function _carregarLocalStorage() {
   try {
     var local = localStorage.getItem(STORAGE_KEY);
@@ -1121,10 +1440,9 @@ function _carregarLocalStorage() {
 
 /* Persiste _cache inteiro (GitHub ou localStorage) */
 async function _persistir(callback) {
-  /* Garante arrays */
-  ['pessoas','pratos','acomps','pedidos','bebidas','usuarios','diasEspeciais'].forEach(function(t){
-    if (!Array.isArray(_cache[t])) _cache[t] = [];
-  });
+  /* Garante arrays globais */
+  if (!Array.isArray(_cache['empresas'])) _cache['empresas'] = [];
+  if (!Array.isArray(_cache['usuarios'])) _cache['usuarios'] = [];
 
   if (GH.isConfigured()) {
     try {
@@ -1240,12 +1558,13 @@ async function sincronizar() {
   if (!GH.isConfigured()) {
     setStatus('⚠️ Configure o GitHub', '#c04a3a');
     _carregarLocalStorage();
-    ['pessoas','pratos','acomps','pedidos','bebidas','usuarios'].forEach(function(t){
-      if (!Array.isArray(_cache[t])) _cache[t] = [];
-    });
+    if (!Array.isArray(_cache['empresas'])) _cache['empresas'] = [];
+    if (!Array.isArray(_cache['usuarios'])) _cache['usuarios'] = [];
+    _garantirSuperAdmin();
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
     initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
+    if(_usuarioLogado && _usuarioLogado.perfil === 'superadmin') _popularSuperSel();
     return;
   }
 
@@ -1260,17 +1579,31 @@ async function sincronizar() {
       iniciarAutoSync();
     }
 
-    /* Migração: se não há usuários no cache mas há no localStorage legado, migra */
-    if (!_cache['usuarios'] || !_cache['usuarios'].length) {
-      try {
-        var legado = JSON.parse(localStorage.getItem('refeicoes_usuarios') || '[]');
-        if (legado.length) {
-          _cache['usuarios'] = legado;
-          _persistir(function(){ localStorage.removeItem('refeicoes_usuarios'); });
-        }
-      } catch(e){}
+    /* Migração: usuários sem campo empresas */
+    if (Array.isArray(_cache['usuarios'])) {
+      _cache['usuarios'] = _cache['usuarios'].map(function(u){
+        if(!u.perfil) u.perfil = 'operador';
+        if(!u.empresas) u.empresas = [];
+        return u;
+      });
     }
 
+    /* Migração: dados globais -> empresa padrão se só há uma empresa */
+    var empresas = _getEmpresas();
+    if(empresas.length === 1) {
+      var empId = empresas[0].id;
+      ['pessoas','pratos','acomps','pedidos','bebidas','diasEspeciais'].forEach(function(t){
+        var prefixKey = 'emp_'+empId+'_'+t;
+        if(!Array.isArray(_cache[prefixKey]) || !_cache[prefixKey].length) {
+          if(Array.isArray(_cache[t]) && _cache[t].length) {
+            _cache[prefixKey] = _cache[t];
+            delete _cache[t];
+          }
+        }
+      });
+    }
+
+    if(_usuarioLogado && _usuarioLogado.perfil === 'superadmin') _popularSuperSel();
     var cfg = CFG.get();
     var cfgEl = document.getElementById('cfg-empresa'); if(cfg.empresa && cfgEl) cfgEl.value = cfg.empresa;
     initPedido(); renderPessoas(); renderPratos(); renderAcomps(); renderBebidas(); renderDiasEspeciais();
@@ -1353,10 +1686,18 @@ var _navBtnResumo = null;
 function showPage(name, btn) {
   /* Verificar permissão */
   if(_usuarioLogado && name !== 'pedido') {
-    var perms = _usuarioLogado.permissoes;
-    /* admin (sem restrições) ou permissão concedida */
-    if(perms && !perms[name]) {
-      toast('⛔ Você não tem permissão para acessar este módulo.', '#c04a3a');
+    var isSA = _usuarioLogado.perfil === 'superadmin';
+    var isAdmin = _usuarioLogado.perfil === 'admin';
+    if(!isSA && !isAdmin) {
+      var perms = _usuarioLogado.permissoes;
+      if(perms && !perms[name]) {
+        toast('⛔ Você não tem permissão para acessar este módulo.', '#c04a3a');
+        return;
+      }
+    }
+    /* Página de empresas: apenas superadmin */
+    if(name === 'empresas' && !isSA) {
+      toast('⛔ Acesso restrito ao Super Administrador.', '#c04a3a');
       return;
     }
   }
@@ -1373,7 +1714,8 @@ function showPage(name, btn) {
   if(name==='pratos') renderPratos();
   if(name==='acomps') renderAcomps();
   if(name==='bebidas') renderBebidas();
-  if(name==='usuarios') renderUsuarios();
+  if(name==='usuarios') { renderUsuarios(); _buildEmpresaChecks(null); }
+  if(name==='empresas') renderEmpresas();
   if(name==='diasEspeciais') { renderDiasEspeciaisForm(); renderDiasEspeciais(); }
 }
 
@@ -1554,12 +1896,13 @@ function onDeModoChange() {
 
 function onDeTipoChange() {
   var tipo = document.getElementById('de-tipo').value;
-  document.getElementById('de-pratos-field').style.display = (tipo === 'feriado') ? 'none' : '';
   var isAni = tipo === 'aniversario';
-  /* Aniversário não precisa de data nem modo — é uma configuração global */
-  document.getElementById('de-data-field').style.display = isAni ? 'none' : (document.getElementById('de-modo').value === 'data' ? '' : 'none');
+  /* Aniversário sempre mostra o campo de pratos (é para isso que serve) */
+  document.getElementById('de-pratos-field').style.display = '';
+  /* Aniversário não precisa de data/modo — é uma regra global */
   var modoField = document.getElementById('de-modo').parentElement;
   if(modoField) modoField.style.display = isAni ? 'none' : '';
+  document.getElementById('de-data-field').style.display = isAni ? 'none' : (document.getElementById('de-modo').value === 'data' ? '' : 'none');
 }
 
 /* Formata aniversário: exibe apenas dia/mês (ignora ano) */
@@ -1590,8 +1933,6 @@ function renderDiasEspeciaisForm() {
     h+='<label class="perm-item"><input type="checkbox" name="de-prato" value="'+pratos[i].id+'"> '+pratos[i].nome+'</label>';
   }
   grid.innerHTML=h;
-  /* Mostrar/ocultar campo de pratos se for feriado */
-  document.getElementById('de-tipo').onchange = onDeTipoChange;
 }
 
 function addDiaEspecial() {
@@ -1674,7 +2015,7 @@ function renderDiasEspeciais() {
   var semana = lista.filter(function(x){ return x.diaSemana; });
 
   function pratosLabel(de){
-    if(de.tipo==='feriado') return '—';
+    if(de.feriado || de.tipo==='feriado') return '—';
     if(Array.isArray(de.pratos) && de.pratos.length){
       var nomes=[];
       for(var j=0;j<de.pratos.length;j++){
@@ -1687,9 +2028,9 @@ function renderDiasEspeciais() {
     return '<span style="color:var(--text-dim);font-size:12px;">Todos os pratos</span>';
   }
 
-  function tipoTag(tipo){
-    if(tipo==='feriado') return '<span class="de-tag feriado">🚫 Feriado</span>';
-    if(tipo==='aniversario') return '<span class="de-tag" style="background:rgba(160,120,40,0.12);color:var(--gold);">🎂 Aniversário</span>';
+  function tipoTag(de){
+    if(de.feriado || de.tipo==='feriado') return '<span class="de-tag feriado">🚫 Feriado</span>';
+    if(de.tipo==='aniversario') return '<span class="de-tag" style="background:rgba(160,120,40,0.12);color:var(--gold);">🎂 Aniversário</span>';
     return '<span class="de-tag especial">🗓️ Especial</span>';
   }
 
@@ -1701,7 +2042,7 @@ function renderDiasEspeciais() {
     h+='<table style="margin-bottom:18px;"><thead><tr><th>Tipo</th><th>Descrição</th><th>Pratos Disponíveis</th><th></th></tr></thead><tbody>';
     for(var i=0;i<aniversarios.length;i++){
       var de=aniversarios[i];
-      h+='<tr><td>'+tipoTag(de.tipo)+'</td><td>'+de.descricao+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+      h+='<tr><td>'+tipoTag(de)+'</td><td>'+de.descricao+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
     }
     h+='</tbody></table>';
   }
@@ -1712,7 +2053,7 @@ function renderDiasEspeciais() {
     for(var i=0;i<semana.length;i++){
       var de=semana[i];
       var diaLabel = de.diaSemana==='sabado'?'📅 Todo Sábado':'📅 Todo Domingo';
-      h+='<tr><td>'+diaLabel+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de.tipo)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+      h+='<tr><td>'+diaLabel+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
     }
     h+='</tbody></table>';
   }
@@ -1723,7 +2064,7 @@ function renderDiasEspeciais() {
     h+='<table><thead><tr><th>Data</th><th>Descrição</th><th>Tipo</th><th>Pratos</th><th></th></tr></thead><tbody>';
     for(var i=0;i<fixas.length;i++){
       var de=fixas[i];
-      h+='<tr><td>'+fmtData(de.data)+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de.tipo)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
+      h+='<tr><td>'+fmtData(de.data)+'</td><td>'+de.descricao+'</td><td>'+tipoTag(de)+'</td><td style="font-size:12px;">'+pratosLabel(de)+'</td><td><button class="btn btn-danger" onclick="delDiaEspecial(\''+de.id+'\')">✕</button></td></tr>';
     }
     h+='</tbody></table>';
   }
@@ -1779,9 +2120,15 @@ function initPedido() {
   var aviso = document.getElementById('aviso-dia-especial');
   var pratos = [];
 
+  /* Pratos normais: sempre exibidos em qualquer dia */
+  var pratosNormaisBase = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly && !_isAniPrato(p); });
+  var pratosEspeciaisDia = []; /* pratos especiais vinculados ao dia de hoje (se houver) */
+  var isFeriado = false;
+
   if(diaEspecialHoje){
     var tipo = diaEspecialHoje.tipo || 'especial';
-    if(tipo === 'feriado'){
+    isFeriado = diaEspecialHoje.feriado === true || tipo === 'feriado';
+    if(isFeriado){
       aviso.textContent = '🚫 FERIADO: ' + diaEspecialHoje.descricao + ' — Sem atendimento hoje.';
       aviso.className = 'prato-aviso-dia feriado';
       aviso.style.display = 'block';
@@ -1796,30 +2143,32 @@ function initPedido() {
       document.getElementById('ped-data').value = dataHoje;
       atualizarCnt(); onPratoChange(); return;
     } else {
-      /* Dia especial:
-         - Sempre exibe os pratos normais (diaEspecialOnly = false), exceto os de aniversário
-         - Adiciona os pratos do dia especial configurados no cadastro (opção extra no cardápio)
-         - Se nenhum prato específico foi definido no dia especial, exibe todos incluindo os diaEspecialOnly (exceto aniversário) */
-      var pratosNormais = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly && !_isAniPrato(p); });
-      var pratosDia = diaEspecialHoje.pratos; /* ids dos pratos extras definidos para este dia */
-      var pratosExtras = [];
+      /* Dia especial com pratos configurados:
+         - Se o dia tem lista específica de pratos → mostra EXATAMENTE esses pratos (todos, independente de diaEspecialOnly)
+         - Se não tem lista → mostra normais + todos os diaEspecialOnly (exceto aniversário) */
+      var pratosDia = diaEspecialHoje.pratos;
       if(Array.isArray(pratosDia) && pratosDia.length > 0){
-        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && !_isAniPrato(p) && pratosDia.indexOf(p.id) !== -1; });
+        /* Todos os pratos vinculados ao dia especial, sem distinção de diaEspecialOnly nem de aniversário
+           — a seleção explícita no cadastro do dia especial tem prioridade sobre qualquer filtro */
+        pratosEspeciaisDia = todosOsPratos.filter(function(p){ return pratosDia.indexOf(p.id) !== -1; });
+        /* Pratos normais do dia = os que NÃO estão na lista específica e não são diaEspecialOnly */
+        pratosNormaisBase = pratosNormaisBase.filter(function(p){ return pratosDia.indexOf(p.id) === -1; });
       } else {
         /* Sem lista específica: inclui todos os pratos marcados como diaEspecialOnly, exceto aniversário */
-        pratosExtras = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && !_isAniPrato(p); });
+        pratosEspeciaisDia = todosOsPratos.filter(function(p){ return p.diaEspecialOnly && !_isAniPrato(p); });
       }
-      pratos = pratosNormais.concat(pratosExtras);
-      var msgExtra = pratosExtras.length ? ' — ' + pratosExtras.length + ' prato(s) especial(is) disponível(is).' : '';
+      var totalEspeciais = pratosEspeciaisDia.length;
+      var msgExtra = totalEspeciais ? ' — ' + totalEspeciais + ' prato(s) especial(is) disponível(is).' : '';
       aviso.textContent = '🗓️ DIA ESPECIAL: ' + diaEspecialHoje.descricao + msgExtra;
       aviso.className = 'prato-aviso-dia';
       aviso.style.display = 'block';
     }
   } else {
-    /* Dia normal: exibe apenas pratos que NÃO são exclusivos de dia especial e NÃO são de aniversário */
-    pratos = todosOsPratos.filter(function(p){ return !p.diaEspecialOnly && !_isAniPrato(p); });
     aviso.style.display = 'none';
   }
+
+  /* Lista final de pratos: sempre os normais; especiais do dia se houver */
+  pratos = pratosNormaisBase.concat(pratosEspeciaisDia);
 
   var selP = document.getElementById('ped-pessoa');
   var curP = selP.value;
@@ -1831,20 +2180,16 @@ function initPedido() {
   var curPr = selPr.value;
   var hPr = '<option value="">— Selecione —</option>';
 
-  if(diaEspecialHoje && diaEspecialHoje.tipo !== 'feriado'){
-    /* Monta com grupos: normais + especiais separados */
-    var pratosNormaisGrp = pratos.filter(function(p){ return !p.diaEspecialOnly; });
-    var pratosEspeciaisGrp = pratos.filter(function(p){ return p.diaEspecialOnly; });
-    if(pratosNormaisGrp.length){
-      hPr += '<optgroup label="🍽️ Cardápio do Dia">';
-      for(var i=0;i<pratosNormaisGrp.length;i++) hPr+='<option value="'+pratosNormaisGrp[i].id+'" data-v="'+pratosNormaisGrp[i].valor+'">'+pratosNormaisGrp[i].nome+' — '+moeda(pratosNormaisGrp[i].valor)+'</option>';
+  if(diaEspecialHoje && !isFeriado && pratosEspeciaisDia.length > 0){
+    /* Monta com grupos: normais (se houver) + especiais do dia */
+    if(pratosNormaisBase.length){
+      hPr += '<optgroup label="🍽️ Cardápio Regular">';
+      for(var i=0;i<pratosNormaisBase.length;i++) hPr+='<option value="'+pratosNormaisBase[i].id+'" data-v="'+pratosNormaisBase[i].valor+'">'+pratosNormaisBase[i].nome+' — '+moeda(pratosNormaisBase[i].valor)+'</option>';
       hPr += '</optgroup>';
     }
-    if(pratosEspeciaisGrp.length){
-      hPr += '<optgroup label="⭐ Pratos Especiais — ' + diaEspecialHoje.descricao + '">';
-      for(var i=0;i<pratosEspeciaisGrp.length;i++) hPr+='<option value="'+pratosEspeciaisGrp[i].id+'" data-v="'+pratosEspeciaisGrp[i].valor+'">⭐ '+pratosEspeciaisGrp[i].nome+' — '+moeda(pratosEspeciaisGrp[i].valor)+'</option>';
-      hPr += '</optgroup>';
-    }
+    hPr += '<optgroup label="⭐ Cardápio Especial — ' + diaEspecialHoje.descricao + '">';
+    for(var i=0;i<pratosEspeciaisDia.length;i++) hPr+='<option value="'+pratosEspeciaisDia[i].id+'" data-v="'+pratosEspeciaisDia[i].valor+'">⭐ '+pratosEspeciaisDia[i].nome+' — '+moeda(pratosEspeciaisDia[i].valor)+'</option>';
+    hPr += '</optgroup>';
   } else {
     for(var i=0;i<pratos.length;i++) hPr+='<option value="'+pratos[i].id+'" data-v="'+pratos[i].valor+'">'+pratos[i].nome+' — '+moeda(pratos[i].valor)+'</option>';
   }
@@ -2273,16 +2618,40 @@ function renderResumo(pedidos, label, filtPessoa, filtPrato) {
 
 function _rowPedido(p) {
   var tv = p.totalPedido !== undefined ? p.totalPedido : p.pratoValor;
+  var todosAcomps = DB.get('acomps');
+  var todasBebidas = DB.get('bebidas');
+
   var acHtml = '';
   if(Array.isArray(p.acomps) && p.acomps.length){
     for(var ai=0;ai<p.acomps.length;ai++){
       var ac=p.acomps[ai];
-      var acNm=typeof ac==='object'?ac.nome:ac;
-      var acVl=typeof ac==='object'&&ac.valor>0?'<span style="color:var(--gold);font-size:11px;margin-left:4px;">+'+moeda(ac.valor)+'</span>':'';
+      var acNm, acVl='';
+      if(typeof ac==='object' && ac && ac.nome){
+        acNm = ac.nome;
+        acVl = (ac.valor>0)?'<span style="color:var(--gold);font-size:11px;margin-left:4px;">+'+moeda(ac.valor)+'</span>':'';
+      } else {
+        /* Fallback: ac é um ID — busca o nome no cadastro */
+        var acFound = null;
+        for(var k=0;k<todosAcomps.length;k++) if(todosAcomps[k].id===ac){ acFound=todosAcomps[k]; break; }
+        acNm = acFound ? acFound.nome : String(ac);
+        acVl = (acFound&&acFound.valor>0)?'<span style="color:var(--gold);font-size:11px;margin-left:4px;">+'+moeda(acFound.valor)+'</span>':'';
+      }
       acHtml+='<div style="line-height:1.6">'+acNm+acVl+'</div>';
     }
   } else { acHtml='<span style="color:var(--text-dim)">—</span>'; }
-  var bebHtml = p.bebida ? '🥤 '+p.bebida.nome+(p.bebida.valor>0?' <span style="color:var(--gold);font-size:11px;">+'+moeda(p.bebida.valor)+'</span>':'') : '<span style="color:var(--text-dim)">—</span>';
+
+  var bebHtml;
+  if(p.bebida && typeof p.bebida==='object' && p.bebida.nome){
+    bebHtml = '🥤 '+p.bebida.nome+(p.bebida.valor>0?' <span style="color:var(--gold);font-size:11px;">+'+moeda(p.bebida.valor)+'</span>':'');
+  } else if(p.bebida && typeof p.bebida==='string'){
+    /* Fallback: bebida é um ID */
+    var bebFound = null;
+    for(var k=0;k<todasBebidas.length;k++) if(todasBebidas[k].id===p.bebida){ bebFound=todasBebidas[k]; break; }
+    bebHtml = bebFound ? ('🥤 '+bebFound.nome+(bebFound.valor>0?' <span style="color:var(--gold);font-size:11px;">+'+moeda(bebFound.valor)+'</span>':'')) : '<span style="color:var(--text-dim)">—</span>';
+  } else {
+    bebHtml = '<span style="color:var(--text-dim)">—</span>';
+  }
+
   var obsHtml = p.obs ? '<span style="color:var(--gold-light);font-size:12px;">⚠ '+p.obs+'</span>' : '<span style="color:var(--text-dim)">—</span>';
   return '<tr>'
     +'<td>'+fmtData(p.data)+'</td>'
