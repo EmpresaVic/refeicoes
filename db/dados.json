@@ -54,6 +54,25 @@
         "moc1lcwb"
       ],
       "permissoes": null
+    },
+    {
+      "id": "moc8foem",
+      "nome": "OperadorVictria",
+      "senhaHash": "-1a0f86b5",
+      "perfil": "operador",
+      "empresas": [
+        "moc1l1xu"
+      ],
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      }
     }
   ],
   "empresas": [
