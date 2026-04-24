@@ -15,23 +15,6 @@
       "empresas": []
     },
     {
-      "id": "mo52pngl",
-      "nome": "Teste",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": true,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
       "id": "mo54c22c",
       "nome": "Gestores",
       "senhaHash": "170842",
