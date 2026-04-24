@@ -1008,6 +1008,42 @@
       },
       "obs": "",
       "criadoEm": "2026-04-24T12:08:39.870Z"
+    },
+    {
+      "id": "mocwb4mubaw",
+      "numPedido": 22,
+      "data": "2026-04-24",
+      "pessoaId": "mocw9qf4z2p",
+      "pessoaNome": "Teste",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "moau37kqgqx",
+      "pratoNome": "Tilápia",
+      "pratoValor": 25.4,
+      "acTotal": 3.9,
+      "bebTotal": 2.5,
+      "totalPedido": 31.799999999999997,
+      "acomps": [
+        {
+          "nome": "Legumes Saute",
+          "valor": 1
+        },
+        {
+          "nome": "Cebola Empanada",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-04-24T12:37:27.222Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "pedidos": [],
