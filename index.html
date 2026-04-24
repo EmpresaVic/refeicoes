@@ -436,6 +436,16 @@ nav button.active {
     <button class="btn btn-ghost-blue" onclick="imprimirRelatorio()">🖨️ Imprimir</button>
   </div>
 
+  <!-- Filtro de empresa (visível apenas para superadmin) -->
+  <div id="res-empresa-row" style="display:none;margin-bottom:14px;">
+    <div class="field" style="margin-bottom:0;max-width:320px;">
+      <label>Filtrar por Empresa</label>
+      <select id="res-empresa" onchange="gerarResumo()">
+        <option value="">🌐 Todas as empresas</option>
+      </select>
+    </div>
+  </div>
+
   <!-- Filtros adicionais: pessoa e prato -->
   <div style="display:flex;gap:14px;flex-wrap:wrap;margin-bottom:20px;align-items:flex-end;">
     <div class="field" style="margin-bottom:0;flex:1;min-width:200px;">
@@ -2479,7 +2489,7 @@ function registrar(imprimir) {
     if(pedidos[i].numPedido && pedidos[i].numPedido>=numPedido) numPedido=pedidos[i].numPedido+1;
   }
 
-  var novo={ id:DB.uid(), numPedido:numPedido, data:data, pessoaId:pessoaId, pessoaNome:pessoa.nome, pessoaSetor:pessoa.setor||'', pratoId:pratoId, pratoNome:prato.nome, pratoValor:prato.valor, acTotal:acTotal, bebTotal:bebTotal, totalPedido:totalPedido, acomps:acSel, bebida:bebida, obs:obs, criadoEm:new Date().toISOString() };
+  var novo={ id:DB.uid(), numPedido:numPedido, data:data, pessoaId:pessoaId, pessoaNome:pessoa.nome, pessoaSetor:pessoa.setor||'', pratoId:pratoId, pratoNome:prato.nome, pratoValor:prato.valor, acTotal:acTotal, bebTotal:bebTotal, totalPedido:totalPedido, acomps:acSel, bebida:bebida, obs:obs, criadoEm:new Date().toISOString(), empresaId:(_empresaAtiva?_empresaAtiva.id:''), empresaNome:(_empresaAtiva?_empresaAtiva.nome:'') };
   pedidos.push(novo);
   limparForm();
   toast('💾 Salvando pedido...','#3a6f98');
@@ -2487,10 +2497,58 @@ function registrar(imprimir) {
   if(imprimir){ _payload={tipo:'pedido',dados:novo}; abrirModal(); }
 }
 
+/* Retorna pedidos de uma empresa específica (empId) ou de todas (empId='') */
+function _getPedidosDeEmpresas(empId) {
+  var empresas = _getEmpresas();
+  var isSA = _usuarioLogado && _usuarioLogado.perfil === 'superadmin';
+  /* Não é superadmin: retorna só os pedidos da empresa ativa */
+  if(!isSA) return DB.get('pedidos');
+  /* Superadmin com empresa específica selecionada no filtro */
+  if(empId) {
+    var chave = 'emp_'+empId+'_pedidos';
+    var v = _cache[chave];
+    if(!Array.isArray(v)) return [];
+    /* Garante que todos os pedidos têm empresaId/empresaNome preenchidos
+       (necessário para pedidos legados/migrados que não possuem esses campos) */
+    var empObj = null;
+    for(var k=0;k<empresas.length;k++){ if(empresas[k].id===empId){ empObj=empresas[k]; break; } }
+    return JSON.parse(JSON.stringify(v)).map(function(p){
+      if(!p.empresaId)   p.empresaId   = empId;
+      if(!p.empresaNome && empObj) p.empresaNome = empObj.nome;
+      return p;
+    });
+  }
+  /* Superadmin sem filtro: agrega pedidos de todas as empresas */
+  if(!empresas.length) return DB.get('pedidos'); /* sem empresa cadastrada: retorna global */
+  var todos = [];
+  for(var i=0;i<empresas.length;i++){
+    var ch = 'emp_'+empresas[i].id+'_pedidos';
+    var arr = _cache[ch];
+    if(Array.isArray(arr)){
+      for(var j=0;j<arr.length;j++){
+        /* Garante que o pedido tem empresaId/empresaNome */
+        var p = JSON.parse(JSON.stringify(arr[j]));
+        if(!p.empresaId) p.empresaId = empresas[i].id;
+        if(!p.empresaNome) p.empresaNome = empresas[i].nome;
+        todos.push(p);
+      }
+    }
+  }
+  /* Inclui também pedidos sem prefixo de empresa (legado) */
+  if(Array.isArray(_cache['pedidos'])){
+    for(var j=0;j<_cache['pedidos'].length;j++){
+      var p = JSON.parse(JSON.stringify(_cache['pedidos'][j]));
+      if(!p.empresaId) p.empresaId = ''; if(!p.empresaNome) p.empresaNome = '—';
+      todos.push(p);
+    }
+  }
+  return todos;
+}
+
 /* =========================================================
    RESUMO
    ========================================================= */
-/* Pedidos base da consulta atual (antes dos filtros de pessoa/prato) */
+/* Pedidos base da consulta atual (antes dos filtros de pessoa/prato/empresa) */
 var _pedidosBase = [];
 
 function initResumo() {
@@ -2498,12 +2556,41 @@ function initResumo() {
   document.getElementById('res-de').value = h;
   document.getElementById('res-ate').value = h;
   _popularFiltrosSelects();
+  /* Filtro de empresa: só para superadmin */
+  var isSA = _usuarioLogado && _usuarioLogado.perfil === 'superadmin';
+  var empRow = document.getElementById('res-empresa-row');
+  if(empRow) empRow.style.display = isSA ? '' : 'none';
+  if(isSA) _popularFiltroEmpresa();
+}
+
+function _popularFiltroEmpresa() {
+  var sel = document.getElementById('res-empresa');
+  if(!sel) return;
+  var cur = sel.value;
+  var empresas = _getEmpresas();
+  var h = '<option value="">🌐 Todas as empresas</option>';
+  for(var i=0;i<empresas.length;i++) h += '<option value="'+empresas[i].id+'">🏢 '+empresas[i].nome+'</option>';
+  sel.innerHTML = h;
+  sel.value = cur;
 }
 
 function _popularFiltrosSelects() {
-  /* Popula os selects de pessoa e prato com os dados cadastrados */
-  var pessoas = DB.get('pessoas').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
-  var pratos  = DB.get('pratos').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  /* Popula os selects de pessoa e prato com os dados cadastrados.
+     Se superadmin tiver uma empresa selecionada no filtro, usa os dados dessa empresa. */
+  var isSA = _usuarioLogado && _usuarioLogado.perfil === 'superadmin';
+  var empFiltId = isSA && document.getElementById('res-empresa') ? document.getElementById('res-empresa').value : '';
+
+  var pessoas, pratos;
+  if(empFiltId) {
+    /* Carrega pessoas/pratos da empresa filtrada */
+    var pKey = 'emp_'+empFiltId+'_pessoas';
+    var prKey = 'emp_'+empFiltId+'_pratos';
+    pessoas = (Array.isArray(_cache[pKey])  ? JSON.parse(JSON.stringify(_cache[pKey]))  : []).sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+    pratos  = (Array.isArray(_cache[prKey]) ? JSON.parse(JSON.stringify(_cache[prKey])) : []).sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  } else {
+    pessoas = DB.get('pessoas').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+    pratos  = DB.get('pratos').slice().sort(function(a,b){ return a.nome.localeCompare(b.nome); });
+  }
 
   var selPessoa = document.getElementById('res-pessoa');
   var selPrato  = document.getElementById('res-prato');
@@ -2529,14 +2616,16 @@ function gerarResumo() {
   if(!de && !ate){ toast('Informe ao menos uma data.','#c04a3a'); return; }
   var ini = de||ate, fim = ate||de;
   if(ini > fim){ toast('Data inicial maior que a final.','#c04a3a'); return; }
-  _pedidosBase = DB.get('pedidos').filter(function(p){ return p.data>=ini && p.data<=fim; });
+  var empId = (document.getElementById('res-empresa') && document.getElementById('res-empresa').value) || '';
+  _pedidosBase = _getPedidosDeEmpresas(empId).filter(function(p){ return p.data>=ini && p.data<=fim; });
   var label = ini===fim ? fmtData(ini) : fmtData(ini)+' a '+fmtData(fim);
   _popularFiltrosSelects();
   aplicarFiltros(label);
 }
 
 function verTodos() {
-  _pedidosBase = DB.get('pedidos');
+  var empId = (document.getElementById('res-empresa') && document.getElementById('res-empresa').value) || '';
+  _pedidosBase = _getPedidosDeEmpresas(empId);
   _popularFiltrosSelects();
   aplicarFiltros(null);
 }
@@ -2544,26 +2633,38 @@ function verTodos() {
 function limparFiltros() {
   document.getElementById('res-pessoa').value = '';
   document.getElementById('res-prato').value  = '';
-  aplicarFiltros();
+  if(document.getElementById('res-empresa')) document.getElementById('res-empresa').value = '';
+  _pedidosBase = [];
+  var body = document.getElementById('resumo-body');
+  if(body) body.innerHTML = '<div class="empty"><span class="ico">📊</span>Selecione um período e clique em Gerar Resumo.</div>';
+  document.getElementById('stats-row').style.display = 'none';
+  _labelAtual = null;
 }
 
 function aplicarFiltros(labelOverride) {
-  if(!_pedidosBase.length && !DB.get('pedidos').length) return;
-  /* Se _pedidosBase estiver vazio mas houver pedidos, ainda não rodou gerarResumo */
+  if(!_pedidosBase.length && !_getPedidosDeEmpresas('').length) return;
   if(!_pedidosBase.length) return;
 
   var pessoaId = document.getElementById('res-pessoa').value;
   var pratoId  = document.getElementById('res-prato').value;
+  var empFiltId = document.getElementById('res-empresa') ? document.getElementById('res-empresa').value : '';
 
   var filtrados = _pedidosBase.slice();
   if(pessoaId) filtrados = filtrados.filter(function(p){ return p.pessoaId === pessoaId; });
   if(pratoId)  filtrados = filtrados.filter(function(p){ return p.pratoId  === pratoId; });
+  /* Filtro de empresa aplicado sobre _pedidosBase já filtrada por gerarResumo,
+     mas se o usuário mudou o select depois, re-filtra */
+  if(empFiltId) filtrados = filtrados.filter(function(p){ return p.empresaId === empFiltId; });
 
   /* Monta label dinâmico */
   var label = (typeof labelOverride !== 'undefined') ? labelOverride : _labelAtual;
   _labelAtual = label;
 
   var sufixos = [];
+  if(empFiltId){
+    var selEmp = document.getElementById('res-empresa');
+    sufixos.push('🏢 ' + selEmp.options[selEmp.selectedIndex].text);
+  }
   if(pessoaId){
     var sel = document.getElementById('res-pessoa');
     sufixos.push('👤 ' + sel.options[sel.selectedIndex].text);
@@ -2575,11 +2676,13 @@ function aplicarFiltros(labelOverride) {
   var labelFinal = label ? label : '';
   if(sufixos.length) labelFinal = (labelFinal ? labelFinal + ' — ' : '') + sufixos.join(' · ');
 
-  renderResumo(filtrados, labelFinal || null, pessoaId, pratoId);
+  /* Mostra empresa nos dados se superadmin sem filtro de empresa específica */
+  var mostrarEmpresa = (_usuarioLogado && _usuarioLogado.perfil === 'superadmin' && !empFiltId);
+  renderResumo(filtrados, labelFinal || null, pessoaId, pratoId, mostrarEmpresa);
 }
 var _labelAtual = null;
 
-function renderResumo(pedidos, label, filtPessoa, filtPrato) {
+function renderResumo(pedidos, label, filtPessoa, filtPrato, mostrarEmpresa) {
   var body  = document.getElementById('resumo-body');
   var stats = document.getElementById('stats-row');
   if(!pedidos.length){
@@ -2603,20 +2706,17 @@ function renderResumo(pedidos, label, filtPessoa, filtPrato) {
   var h = '';
 
   if(filtPrato && !filtPessoa) {
-    /* Agrupado por pessoa quando filtro é só por prato */
-    h += _renderResumoAgrupado(pedidos, 'pessoa', label);
+    h += _renderResumoAgrupado(pedidos, 'pessoa', label, mostrarEmpresa);
   } else if(filtPessoa && !filtPrato) {
-    /* Agrupado por prato quando filtro é só por pessoa */
-    h += _renderResumoAgrupado(pedidos, 'prato', label);
+    h += _renderResumoAgrupado(pedidos, 'prato', label, mostrarEmpresa);
   } else {
-    /* Padrão: agrupado por data */
-    h += _renderResumoPorData(pedidos);
+    h += _renderResumoPorData(pedidos, mostrarEmpresa);
   }
 
   body.innerHTML = h;
 }
 
-function _rowPedido(p) {
+function _rowPedido(p, mostrarEmpresa) {
   var tv = p.totalPedido !== undefined ? p.totalPedido : p.pratoValor;
   var todosAcomps = DB.get('acomps');
   var todasBebidas = DB.get('bebidas');
@@ -2653,7 +2753,9 @@ function _rowPedido(p) {
   }
 
   var obsHtml = p.obs ? '<span style="color:var(--gold-light);font-size:12px;">⚠ '+p.obs+'</span>' : '<span style="color:var(--text-dim)">—</span>';
+  var empHtml = mostrarEmpresa ? '<td><span style="font-size:12px;font-weight:600;color:var(--blue);">🏢 '+(p.empresaNome||'—')+'</span></td>' : '';
   return '<tr>'
+    + empHtml
     +'<td>'+fmtData(p.data)+'</td>'
     +'<td><strong>'+p.pessoaNome+'</strong>'+(p.pessoaSetor?'<br><small style="color:var(--text-dim)">'+p.pessoaSetor+'</small>':'')+'</td>'
     +'<td>'+p.pratoNome+'<br><small style="color:var(--text-dim)">'+moeda(p.pratoValor)+'</small></td>'
@@ -2664,24 +2766,25 @@ function _rowPedido(p) {
     +'</tr>';
 }
 
-function _renderResumoPorData(pedidos) {
+function _renderResumoPorData(pedidos, mostrarEmpresa) {
   var grupos={};
   for(var i=0;i<pedidos.length;i++){ var d=pedidos[i].data; if(!grupos[d]) grupos[d]=[]; grupos[d].push(pedidos[i]); }
   var datas=Object.keys(grupos).sort(function(a,b){ return b.localeCompare(a); });
+  var thEmp = mostrarEmpresa ? '<th>Empresa</th>' : '';
   var h='';
   for(var di=0;di<datas.length;di++){
     var d=datas[di]; var ps=grupos[d]; var tot=0;
     for(var i=0;i<ps.length;i++){ var tv=ps[i].totalPedido!==undefined?ps[i].totalPedido:ps[i].pratoValor; tot+=tv; }
     var rows='';
-    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i]);
+    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i], mostrarEmpresa);
     h+='<div class="resumo-card"><div class="resumo-head"><strong>📅 '+fmtData(d)+'</strong>'
       +'<div style="text-align:right"><div style="font-size:11px;color:var(--text-dim)">'+ps.length+' pedido(s)</div><div class="resumo-total">'+moeda(tot)+'</div></div></div>'
-      +'<table><thead><tr><th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+      +'<table><thead><tr>'+thEmp+'<th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   return h;
 }
 
-function _renderResumoAgrupado(pedidos, porCampo, label) {
+function _renderResumoAgrupado(pedidos, porCampo, label, mostrarEmpresa) {
   /* porCampo: 'pessoa' ou 'prato' */
   var grupos={};
   for(var i=0;i<pedidos.length;i++){
@@ -2692,16 +2795,17 @@ function _renderResumoAgrupado(pedidos, porCampo, label) {
   }
   var keys = Object.keys(grupos).sort(function(a,b){ return a.split('|')[1].localeCompare(b.split('|')[1]); });
   var ico  = porCampo==='pessoa' ? '👤' : '🍽️';
+  var thEmp = mostrarEmpresa ? '<th>Empresa</th>' : '';
   var h='';
   for(var ki=0;ki<keys.length;ki++){
     var k=keys[ki]; var ps=grupos[k]; var tot=0;
     var nomeGrupo = k.split('|')[1];
     for(var i=0;i<ps.length;i++){ var tv=ps[i].totalPedido!==undefined?ps[i].totalPedido:ps[i].pratoValor; tot+=tv; }
     var rows='';
-    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i]);
+    for(var i=0;i<ps.length;i++) rows += _rowPedido(ps[i], mostrarEmpresa);
     h+='<div class="resumo-card"><div class="resumo-head"><strong>'+ico+' '+nomeGrupo+'</strong>'
       +'<div style="text-align:right"><div style="font-size:11px;color:var(--text-dim)">'+ps.length+' pedido(s)</div><div class="resumo-total">'+moeda(tot)+'</div></div></div>'
-      +'<table><thead><tr><th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
+      +'<table><thead><tr>'+thEmp+'<th>Data</th><th>Pessoa</th><th>Prato</th><th>Acompanhamentos</th><th>Bebida</th><th>Obs.</th><th>Total</th></tr></thead><tbody>'+rows+'</tbody></table></div>';
   }
   return h;
 }
