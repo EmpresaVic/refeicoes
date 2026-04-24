@@ -44,6 +44,16 @@
         "moc1ll1c"
       ],
       "permissoes": null
+    },
+    {
+      "id": "moc8du8y",
+      "nome": "AdminVictive",
+      "senhaHash": "78b2a1ac",
+      "perfil": "admin",
+      "empresas": [
+        "moc1lcwb"
+      ],
+      "permissoes": null
     }
   ],
   "empresas": [
