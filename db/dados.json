@@ -32,23 +32,6 @@
       "empresas": []
     },
     {
-      "id": "mo66pp6x",
-      "nome": "teste55",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": true,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
       "id": "mobr7mug",
       "nome": "Operador",
       "senhaHash": "170842",
