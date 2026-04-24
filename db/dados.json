@@ -998,6 +998,13 @@
         "mo63imcyngi"
       ],
       "diaSemana": "domingo"
+    },
+    {
+      "id": "moc8hm8mz66",
+      "descricao": "Feriado dia do trabalho",
+      "tipo": "especial",
+      "pratos": [],
+      "data": "2026-05-01"
     }
   ]
 }
