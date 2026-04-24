@@ -1108,11 +1108,6 @@
   "pedidos": [],
   "emp_moc1lcwb_pessoas": [
     {
-      "id": "mo3q3aj3gmd",
-      "nome": "Jairo Brito",
-      "setor": "Cozinha"
-    },
-    {
       "id": "mo544a6lsgu",
       "nome": "TESTE",
       "setor": "TESTE"
@@ -1169,11 +1164,6 @@
     }
   ],
   "pessoas": [
-    {
-      "id": "mo3q3aj3gmd",
-      "nome": "Jairo Brito",
-      "setor": "Cozinha"
-    },
     {
       "id": "mo544a6lsgu",
       "nome": "TESTE",
