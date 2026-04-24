@@ -146,6 +146,12 @@
       "nome": "Teste",
       "setor": "Atendimento",
       "aniversario": "2026-04-24"
+    },
+    {
+      "id": "mocwa49ona0",
+      "nome": "Teste 2",
+      "setor": "Gestão",
+      "aniversario": "2026-04-25"
     }
   ],
   "emp_moc1l1xu_pratos": [
