@@ -92,6 +92,25 @@
         "diasEspeciais": false,
         "usuarios": false
       }
+    },
+    {
+      "id": "moc8gp25",
+      "nome": "OperadorVictive",
+      "senhaHash": "-1a0f86b5",
+      "perfil": "operador",
+      "empresas": [
+        "moc1lcwb"
+      ],
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": false,
+        "pratos": false,
+        "acomps": false,
+        "bebidas": false,
+        "diasEspeciais": false,
+        "usuarios": false
+      }
     }
   ],
   "empresas": [
