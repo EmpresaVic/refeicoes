@@ -1,23 +1,6 @@
 {
   "usuarios": [
     {
-      "id": "mobr7mug",
-      "nome": "Operador",
-      "senhaHash": "170842",
-      "permissoes": {
-        "pedido": true,
-        "resumo": false,
-        "pessoas": false,
-        "pratos": false,
-        "acomps": false,
-        "bebidas": false,
-        "diasEspeciais": false,
-        "usuarios": false
-      },
-      "perfil": "operador",
-      "empresas": []
-    },
-    {
       "id": "super",
       "nome": "super",
       "senhaHash": "-63bd2729",
