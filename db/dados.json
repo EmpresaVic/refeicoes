@@ -142,11 +142,6 @@
       "setor": "Cozinha"
     },
     {
-      "id": "mo544a6lsgu",
-      "nome": "TESTE",
-      "setor": "TESTE"
-    },
-    {
       "id": "mocv7zad7cs",
       "nome": "teste",
       "setor": "adm",
@@ -1077,7 +1072,29 @@
       ]
     }
   ],
-  "setores": [
+  "pessoas": [
+    {
+      "id": "mo3nnu4w6zt",
+      "nome": "Mario Bross",
+      "setor": "Administrativo"
+    },
+    {
+      "id": "mo3q3aj3gmd",
+      "nome": "Jairo Brito",
+      "setor": "Cozinha"
+    },
+    {
+      "id": "mocv7zad7cs",
+      "nome": "teste",
+      "setor": "adm",
+      "aniversario": "2026-04-24"
+    }
+  ],
+  "pratos": [],
+  "acomps": [],
+  "bebidas": [],
+  "diasEspeciais": [],
+  "emp_moc1l1xu_setores": [
     {
       "id": "mocw8byyi84",
       "nome": "Cozinha"
