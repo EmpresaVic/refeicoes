@@ -1044,6 +1044,39 @@
       "criadoEm": "2026-04-24T12:37:27.222Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mocwcdu81y6",
+      "numPedido": 23,
+      "data": "2026-04-24",
+      "pessoaId": "mo3nnu4w6zt",
+      "pessoaNome": "Mario Bross",
+      "pessoaSetor": "Administrativo",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 3,
+      "bebTotal": 0,
+      "totalPedido": 4,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-24T12:38:25.808Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "pedidos": [],
