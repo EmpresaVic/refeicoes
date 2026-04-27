@@ -1340,7 +1340,13 @@
       "diaEspecialOnly": false
     }
   ],
-  "acomps": [],
+  "acomps": [
+    {
+      "id": "mohn6k61lgd",
+      "nome": "Arroz Branco",
+      "valor": 2.2
+    }
+  ],
   "bebidas": [],
   "diasEspeciais": []
 }
