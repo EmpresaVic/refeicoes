@@ -1308,6 +1308,12 @@
       "nome": "File de Frango Grelhado",
       "valor": 12.5,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mohn3390v5s",
+      "nome": "Bife Paris",
+      "valor": 16.5,
+      "diaEspecialOnly": false
     }
   ],
   "acomps": [],
