@@ -1368,6 +1368,19 @@
         "mohnztmj223"
       ],
       "diaSemana": "domingo"
+    },
+    {
+      "id": "moho4cvg4ut",
+      "descricao": "Sabado",
+      "tipo": "especial",
+      "pratos": [
+        "mohnymhy2sf",
+        "mohnyufgjah",
+        "mohnz4zw78j",
+        "mohnzfp6he9",
+        "mohnztmj223"
+      ],
+      "diaSemana": "sabado"
     }
   ],
   "emp_moc1ll1c_setores": [
@@ -1535,6 +1548,19 @@
         "mohnztmj223"
       ],
       "diaSemana": "domingo"
+    },
+    {
+      "id": "moho4cvg4ut",
+      "descricao": "Sabado",
+      "tipo": "especial",
+      "pratos": [
+        "mohnymhy2sf",
+        "mohnyufgjah",
+        "mohnz4zw78j",
+        "mohnzfp6he9",
+        "mohnztmj223"
+      ],
+      "diaSemana": "sabado"
     }
   ],
   "setores": [
