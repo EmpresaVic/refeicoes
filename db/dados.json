@@ -1367,6 +1367,12 @@
       "valor": 1.8
     }
   ],
-  "bebidas": [],
+  "bebidas": [
+    {
+      "id": "mohn8a4vb7t",
+      "nome": "Guaraná Pet 200 ml",
+      "valor": 1.9
+    }
+  ],
   "diasEspeciais": []
 }
