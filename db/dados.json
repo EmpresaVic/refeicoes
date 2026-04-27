@@ -130,6 +130,16 @@
         "diasEspeciais": true,
         "usuarios": false
       }
+    },
+    {
+      "id": "mohop874",
+      "nome": "victria",
+      "senhaHash": "56cfd04c",
+      "perfil": "admin",
+      "empresas": [
+        "moc1l1xu"
+      ],
+      "permissoes": null
     }
   ],
   "empresas": [
