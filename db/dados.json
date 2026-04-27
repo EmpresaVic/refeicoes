@@ -1327,6 +1327,12 @@
       "nome": "Picanha Suina",
       "valor": 15.5,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mohnzfp6he9",
+      "nome": "Calabresa Fatiada",
+      "valor": 13.5,
+      "diaEspecialOnly": false
     }
   ],
   "emp_moc1ll1c_acomps": [],
