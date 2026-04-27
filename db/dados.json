@@ -139,7 +139,16 @@
       "empresas": [
         "moc1l1xu"
       ],
-      "permissoes": null
+      "permissoes": {
+        "pedido": true,
+        "resumo": false,
+        "pessoas": true,
+        "pratos": true,
+        "acomps": true,
+        "bebidas": true,
+        "diasEspeciais": true,
+        "usuarios": false
+      }
     }
   ],
   "empresas": [
