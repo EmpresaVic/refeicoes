@@ -1320,6 +1320,12 @@
       "nome": "Picanha Suina",
       "valor": 12.5,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mohn43g40kq",
+      "nome": "Parmegiana de Frango",
+      "valor": 14.5,
+      "diaEspecialOnly": false
     }
   ],
   "acomps": [],
