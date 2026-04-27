@@ -272,6 +272,12 @@
       "nome": "Teste de prato",
       "valor": 25.9,
       "diaEspecialOnly": true
+    },
+    {
+      "id": "mohosxvl6rs",
+      "nome": "Bife Paris",
+      "valor": 25.9,
+      "diaEspecialOnly": false
     }
   ],
   "emp_moc1l1xu_acomps": [
