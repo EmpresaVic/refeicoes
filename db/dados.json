@@ -1387,7 +1387,13 @@
       "valor": 1.9
     }
   ],
-  "emp_moc1ll1c_bebidas": [],
+  "emp_moc1ll1c_bebidas": [
+    {
+      "id": "mohodqy710t",
+      "nome": "Suco em po feito na Loja ( 300 ml)",
+      "valor": 1.7
+    }
+  ],
   "emp_moc1ll1c_diasEspeciais": [
     {
       "id": "moho3zt3zt6",
