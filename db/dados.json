@@ -384,6 +384,15 @@
       "pratos": [
         "moau37kqgqx"
       ]
+    },
+    {
+      "id": "mohorxd8zix",
+      "descricao": "Feriado dia 27.4",
+      "tipo": "especial",
+      "pratos": [
+        "moau2zqn6bp"
+      ],
+      "data": "2026-04-27"
     }
   ],
   "emp_moc1l1xu_pedidos": [
@@ -1644,53 +1653,58 @@
   ],
   "diasEspeciais": [
     {
-      "id": "moho3zt3zt6",
-      "descricao": "Domingo",
+      "id": "mobrf6w7sm7",
+      "descricao": "Todo sabado",
       "tipo": "especial",
       "pratos": [
-        "mohnymhy2sf",
-        "mohnyufgjah",
-        "mohnz4zw78j",
-        "mohnzfp6he9",
-        "mohnztmj223"
-      ],
-      "diaSemana": "domingo"
-    },
-    {
-      "id": "moho4cvg4ut",
-      "descricao": "Sabado",
-      "tipo": "especial",
-      "pratos": [
-        "mohnymhy2sf",
-        "mohnyufgjah",
-        "mohnz4zw78j",
-        "mohnzfp6he9",
-        "mohnztmj223"
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
       ],
       "diaSemana": "sabado"
     },
     {
-      "id": "moho53gis60",
-      "descricao": "Aniversariante do mês",
+      "id": "mobrfry4xlg",
+      "descricao": "Todo Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mo3nn6mr8h6",
+        "mo3nncccfu8",
+        "mo3q2qzr56u",
+        "mo54e0wh6th",
+        "mo63imcyngi"
+      ],
+      "diaSemana": "domingo"
+    },
+    {
+      "id": "moc1vj4cyay",
+      "descricao": "feriado dia 23 4",
+      "tipo": "especial",
+      "pratos": [
+        "moau2tfvppc",
+        "moau2zqn6bp",
+        "moau37kqgqx"
+      ],
+      "data": "2026-04-23"
+    },
+    {
+      "id": "mocv6vwhdkc",
+      "descricao": "Aniversário",
       "tipo": "aniversario",
       "pratos": [
-        "mohnztmj223",
-        "moho00plmqq",
-        "moho05xpc1s"
+        "moau37kqgqx"
       ]
     },
     {
-      "id": "moho5zxh2ae",
-      "descricao": "Feriado dia do Trabalho",
+      "id": "mohorxd8zix",
+      "descricao": "Feriado dia 27.4",
       "tipo": "especial",
       "pratos": [
-        "mohnymhy2sf",
-        "mohnyufgjah",
-        "mohnz4zw78j",
-        "mohnzfp6he9",
-        "mohnztmj223"
+        "moau2zqn6bp"
       ],
-      "data": "2026-05-01"
+      "data": "2026-04-27"
     }
   ],
   "setores": [
