@@ -1355,7 +1355,21 @@
   ],
   "emp_moc1ll1c_acomps": [],
   "emp_moc1ll1c_bebidas": [],
-  "emp_moc1ll1c_diasEspeciais": [],
+  "emp_moc1ll1c_diasEspeciais": [
+    {
+      "id": "moho3zt3zt6",
+      "descricao": "Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mohnymhy2sf",
+        "mohnyufgjah",
+        "mohnz4zw78j",
+        "mohnzfp6he9",
+        "mohnztmj223"
+      ],
+      "diaSemana": "domingo"
+    }
+  ],
   "emp_moc1ll1c_setores": [
     {
       "id": "modbdsg9qtz",
@@ -1508,7 +1522,21 @@
       "valor": 1.6
     }
   ],
-  "diasEspeciais": [],
+  "diasEspeciais": [
+    {
+      "id": "moho3zt3zt6",
+      "descricao": "Domingo",
+      "tipo": "especial",
+      "pratos": [
+        "mohnymhy2sf",
+        "mohnyufgjah",
+        "mohnz4zw78j",
+        "mohnzfp6he9",
+        "mohnztmj223"
+      ],
+      "diaSemana": "domingo"
+    }
+  ],
   "setores": [
     {
       "id": "mohn8zshe04",
