@@ -232,12 +232,6 @@
       "diaEspecialOnly": false
     },
     {
-      "id": "mo3nncccfu8",
-      "nome": "Tiras de Carne",
-      "valor": 25.9,
-      "diaEspecialOnly": false
-    },
-    {
       "id": "mo3q2qzr56u",
       "nome": "Calabresa Fatiada",
       "valor": 1,
@@ -1566,40 +1560,52 @@
   ],
   "pratos": [
     {
-      "id": "mohn2qft6t9",
-      "nome": "File de Frango Grelhado",
-      "valor": 12.5,
+      "id": "mo3nn6mr8h6",
+      "nome": "Frango Grelhado",
+      "valor": 25.9,
       "diaEspecialOnly": false
     },
     {
-      "id": "mohn3390v5s",
-      "nome": "Bife Paris",
-      "valor": 16.5,
+      "id": "mo3q2qzr56u",
+      "nome": "Calabresa Fatiada",
+      "valor": 1,
       "diaEspecialOnly": false
     },
     {
-      "id": "mohn3otcpd7",
+      "id": "mo54e0wh6th",
       "nome": "Picanha Suina",
-      "valor": 12.5,
+      "valor": 20.9,
       "diaEspecialOnly": false
     },
     {
-      "id": "mohn43g40kq",
+      "id": "mo63imcyngi",
       "nome": "Parmegiana de Frango",
-      "valor": 14.5,
-      "diaEspecialOnly": false
+      "valor": 22.5,
+      "diaEspecialOnly": true
     },
     {
-      "id": "mohn529m09i",
-      "nome": "Fraldinha",
-      "valor": 16.5,
-      "diaEspecialOnly": false
-    },
-    {
-      "id": "mohn5a2ydxl",
+      "id": "moau2tfvppc",
       "nome": "Contra File",
-      "valor": 16.5,
-      "diaEspecialOnly": false
+      "valor": 26.9,
+      "diaEspecialOnly": true
+    },
+    {
+      "id": "moau2zqn6bp",
+      "nome": "Fraldinha",
+      "valor": 29.3,
+      "diaEspecialOnly": true
+    },
+    {
+      "id": "moau37kqgqx",
+      "nome": "Tilápia",
+      "valor": 25.4,
+      "diaEspecialOnly": true
+    },
+    {
+      "id": "mobrdrlewzz",
+      "nome": "Teste de prato",
+      "valor": 25.9,
+      "diaEspecialOnly": true
     }
   ],
   "acomps": [
