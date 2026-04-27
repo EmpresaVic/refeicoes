@@ -307,11 +307,6 @@
       "valor": 1
     },
     {
-      "id": "mo3rb4d6m7k",
-      "nome": "Cebola Empanada",
-      "valor": 1
-    },
-    {
       "id": "mo3s535s3m0",
       "nome": "Feijao",
       "valor": 1.9
@@ -1609,29 +1604,34 @@
   ],
   "acomps": [
     {
-      "id": "mohn6k61lgd",
+      "id": "mo3nmimd9gh",
+      "nome": "Farofa",
+      "valor": 1
+    },
+    {
+      "id": "mo3nmowepdr",
       "nome": "Arroz Branco",
-      "valor": 2.2
+      "valor": 1
     },
     {
-      "id": "mohn6qldwqe",
-      "nome": "Feijão Carioca",
-      "valor": 2.2
+      "id": "mo3q2ivojhu",
+      "nome": "Saladinha Express ( alface e Cenoura)",
+      "valor": 1
     },
     {
-      "id": "mohn6x5x04p",
-      "nome": "Batata Frita",
-      "valor": 2.9
+      "id": "mo3q7sdgj9b",
+      "nome": "Legumes grelhados",
+      "valor": 1
     },
     {
-      "id": "mohn779da9b",
-      "nome": "Pure de Batata",
-      "valor": 2.1
+      "id": "mo3qlt55wl2",
+      "nome": "Legumes Saute",
+      "valor": 1
     },
     {
-      "id": "mohn7jczmhf",
-      "nome": "Legumes Sautê",
-      "valor": 1.8
+      "id": "mo3s535s3m0",
+      "nome": "Feijao",
+      "valor": 1.9
     }
   ],
   "bebidas": [
