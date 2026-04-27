@@ -1314,6 +1314,12 @@
       "nome": "Bife Paris",
       "valor": 16.5,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mohn3otcpd7",
+      "nome": "Picanha Suina",
+      "valor": 12.5,
+      "diaEspecialOnly": false
     }
   ],
   "acomps": [],
