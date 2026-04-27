@@ -1302,7 +1302,14 @@
     }
   ],
   "pessoas": [],
-  "pratos": [],
+  "pratos": [
+    {
+      "id": "mohn2qft6t9",
+      "nome": "File de Frango Grelhado",
+      "valor": 12.5,
+      "diaEspecialOnly": false
+    }
+  ],
   "acomps": [],
   "bebidas": [],
   "diasEspeciais": []
