@@ -1321,6 +1321,12 @@
       "nome": "Bife Paris",
       "valor": 18.5,
       "diaEspecialOnly": false
+    },
+    {
+      "id": "mohnz4zw78j",
+      "nome": "Picanha Suina",
+      "valor": 15.5,
+      "diaEspecialOnly": false
     }
   ],
   "emp_moc1ll1c_acomps": [],
