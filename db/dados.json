@@ -122,7 +122,7 @@
       ],
       "permissoes": {
         "pedido": true,
-        "resumo": true,
+        "resumo": false,
         "pessoas": true,
         "pratos": true,
         "acomps": true,
@@ -1321,7 +1321,7 @@
       "aniversario": ""
     },
     {
-      "id": "mohoh9ib4if",
+      "id": "mohogj7lecu",
       "nome": "Celso",
       "setor": "Gestão",
       "aniversario": "2026-04-27"
