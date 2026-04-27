@@ -120,7 +120,16 @@
       "empresas": [
         "moc1ll1c"
       ],
-      "permissoes": null
+      "permissoes": {
+        "pedido": true,
+        "resumo": true,
+        "pessoas": true,
+        "pratos": true,
+        "acomps": true,
+        "bebidas": true,
+        "diasEspeciais": true,
+        "usuarios": false
+      }
     }
   ],
   "empresas": [
@@ -1291,5 +1300,10 @@
       "id": "modbfi0nlwc",
       "nome": "."
     }
-  ]
+  ],
+  "pessoas": [],
+  "pratos": [],
+  "acomps": [],
+  "bebidas": [],
+  "diasEspeciais": []
 }
