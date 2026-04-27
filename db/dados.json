@@ -1353,7 +1353,13 @@
       "diaEspecialOnly": false
     }
   ],
-  "emp_moc1ll1c_acomps": [],
+  "emp_moc1ll1c_acomps": [
+    {
+      "id": "moho7ijdweh",
+      "nome": "Arroz Branco",
+      "valor": 1.9
+    }
+  ],
   "emp_moc1ll1c_bebidas": [],
   "emp_moc1ll1c_diasEspeciais": [
     {
