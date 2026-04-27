@@ -111,6 +111,16 @@
         "diasEspeciais": false,
         "usuarios": false
       }
+    },
+    {
+      "id": "mohmygny",
+      "nome": "victrus",
+      "senhaHash": "57811906",
+      "perfil": "admin",
+      "empresas": [
+        "moc1ll1c"
+      ],
+      "permissoes": null
     }
   ],
   "empresas": [
