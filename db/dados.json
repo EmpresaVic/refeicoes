@@ -1384,5 +1384,11 @@
       "valor": 1.6
     }
   ],
-  "diasEspeciais": []
+  "diasEspeciais": [],
+  "setores": [
+    {
+      "id": "mohn8zshe04",
+      "nome": "Cozinha"
+    }
+  ]
 }
