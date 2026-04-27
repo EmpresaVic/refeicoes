@@ -1183,7 +1183,6 @@
       "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
-  "pedidos": [],
   "emp_moc1lcwb_pessoas": [
     {
       "id": "modb4una1hm",
@@ -1779,6 +1778,40 @@
     {
       "id": "mohn97gw85g",
       "nome": "Gestao"
+    }
+  ],
+  "emp_moc1ll1c_pedidos": [
+    {
+      "id": "mohslfilefa",
+      "numPedido": 1,
+      "data": "2026-04-27",
+      "pessoaId": "mohogj7lecu",
+      "pessoaNome": "Celso",
+      "pessoaSetor": "Gestão",
+      "pratoId": "moho05xpc1s",
+      "pratoNome": "Fraldinha",
+      "pratoValor": 22.5,
+      "acTotal": 4.3,
+      "bebTotal": 1.7,
+      "totalPedido": 28.5,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1.9
+        },
+        {
+          "nome": "Batata Frita",
+          "valor": 2.4
+        }
+      ],
+      "bebida": {
+        "nome": "Suco em po feito na Loja ( 300 ml)",
+        "valor": 1.7
+      },
+      "obs": "",
+      "criadoEm": "2026-04-27T22:52:20.301Z",
+      "empresaId": "moc1ll1c",
+      "empresaNome": "Victrus Comercio de Alimentos"
     }
   ]
 }
