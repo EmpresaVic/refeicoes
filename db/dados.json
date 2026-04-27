@@ -1309,7 +1309,14 @@
       "aniversario": "2009-08-23"
     }
   ],
-  "emp_moc1ll1c_pratos": [],
+  "emp_moc1ll1c_pratos": [
+    {
+      "id": "mohnymhy2sf",
+      "nome": "File de Frango Grelhado",
+      "valor": 16.5,
+      "diaEspecialOnly": false
+    }
+  ],
   "emp_moc1ll1c_acomps": [],
   "emp_moc1ll1c_bebidas": [],
   "emp_moc1ll1c_diasEspeciais": [],
