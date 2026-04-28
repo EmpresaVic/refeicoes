@@ -1314,6 +1314,39 @@
       "criadoEm": "2026-04-28T19:17:32.865Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moj0dwyxsxa",
+      "numPedido": 27,
+      "data": "2026-04-28",
+      "pessoaId": "modapvi7bqh",
+      "pessoaNome": "Aline Silva da Costa",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 29.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-28T19:18:12.777Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
