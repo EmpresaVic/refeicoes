@@ -1181,6 +1181,42 @@
       "criadoEm": "2026-04-24T12:38:25.808Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mohvtped51e",
+      "numPedido": 24,
+      "data": "2026-04-28",
+      "pessoaId": "mohotqntotn",
+      "pessoaNome": "Celso",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mohosxvl6rs",
+      "pratoNome": "Bife Paris",
+      "pratoValor": 25.9,
+      "acTotal": 3,
+      "bebTotal": 1.9,
+      "totalPedido": 30.799999999999997,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Legumes grelhados",
+          "valor": 1
+        }
+      ],
+      "bebida": {
+        "nome": "Pet Guarana 200 ml",
+        "valor": 1.9
+      },
+      "obs": "teste",
+      "criadoEm": "2026-04-28T00:22:45.206Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
@@ -1813,5 +1849,6 @@
       "empresaId": "moc1ll1c",
       "empresaNome": "Victrus Comercio de Alimentos"
     }
-  ]
+  ],
+  "pedidos": []
 }
