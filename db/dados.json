@@ -1347,6 +1347,43 @@
       "criadoEm": "2026-04-28T19:18:12.777Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moj0egr50v5",
+      "numPedido": 28,
+      "data": "2026-04-28",
+      "pessoaId": "modavc8hhml",
+      "pessoaNome": "Maria da Piedade Gomes dos Anjos",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "moj088rtefq",
+      "pratoNome": "Bisteca Suina",
+      "pratoValor": 14.5,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 19.4,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-28T19:18:38.417Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
