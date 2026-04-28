@@ -1384,6 +1384,35 @@
       "criadoEm": "2026-04-28T19:18:38.417Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moj0fwa14lk",
+      "numPedido": 29,
+      "data": "2026-04-28",
+      "pessoaId": "mohow6hw0rc",
+      "pessoaNome": "Deyvilla",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 2.9,
+      "bebTotal": 0,
+      "totalPedido": 3.9,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-28T19:19:45.193Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
