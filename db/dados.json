@@ -1413,6 +1413,39 @@
       "criadoEm": "2026-04-28T19:19:45.193Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moj0izmxz5b",
+      "numPedido": 30,
+      "data": "2026-04-28",
+      "pessoaId": "modaz0ilzpx",
+      "pessoaNome": "Valdineia Nascimento Chagas",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 4.4,
+      "bebTotal": 0,
+      "totalPedido": 30.299999999999997,
+      "acomps": [
+        {
+          "nome": "Farofa",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Arroz a grega",
+          "valor": 1.5
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-28T19:22:09.513Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
