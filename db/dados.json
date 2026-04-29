@@ -2110,6 +2110,26 @@
       "criadoEm": "2026-04-27T22:52:20.301Z",
       "empresaId": "moc1ll1c",
       "empresaNome": "Victrus Comercio de Alimentos"
+    },
+    {
+      "id": "mokispc1pbr",
+      "numPedido": 2,
+      "data": "2026-04-29",
+      "pessoaId": "modbikfwdtn",
+      "pessoaNome": "Joilma Paixão da Hora dos Santos",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mohnymhy2sf",
+      "pratoNome": "File de Frango Grelhado",
+      "pratoValor": 16.5,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 16.5,
+      "acomps": [],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-29T20:41:21.985Z",
+      "empresaId": "moc1ll1c",
+      "empresaNome": "Victrus Comercio de Alimentos"
     }
   ],
   "pedidos": []
