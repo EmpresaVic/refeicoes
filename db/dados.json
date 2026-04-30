@@ -1479,6 +1479,43 @@
       "criadoEm": "2026-04-28T19:24:35.881Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "molwnac3c5j",
+      "numPedido": 32,
+      "data": "2026-04-30",
+      "pessoaId": "modawmqhf0h",
+      "pessoaNome": "Mirian Regina Gonçalves",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "moj07vupv6n",
+      "pratoNome": "Toscaninha",
+      "pratoValor": 13.5,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 18.4,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-04-30T19:56:50.067Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
