@@ -1627,6 +1627,43 @@
       "criadoEm": "2026-05-01T20:42:48.102Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mondr5cdlux",
+      "numPedido": 36,
+      "data": "2026-05-01",
+      "pessoaId": "modaz0ilzpx",
+      "pessoaNome": "Valdineia Nascimento Chagas",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 30.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-01T20:43:29.869Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
