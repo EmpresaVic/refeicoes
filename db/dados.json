@@ -1882,6 +1882,43 @@
       "criadoEm": "2026-05-01T20:48:50.941Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mondyu0cjd7",
+      "numPedido": 43,
+      "data": "2026-05-01",
+      "pessoaId": "modarqnhqfz",
+      "pessoaNome": "Danilo Polis Dias Moreira",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 30.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-01T20:49:28.428Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
