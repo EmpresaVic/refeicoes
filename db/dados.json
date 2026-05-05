@@ -2022,6 +2022,35 @@
       "criadoEm": "2026-05-05T15:35:22.592Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mossipew6y9",
+      "numPedido": 47,
+      "data": "2026-05-05",
+      "pessoaId": "mohou9dis1z",
+      "pessoaNome": "Richel",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mo54e0wh6th",
+      "pratoNome": "Picanha Suina",
+      "pratoValor": 20.9,
+      "acTotal": 2.9,
+      "bebTotal": 0,
+      "totalPedido": 23.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-05T15:35:41.096Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
