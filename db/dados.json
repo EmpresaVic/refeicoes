@@ -1989,6 +1989,39 @@
       "criadoEm": "2026-05-04T21:10:01.475Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mossib4wpbc",
+      "numPedido": 46,
+      "data": "2026-05-05",
+      "pessoaId": "modaz0ilzpx",
+      "pessoaNome": "Valdineia Nascimento Chagas",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mohosxvl6rs",
+      "pratoNome": "Bife Paris",
+      "pratoValor": 25.9,
+      "acTotal": 4.6,
+      "bebTotal": 0,
+      "totalPedido": 30.5,
+      "acomps": [
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Arroz a grega",
+          "valor": 1.5
+        },
+        {
+          "nome": "Batata Frita",
+          "valor": 1.2
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-05T15:35:22.592Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
