@@ -2051,6 +2051,39 @@
       "criadoEm": "2026-05-05T15:35:41.096Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moz424trmpc",
+      "numPedido": 48,
+      "data": "2026-05-10",
+      "pessoaId": "modb11jrs0d",
+      "pessoaNome": "Debora Cristina Modesto dos Anjos",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo63imcyngi",
+      "pratoNome": "Parmegiana de Frango",
+      "pratoValor": 22.5,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 26.4,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-10T01:45:20.367Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
