@@ -2084,6 +2084,42 @@
       "criadoEm": "2026-05-10T01:45:20.367Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moz42kx2c2j",
+      "numPedido": 49,
+      "data": "2026-05-10",
+      "pessoaId": "modarqnhqfz",
+      "pessoaNome": "Danilo Polis Dias Moreira",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo63imcyngi",
+      "pratoNome": "Parmegiana de Frango",
+      "pratoValor": 22.5,
+      "acTotal": 4.6,
+      "bebTotal": 2.5,
+      "totalPedido": 29.6,
+      "acomps": [
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Arroz a grega",
+          "valor": 1.5
+        },
+        {
+          "nome": "Batata Frita",
+          "valor": 1.2
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-05-10T01:45:41.222Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
