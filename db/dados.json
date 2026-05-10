@@ -2120,6 +2120,42 @@
       "criadoEm": "2026-05-10T01:45:41.222Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "moz42ykup35",
+      "numPedido": 50,
+      "data": "2026-05-10",
+      "pessoaId": "modawmqhf0h",
+      "pessoaNome": "Mirian Regina Gonçalves",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mo63imcyngi",
+      "pratoNome": "Parmegiana de Frango",
+      "pratoValor": 22.5,
+      "acTotal": 3.7,
+      "bebTotal": 2.5,
+      "totalPedido": 28.7,
+      "acomps": [
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Arroz a grega",
+          "valor": 1.5
+        },
+        {
+          "nome": "Batata Frita",
+          "valor": 1.2
+        }
+      ],
+      "bebida": {
+        "nome": "Suco de Laranja 300 ml",
+        "valor": 2.5
+      },
+      "obs": "",
+      "criadoEm": "2026-05-10T01:45:58.926Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
