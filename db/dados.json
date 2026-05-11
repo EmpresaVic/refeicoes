@@ -2299,6 +2299,39 @@
       "criadoEm": "2026-05-11T20:17:34.591Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp1n8pnjcyi",
+      "numPedido": 55,
+      "data": "2026-05-11",
+      "pessoaId": "modb11jrs0d",
+      "pessoaNome": "Debora Cristina Modesto dos Anjos",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 29.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-11T20:17:52.351Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
