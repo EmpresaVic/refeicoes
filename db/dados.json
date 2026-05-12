@@ -2398,6 +2398,43 @@
       "criadoEm": "2026-05-12T20:28:24.800Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp332n4oaf2",
+      "numPedido": 58,
+      "data": "2026-05-12",
+      "pessoaId": "mohow6hw0rc",
+      "pessoaNome": "Deyvilla",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mo54e0wh6th",
+      "pratoNome": "Picanha Suina",
+      "pratoValor": 20.9,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 25.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-12T20:28:49.176Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
