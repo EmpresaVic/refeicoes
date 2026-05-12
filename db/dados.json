@@ -2365,6 +2365,39 @@
       "criadoEm": "2026-05-12T20:27:46.713Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp3324bk2hc",
+      "numPedido": 57,
+      "data": "2026-05-12",
+      "pessoaId": "modaxebl2fe",
+      "pessoaNome": "Sonia Maria dos Santos",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 29.799999999999997,
+      "acomps": [
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-12T20:28:24.800Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
