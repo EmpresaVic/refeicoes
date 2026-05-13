@@ -2563,6 +2563,26 @@
       "criadoEm": "2026-05-13T18:44:45.319Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp4etbmo570",
+      "numPedido": 63,
+      "data": "2026-05-13",
+      "pessoaId": "modapvi7bqh",
+      "pessoaNome": "Aline Silva da Costa",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mo3nn6mr8h6",
+      "pratoNome": "Frango Grelhado",
+      "pratoValor": 25.9,
+      "acTotal": 0,
+      "bebTotal": 0,
+      "totalPedido": 25.9,
+      "acomps": [],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-13T18:45:15.936Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
