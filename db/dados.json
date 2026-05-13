@@ -2583,6 +2583,35 @@
       "criadoEm": "2026-05-13T18:45:15.936Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp4fu3admez",
+      "numPedido": 64,
+      "data": "2026-05-13",
+      "pessoaId": "modawmqhf0h",
+      "pessoaNome": "Mirian Regina Gonçalves",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mo54e0wh6th",
+      "pratoNome": "Picanha Suina",
+      "pratoValor": 20.9,
+      "acTotal": 2,
+      "bebTotal": 0,
+      "totalPedido": 22.9,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-13T19:13:51.397Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
