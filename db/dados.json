@@ -2781,6 +2781,43 @@
       "criadoEm": "2026-05-14T20:11:14.388Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp7dgmtnzr5",
+      "numPedido": 70,
+      "data": "2026-05-15",
+      "pessoaId": "modarqnhqfz",
+      "pessoaNome": "Danilo Polis Dias Moreira",
+      "pessoaSetor": "Cozinha",
+      "pratoId": "mo3q2qzr56u",
+      "pratoNome": "Calabresa Fatiada",
+      "pratoValor": 1,
+      "acTotal": 4.9,
+      "bebTotal": 0,
+      "totalPedido": 5.9,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-15T20:30:42.827Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
