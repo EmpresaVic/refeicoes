@@ -2851,6 +2851,39 @@
       "criadoEm": "2026-05-15T20:31:01.675Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp7dp7563b1",
+      "numPedido": 72,
+      "data": "2026-05-15",
+      "pessoaId": "modawmqhf0h",
+      "pessoaNome": "Mirian Regina Gonçalves",
+      "pessoaSetor": "Atendimento",
+      "pratoId": "mohosxvl6rs",
+      "pratoNome": "Bife Paris",
+      "pratoValor": 25.9,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 29.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Saladinha Express ( alface e Cenoura)",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-15T20:37:22.410Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
