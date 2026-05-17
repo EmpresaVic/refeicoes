@@ -2956,6 +2956,39 @@
       "criadoEm": "2026-05-17T01:49:50.895Z",
       "empresaId": "moc1l1xu",
       "empresaNome": "Victria Comercio de Alimentos Ltda"
+    },
+    {
+      "id": "mp94bbt1hu0",
+      "numPedido": 75,
+      "data": "2026-05-17",
+      "pessoaId": "modb11jrs0d",
+      "pessoaNome": "Debora Cristina Modesto dos Anjos",
+      "pessoaSetor": "Gestão",
+      "pratoId": "mohosxvl6rs",
+      "pratoNome": "Bife Paris",
+      "pratoValor": 25.9,
+      "acTotal": 3.9,
+      "bebTotal": 0,
+      "totalPedido": 29.799999999999997,
+      "acomps": [
+        {
+          "nome": "Arroz Branco",
+          "valor": 1
+        },
+        {
+          "nome": "Feijao",
+          "valor": 1.9
+        },
+        {
+          "nome": "Purê de Batata",
+          "valor": 1
+        }
+      ],
+      "bebida": null,
+      "obs": "",
+      "criadoEm": "2026-05-17T01:50:11.077Z",
+      "empresaId": "moc1l1xu",
+      "empresaNome": "Victria Comercio de Alimentos Ltda"
     }
   ],
   "emp_moc1lcwb_pessoas": [
